@@ -36,6 +36,8 @@ def window():
 
 	label7.move(606 , 530)
 	
+
+
 	
 
 	label1font = QtGui.QFont("Times", 25, QtGui.QFont.Bold)
@@ -51,6 +53,9 @@ def window():
 	label5.setFont(label_2_4_font)
 	label6.setFont(label6font)
 	label7.setFont(label6font)
+
+	label6.setStyle('color : brown')
+	label7.setStyle('color : brown')
 
 
 
