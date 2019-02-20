@@ -70,6 +70,37 @@ def window():
 		
 		vert_space += 30
 
+	pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5' , 'PD6', 'PB3', 'PB4', 'PB5', 'PB6']
+	pinsr = ['PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1' , 'PC0', 'PB1', 'PB2', 'PF2', 'PF1']
+
+	
+	pinl_dict = {}
+	vert_space = 351
+
+	
+	for i in pinsl:
+
+		pinl_dict[i] = QtWidgets.QLabel(w)
+
+		pinl_dict[i].setText(i)
+		pinl_dict[i].move(515, vert_space)
+		pinl_dict[i].setFont(label_2_4_font)
+		
+		vert_space += 30
+
+	pinr_dict = {}
+	vert_space = 351
+
+	for i in pinsr:
+
+		pinr_dict[i] = QtWidgets.QLabel(w)
+
+		pinr_dict[i].setText(i)
+		pinr_dict[i].move(760, vert_space)
+		pinr_dict[i].setFont(label_2_4_font)
+		
+		vert_space += 30
+
 	w.show()
 
 	#to let us know if the process ended successfully or not
