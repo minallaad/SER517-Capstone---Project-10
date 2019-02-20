@@ -45,7 +45,25 @@ def window():
 	label4.setFont(label_2_4_font)
 	label5.setFont(label_2_4_font)
 	label6.setFont(label6font)
-	
+
+
+
+	pins = ['CORE.GPIOR2', 'PORTB.PORT', 'PORTB.PIN', 'PORTB.DDR', 'PORTB.B0-Out', 'IRQ.VECTOR0','EEPROM.EEDR', 'TMRIRQ0.TIMSKO','TIMER0.Counter',
+	'TIMER0.TCNT','SPI.SPDR','UART0.UDR']
+
+	pin_dict = {}
+	vert_space = 195
+
+	for i in pins:
+
+		pin_dict[i] = QtWidgets.QLabel(w)
+
+		pin_dict[i].setText(i)
+		pin_dict[i].move(90, vert_space)
+		pin_dict[i].setFont(label_2_4_font)
+		
+		vert_space += 30
+
 	w.show()
 
 	#to let us know if the process ended successfully or not
