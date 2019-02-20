@@ -15,6 +15,7 @@ def window():
 	label4 =  QtWidgets.QLabel(w)
 	label5 =  QtWidgets.QLabel(w)
 	label6 =  QtWidgets.QLabel(w)
+	label7 =  QtWidgets.QLabel(w)
 
 	label1.setText("ATMega328p Simulator")
 	label2.setText("Connected to Simulavr  ")
@@ -22,6 +23,7 @@ def window():
 	label4.setText("Disconnected  ")
 	label5.setText("Program Loading")
 	label6.setText("ATMega328p")
+	label7.setText("ATMega328p")
 
 	label1.move(540 , 45)
 
@@ -31,6 +33,9 @@ def window():
 	label5.move(930 , 105)
 
 	label6.move(606 , 195)
+
+	label7.move(606 , 530)
+	
 	
 
 	label1font = QtGui.QFont("Times", 25, QtGui.QFont.Bold)
@@ -45,6 +50,7 @@ def window():
 	label4.setFont(label_2_4_font)
 	label5.setFont(label_2_4_font)
 	label6.setFont(label6font)
+	label7.setFont(label6font)
 
 
 
