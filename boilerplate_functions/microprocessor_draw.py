@@ -54,8 +54,8 @@ def window():
 	label6.setFont(label6font)
 	label7.setFont(label6font)
 
-	label6.setStyle('color : brown')
-	label7.setStyle('color : brown')
+	label6.setStyleSheet('color : brown')
+	label7.setStyleSheet('color : brown')
 
 
 
