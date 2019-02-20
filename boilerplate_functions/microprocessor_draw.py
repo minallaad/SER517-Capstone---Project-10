@@ -90,7 +90,8 @@ def window():
 		pinl_dict[i].setText(i)
 		pinl_dict[i].move(515, vert_space)
 		pinl_dict[i].setFont(label_2_4_font)
-		
+		pinl_dict[i].setStyleSheet('color : grey')
+
 		vert_space += 30
 
 	pinr_dict = {}
@@ -103,6 +104,7 @@ def window():
 		pinr_dict[i].setText(i)
 		pinr_dict[i].move(760, vert_space)
 		pinr_dict[i].setFont(label_2_4_font)
+		pinr_dict[i].setStyleSheet('color : grey')
 		
 		vert_space += 30
 
