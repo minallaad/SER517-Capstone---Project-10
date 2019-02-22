@@ -32,6 +32,17 @@ Aman
     MacOS(native)
     Windows(native)
 
-## Tools
+
+
+## Installation Direction
+
+Requires Python 2.7 to be installed on the computer.
+
+## Build and Run Directions
+
+
+## Design Details
+
+
 
 
