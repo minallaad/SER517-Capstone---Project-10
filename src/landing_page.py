@@ -203,6 +203,7 @@ class myListWidget(QListWidget):
    
 		
 
+<<<<<<< HEAD:landing_page.py
 	 
 		
 if __name__ == '__main__':
@@ -211,3 +212,6 @@ if __name__ == '__main__':
     ex = Landing()
     sys.exit(app.exec_())
 
+=======
+window()
+>>>>>>> b9a2e38bc04850a84b798fe8f1dd53cc18415b5c:src/landing_page.py

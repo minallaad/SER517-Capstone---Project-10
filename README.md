@@ -1,11 +1,48 @@
-
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
-
 # SER517-Capstone---Project-10 with Professor Douglas
 
 
-## Hardware Simulator for ATMEGA328P
+**Members**
+
+Ayan Shah
+
+Minal Laad
+
+Ruihao Zhou
+
+Kaustuv
+
+ssjohar
+
+Aman
+
+**Development Plan**
 
 
-![](https://raw.githubusercontent.com/Parsons-Ray/SER517-Capstone---Project-10/master/images/landing_page.png)
+
+
+
+
+
+## System Requirement
+
+
+**Platform**
+
+    Linux(native)
+    MacOS(native)
+    Windows(native)
+
+
+
+## Installation Direction
+
+Requires Python 2.7 to be installed on the computer.
+
+## Build and Run Directions
+
+
+## Design Details
+
+
+
 
