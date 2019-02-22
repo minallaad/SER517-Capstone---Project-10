@@ -1,11 +1,33 @@
-
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
-
 # SER517-Capstone---Project-10 with Professor Douglas
 
+# SER502-Spring2017-Team10
+**Members**
 
-## Hardware Simulator for ATMEGA328P
+@Parsons-Ray, Ruihao Zhou
+
+@run-dong-zhu, Zhu Rundong
+
+@XimingFeng, Feng Ximing
+
+@kkmacart, MacArthur Katie
+
+**Development Plan**
 
 
-![](https://raw.githubusercontent.com/Parsons-Ray/SER517-Capstone---Project-10/master/images/landing_page.png)
+
+
+
+
+
+## System Requirement
+
+
+**Platform**
+
+    Linux(native)
+    MacOS(native)
+    Windows(native)
+
+## Tools
+
 
