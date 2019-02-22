@@ -2,10 +2,11 @@
 
 
 **Members**
-
-@Parsons-Ray, Ruihao Zhou
-
-
+Ayan Shah
+Minal Laad
+Ruihao Zhou
+Kaustuv
+ssjohar
 
 **Development Plan**
 
