@@ -36,7 +36,8 @@ Aman Maheshwari
 
 ## Installation Direction
 
-Requires Python 2.7 to be installed on the computer.
+Run this command to install pyQt5
+```sudo apt-get install python3-pyqt5```
 
 ## Build and Run Directions
 
