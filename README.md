@@ -39,7 +39,8 @@ Aman Maheshwari
 Run this command to install PyQt5
 
 ```
-sudo apt-get install python3-pyqt5```
+sudo apt-get install python3-pyqt5
+```
 
 ## Build and Run Directions
 
