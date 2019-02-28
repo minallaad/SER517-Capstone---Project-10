@@ -68,9 +68,27 @@ class Landing(QtWidgets.QWidget):
 
 		horizontalLayout = QHBoxLayout()
 
+		simulatorTitle = QtWidgets.QLabel(self)
+		simulatorTitle.setText("ATMega328p Simulator")
+		simulatorTitle.setAlignment(Qt.AlignCenter)
+
+		simulatorFrame = QFrame()
+		simulatorFrame.setStyleSheet("QWidget { background-color: grey }")
+		simulatorFrame.setLineWidth(3)
+		simulatorFrame.setMidLineWidth(3)
+		simulatorFrame.setFrameShape(QFrame.Panel)
+		simulatorFrame.setFixedSize(300, 500)
+		simulatorFrame.layout = QHBoxLayout()
+		simulatorFrame.layout.addWidget(simulatorTitle)
+		
+		simulatorFrame.setFrameShadow(simulatorFrame.Raised)
+		simulatorFrame.setLayout(simulatorFrame.layout)
 
 		rightFrame = QFrame()
 		rightFrame.setFrameShape(QFrame.StyledPanel)
+		rightFrame.layout = QHBoxLayout()
+		rightFrame.layout.addWidget(simulatorFrame)
+		rightFrame.setLayout(rightFrame.layout)
 
 		horizontalSplitter = QSplitter(Qt.Horizontal)
 		horizontalLayout.addWidget(splitter)
