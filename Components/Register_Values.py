@@ -20,7 +20,7 @@ class Register_Values():
             self.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
 
 
-    def getTable(self):
+    def getTable(self): # Return Single Instance of Register Value Table Widget
         return self.tableWidget
 
     def addRegisterValues(self,name,address,value):   # Function to add Register details in Register Value Table

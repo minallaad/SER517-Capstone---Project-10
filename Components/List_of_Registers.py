@@ -3,7 +3,7 @@
 from PyQt5.QtWidgets import  QMessageBox , QListWidget
 from PyQt5 import  QtCore
 
-class List_of_Registers():
+class List_of_Registers(QListWidget):
 
 
     listWidget = None
@@ -19,19 +19,13 @@ class List_of_Registers():
                     'TIMER0.TCNT', 'SPI.SPDR',
                     'UART0.UDR']  # Add the correct register values from tracelist and update this comment
 
-            listWidget = myListWidget()
-            listWidget.itemClicked.connect(listWidget.Clicked)
-            listWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-            listWidget.move(90, 195)
+            self.listWidget = QListWidget()
+            self.listWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+            self.listWidget.move(90, 195)
 
             for i in pins:
-                listWidget.addItem(i)
+                self.listWidget.addItem(i)
 
-    def getListOfRegisters(self):
+    def getListOfRegisters(self):   # Returns Single Instance of Register List Widget
         return self.listWidget
-
-class myListWidget(QListWidget):
-
-        def Clicked(self, item):
-            QMessageBox.information(self, "ListWidget", "You clicked: " + item.text())
 

@@ -39,27 +39,15 @@ class Landing(QtWidgets.QWidget):
 		Register_Values = Components.Register_Values.Register_Values()  # Object of Class Register Values
 		List_of_Registers = Components.List_of_Registers.List_of_Registers() # Object of Class List of Registers
 
-		splitter = QSplitter(Qt.Vertical);
-
-		pins = ['CORE.GPIOR2', 'PORTB.PORT', 'PORTB.PIN', 'PORTB.DDR', 'PORTB.B0-Out', 'IRQ.VECTOR0', 'EEPROM.EEDR',
-				'TMRIRQ0.TIMSKO', 'TIMER0.Counter', 'TIMER0.TCNT', 'SPI.SPDR', 'UART0.UDR' , 'CORE.GPIOR2', 'PORTB.PORT', 'PORTB.PIN', 'PORTB.DDR', 'PORTB.B0-Out', 'IRQ.VECTOR0', 'EEPROM.EEDR',
-				'TMRIRQ0.TIMSKO', 'TIMER0.Counter','TIMER0.TCNT', 'SPI.SPDR', 'UART0.UDR' ,'CORE.GPIOR2', 'PORTB.PORT', 'PORTB.PIN', 'PORTB.DDR', 'PORTB.B0-Out', 'IRQ.VECTOR0', 'EEPROM.EEDR',
-				'TMRIRQ0.TIMSKO', 'TIMER0.Counter',
-				'TIMER0.TCNT', 'SPI.SPDR', 'UART0.UDR' ]   # Add the correct register values from tracelist and update this comment
-
-		listWidget = myListWidget(self)
-		listWidget.itemClicked.connect(listWidget.Clicked)
-		listWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-		listWidget.move(90, 195)
-
-		for i in pins:
-			listWidget.addItem(i)
 
 
 		self.tableWidget = Register_Values .getTable()
-		# listWidget = List_of_Registers.getListOfRegisters()
+		self.listWidget = List_of_Registers.getListOfRegisters()
+		self.listWidget.itemClicked.connect(self.Clicked)
 
-		splitter.addWidget(listWidget)
+		splitter = QSplitter(Qt.Vertical);
+
+		splitter.addWidget(self.listWidget)
 		splitter.addWidget(self.tableWidget)
 		splitter.setSizes([300,150])
 
@@ -84,12 +72,64 @@ class Landing(QtWidgets.QWidget):
 		simulatorFrame.setFrameShadow(simulatorFrame.Raised)
 		simulatorFrame.setLayout(simulatorFrame.layout)
 
+		pinFont = QtGui.QFont("Arial", 12, QtGui.QFont.Bold)
 
+		pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5', 'PD6', 'PB3', 'PB4', 'PB5', 'PB6']
+
+
+		leftPinFrame = QFrame()
+		leftPinFrame.layout = QVBoxLayout()
+		leftPinFrame.layout.addStretch()
+
+		pinl_dict = {}
+
+		for i in pinsl:
+			pinl_dict[i] = QtWidgets.QLabel(self)
+
+			pinl_dict[i].setText(i)
+			pinl_dict[i].setStyleSheet('color : dark grey')
+			pinl_dict[i].setAlignment(Qt.AlignRight)
+			pinl_dict[i].setFont(pinFont)
+			leftPinFrame.layout.setSpacing(20)
+			leftPinFrame.layout.addWidget(pinl_dict[i])
+
+
+		leftPinFrame.setLayout(leftPinFrame.layout)
+		leftPinFrame.layout.addStretch()
+
+		rightPinFrame = QFrame()
+		rightPinFrame.layout = QVBoxLayout()
+		rightPinFrame.layout.addStretch()
+
+		pinsr = ['PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0', 'PB1', 'PB2', 'VCC', 'GND']
+		pinr_dict = {}
+
+		for i in pinsr:
+			pinr_dict[i] = QtWidgets.QLabel(self)
+
+			pinr_dict[i].setText(i)
+			pinr_dict[i].setStyleSheet('color : dark grey')
+			pinr_dict[i].setFont(pinFont)
+			rightPinFrame.layout.setSpacing(20)
+			rightPinFrame.layout.addWidget(pinr_dict[i])
+
+		rightPinFrame.layout.addStretch()
+		rightPinFrame.setLayout(rightPinFrame.layout)
+
+		pinl_dict['PD0'].setStyleSheet('color : red')
+		pinl_dict['PD1'].setStyleSheet('color : red')
+		pinl_dict['PD2'].setStyleSheet('color : red')
+
+		pinr_dict['PC6'].setStyleSheet('color : green')
+		pinr_dict['PC5'].setStyleSheet('color : green')
+		pinr_dict['PC4'].setStyleSheet('color : green')
 
 		rightFrame = QFrame()
 		rightFrame.setFrameShape(QFrame.StyledPanel)
 		rightFrame.layout = QHBoxLayout()
+		rightFrame.layout.addWidget(leftPinFrame)
 		rightFrame.layout.addWidget(simulatorFrame)
+		rightFrame.layout.addWidget(rightPinFrame)
 		rightFrame.setLayout(rightFrame.layout)
 
 
@@ -124,84 +164,8 @@ class Landing(QtWidgets.QWidget):
 	def getConnectionStatus(self):  # Function returns status (Connected / Disconnected)
 		return "Connected to Simulavr"
 
-
-
-		# pins = ['CORE.GPIOR2', 'PORTB.PORT', 'PORTB.PIN', 'PORTB.DDR', 'PORTB.B0-Out', 'IRQ.VECTOR0','EEPROM.EEDR', 'TMRIRQ0.TIMSKO','TIMER0.Counter',
-		# 'TIMER0.TCNT','SPI.SPDR','UART0.UDR']
-        #
-		# pin_dict = {}
-		# vert_space = 195
-        #
-		# listWidget = myListWidget(self)
-        #
-		# listWidget.resize(190,150)
-		# listWidget.itemClicked.connect(listWidget.Clicked)
-		# listWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-		# listWidget.move(90,195)
-  		#
-        #
-		# for i in pins:
-        #
-		# 	#pin_dict[i] = QtWidgets.QLabel(self)
-        #
-		# 	#pin_dict[i].setText(i)
-		# 	#pin_dict[i].move(90, vert_space)
-		# 	#pin_dict[i].setFont(label_2_4_font)
-		# 	listWidget.addItem(i)
-		#
-  		
-
-			#vert_space += 30
-        #
-		# pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5' , 'PD6', 'PB3', 'PB4', 'PB5', 'PB6']
-		# pinsr = ['PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1' , 'PC0', 'PB1', 'PB2', 'PF2', 'PF1']
-        #
-		#
-		# pinl_dict = {}
-		# vert_space = 325
-		#
-		#
-        #
-		# for i in pinsl:
-        #
-		# 	pinl_dict[i] = QtWidgets.QLabel(self)
-        #
-		# 	pinl_dict[i].setText(i)
-		# 	pinl_dict[i].move(515, vert_space)
-		# 	pinl_dict[i].setFont(label_2_4_font)
-		# 	pinl_dict[i].setStyleSheet('color : grey')
-		#
-		# 	vert_space += 30
-        #
-		# pinr_dict = {}
-		# vert_space = 325
-        #
-		# for i in pinsr:
-        #
-		# 	pinr_dict[i] = QtWidgets.QLabel(self)
-        #
-		# 	pinr_dict[i].setText(i)
-		# 	pinr_dict[i].move(760, vert_space)
-		# 	pinr_dict[i].setFont(label_2_4_font)
-		# 	pinr_dict[i].setStyleSheet('color : grey')
-		#
-		# 	vert_space += 30
-        #
-		# pinl_dict['PD0'].setStyleSheet('color : red')
-		# pinl_dict['PD1'].setStyleSheet('color : red')
-		# pinl_dict['PD2'].setStyleSheet('color : red')
-        #
-		# pinr_dict['PC6'].setStyleSheet('color : green')
-		# pinr_dict['PC5'].setStyleSheet('color : green')
-		# pinr_dict['PC4'].setStyleSheet('color : green')
-        #
-		#
-		
-class myListWidget(QListWidget):   # On Click Register name calls this function
-
-	def Clicked(self,item):
+	def Clicked(self,item):  # On Click Register name calls this function
 		QMessageBox.information(self, "ListWidget", "You clicked: "+item.text())
-		
 
 
 		
