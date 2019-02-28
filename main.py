@@ -8,14 +8,15 @@ from PyQt5.QtWidgets import QWidget,QLabel, QSplitter,QApplication, QHBoxLayout,
 from PyQt5.QtGui import QPainter, QPen , QPixmap
 from PyQt5.QtCore import Qt
 
+import Components.Register_Values
+import Components.List_of_Registers
+
 
 class Landing(QtWidgets.QWidget): 
 
 
 	def __init__(self):
-
 	    super(Landing, self).__init__()
-
 	    self.initUI()
 	    
 	    
@@ -25,7 +26,6 @@ class Landing(QtWidgets.QWidget):
 		self.left = 100
 		self.width = 1000
 		self.height = 800
-
 		self.setWindowTitle(self.title)
 		self.setStyleSheet("background-color: white")
 		self.window()
@@ -35,6 +35,9 @@ class Landing(QtWidgets.QWidget):
 
 
 	def window(self):
+
+		Register_Values = Components.Register_Values.Register_Values()  # Object of Class Register Values
+		List_of_Registers = Components.List_of_Registers.List_of_Registers() # Object of Class List of Registers
 
 		splitter = QSplitter(Qt.Vertical);
 
@@ -52,15 +55,9 @@ class Landing(QtWidgets.QWidget):
 		for i in pins:
 			listWidget.addItem(i)
 
-		self.tableWidget = QTableWidget()
-		self.tableWidget.setRowCount(1)
-		self.tableWidget.setColumnCount(3)
 
-
-		self.tableWidget.setItem(0, 0, QTableWidgetItem("Name"))
-		self.tableWidget.setItem(0, 1, QTableWidgetItem("Address"))
-		self.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
-		self.tableWidget.resize(4,4)
+		self.tableWidget = Register_Values .getTable()
+		# listWidget = List_of_Registers.getListOfRegisters()
 
 		splitter.addWidget(listWidget)
 		splitter.addWidget(self.tableWidget)
@@ -68,19 +65,37 @@ class Landing(QtWidgets.QWidget):
 
 		horizontalLayout = QHBoxLayout()
 
+		simulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
+		simulatorTitle = QtWidgets.QLabel(self)
+		simulatorTitle.setText("ATMega328p")
+		simulatorTitle.setAlignment(Qt.AlignCenter)
+		simulatorTitle.setFont(simulatorFont)
+		simulatorTitle.setAlignment(Qt.AlignCenter)
 
-		imgLabel = QLabel(self)
-		pixmap = QPixmap('Resources/Images/atmega328p.png')
-		pixmap1 = pixmap.scaled(250, 400)
-		imgLabel.setPixmap(pixmap1)
-		imgLabel.setAlignment(Qt.AlignCenter)
-		imgLabel.setFrameStyle(QFrame.Box)
+		simulatorFrame = QFrame()
+		simulatorFrame.setStyleSheet("QWidget { background-color: grey }")
+		simulatorFrame.setLineWidth(3)
+		simulatorFrame.setMidLineWidth(3)
+		simulatorFrame.setFrameShape(QFrame.Panel)
+		simulatorFrame.setFixedSize(250, 450)
+		simulatorFrame.layout = QHBoxLayout()
+		simulatorFrame.layout.addWidget(simulatorTitle)
+		
+		simulatorFrame.setFrameShadow(simulatorFrame.Raised)
+		simulatorFrame.setLayout(simulatorFrame.layout)
 
+
+
+		rightFrame = QFrame()
+		rightFrame.setFrameShape(QFrame.StyledPanel)
+		rightFrame.layout = QHBoxLayout()
+		rightFrame.layout.addWidget(simulatorFrame)
+		rightFrame.setLayout(rightFrame.layout)
 
 
 		horizontalSplitter = QSplitter(Qt.Horizontal)
 		horizontalLayout.addWidget(splitter)
-		horizontalSplitter.addWidget(imgLabel)
+		horizontalSplitter.addWidget(rightFrame)
 		horizontalSplitter.setSizes([80,320])
 		horizontalSplitter.adjustSize()
 

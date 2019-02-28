@@ -11,9 +11,9 @@ Ruihao Zhou
 
 Kaustuv
 
-ssjohar
+Saheb Johar
 
-Aman
+Aman Maheshwari
 
 **Development Plan**
 
@@ -36,7 +36,11 @@ Aman
 
 ## Installation Direction
 
-Requires Python 2.7 to be installed on the computer.
+Run this command to install PyQt5
+
+```
+sudo apt-get install python3-pyqt5
+```
 
 ## Build and Run Directions
 
