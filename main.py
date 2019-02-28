@@ -4,8 +4,8 @@ import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QSplitter,QApplication, QHBoxLayout, QGroupBox,QFrame,QVBoxLayout,QScrollArea,QListWidget,  QMessageBox,QTableWidget,QTableWidgetItem
-from PyQt5.QtGui import QPainter, QPen
+from PyQt5.QtWidgets import QWidget,QLabel, QSplitter,QApplication, QHBoxLayout, QGroupBox,QFrame,QVBoxLayout,QScrollArea,QListWidget,  QMessageBox,QTableWidget,QTableWidgetItem
+from PyQt5.QtGui import QPainter, QPen , QPixmap
 from PyQt5.QtCore import Qt
 
 
@@ -69,12 +69,18 @@ class Landing(QtWidgets.QWidget):
 		horizontalLayout = QHBoxLayout()
 
 
-		rightFrame = QFrame()
-		rightFrame.setFrameShape(QFrame.StyledPanel)
+		imgLabel = QLabel(self)
+		pixmap = QPixmap('Resources/Images/atmega328p.png')
+		pixmap1 = pixmap.scaled(250, 400)
+		imgLabel.setPixmap(pixmap1)
+		imgLabel.setAlignment(Qt.AlignCenter)
+		imgLabel.setFrameStyle(QFrame.Box)
+
+
 
 		horizontalSplitter = QSplitter(Qt.Horizontal)
 		horizontalLayout.addWidget(splitter)
-		horizontalSplitter.addWidget(rightFrame)
+		horizontalSplitter.addWidget(imgLabel)
 		horizontalSplitter.setSizes([80,320])
 		horizontalSplitter.adjustSize()
 
@@ -90,6 +96,7 @@ class Landing(QtWidgets.QWidget):
 		Status = QtWidgets.QLabel(self)
 		Status.setText(self.getConnectionStatus())
 		Status.setFont(StatusFont)
+		Status.setStyleSheet('color : green')
 		Status.setAlignment(Qt.AlignCenter)
 
 		verticalLayout = QVBoxLayout()
@@ -175,7 +182,7 @@ class Landing(QtWidgets.QWidget):
         #
 		#
 		
-class myListWidget(QListWidget):
+class myListWidget(QListWidget):   # On Click Register name calls this function
 
 	def Clicked(self,item):
 		QMessageBox.information(self, "ListWidget", "You clicked: "+item.text())
