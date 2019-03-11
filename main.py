@@ -61,7 +61,7 @@ class Landing(QtWidgets.QWidget):
 		simulatorTitle.setAlignment(Qt.AlignCenter)
 
 		simulatorFrame = QFrame()
-		simulatorFrame.setStyleSheet("QWidget { background-color: grey }")
+		simulatorFrame.setStyleSheet("QWidget { background-color: silver }")
 		simulatorFrame.setLineWidth(3)
 		simulatorFrame.setMidLineWidth(3)
 		simulatorFrame.setFrameShape(QFrame.Panel)
