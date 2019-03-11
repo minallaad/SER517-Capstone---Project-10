@@ -29,3 +29,7 @@ class List_of_Registers(QListWidget):
     def getListOfRegisters(self):   # Returns Single Instance of Register List Widget
         return self.listWidget
 
+    def Clicked(self, item):  # On Click Register name calls this function
+        QMessageBox.information(self, "ListWidget", "You clicked: " + item.text())
+
+
