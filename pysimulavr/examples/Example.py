@@ -1,5 +1,6 @@
 import pysimulavr
 import SimulavrAdaptor
+import threading
 
 
 class XPin(pysimulavr.Pin):
@@ -16,6 +17,16 @@ class XPin(pysimulavr.Pin):
     def SetInState(self, pin):
         pysimulavr.Pin.SetInState(self, pin)
         print "%s='%s' (t=%dns)" % (self.name, pin.toChar(), sim.getCurrentTime())
+
+
+def callGdb(gdb):
+    t1 = pysimulavr.SystemClock.Instance()
+    t1.Add(gdb)
+    t1.Endless()
+
+
+def call():
+    print "hello"
 
 
 if __name__ == "__main__":
@@ -47,4 +58,18 @@ if __name__ == "__main__":
     print "EEPRom"
     print dev.eeprom.CTRL_IRQ
     sim.dmanStop()
+
+    #Open Simulavr in GDB mode in a different thread to listen at port 1212
+    gdb = pysimulavr.GdbServer(dev, 1212, 0, True)
+    gdb.TryConnectGdb()
+
+    thread1 = threading.Thread(target=callGdb(gdb))
+
+    thread = threading.Thread(target=call())
+    thread.start()
+    thread1.start()
+
+    thread.join()
+    thread1.join()
+
     del dev
