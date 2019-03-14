@@ -4,18 +4,19 @@ import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, \
-    QScrollArea, QListWidget, QMessageBox, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, QStackedLayout
 from PyQt5.QtGui import QPainter, QPen, QPixmap
 from PyQt5.QtCore import Qt
 
 import Components.Register_Values
 import Components.List_of_Registers
-
+import Components.stackedWidget
+import Components.ViewFactory
 
 class PIN_Diagram(QtWidgets.QWidget):
 
     rightFrame = None
+    stackedLayout = None
 
     def __init__(self):
         super(PIN_Diagram, self).__init__()
@@ -62,7 +63,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 # pinl_dict[i].setAlignment(Qt.AlignRight)
                 pinl_dict[i].setFixedSize(30, 30)
                 pinl_dict[i].setFont(pinFont)
-                pinl_dict[i].clicked.connect(self.Clicked)
+                pinl_dict[i].clicked.connect(lambda: self.Clicked(i))
                 leftPinFrame.layout.setSpacing(10)
                 leftPinFrame.layout.addWidget(pinl_dict[i])
 
@@ -84,7 +85,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 pinr_dict[i].setStyleSheet('color : dark grey')
                 pinr_dict[i].setFixedSize(30, 30)
                 pinr_dict[i].setFont(pinFont)
-                pinr_dict[i].clicked.connect(self.Clicked)
+                pinr_dict[i].clicked.connect(lambda: self.Clicked(i))
                 rightPinFrame.layout.setSpacing(10)
                 rightPinFrame.layout.addWidget(pinr_dict[i])
 
@@ -107,16 +108,16 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.setLayout(self.rightFrame.layout)
 
 
-
     def getPIN_Digram(self):
         return self.rightFrame
 
-    def Clicked(self, item):  # On Click Register name calls this function
-        QMessageBox.information(self, "ListWidget", "You clicked: " + item.text())
+    def Clicked(self, port):  # On Click opens up port circuit diagram
+        pinFrame = Components.ViewFactory.ViewFactory.getView('PD1')
+        Components.stackedWidget.stackWidget.addWidget(pinFrame)
+        Components.stackedWidget.stackWidget.incrementTopCount()
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Landing()
-    sys.exit(app.exec_())
+
+
+
 

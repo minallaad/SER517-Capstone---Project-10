@@ -10,21 +10,29 @@ class Register_Values():
     tableWidget = None
 
     def __init__(self):
-        if self.tableWidget == None:
-            self.tableWidget = QTableWidget()
-            self.tableWidget.setRowCount(1)
-            self.tableWidget.setColumnCount(3)
+        """ Virtually private constructor. """
+        super().__init__()
+        if Register_Values.tableWidget != None:
+            raise Exception("This class is a singleton!")
+        else:
+            Register_Values.tableWidget = QTableWidget()
+            Register_Values.tableWidget.setRowCount(1)
+            Register_Values.tableWidget.setColumnCount(3)
 
-            self.tableWidget.setItem(0, 0, QTableWidgetItem("Name"))
-            self.tableWidget.setItem(0, 1, QTableWidgetItem("Address"))
-            self.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
+            Register_Values.tableWidget.setItem(0, 0, QTableWidgetItem("Name"))
+            Register_Values.tableWidget.setItem(0, 1, QTableWidgetItem("Address"))
+            Register_Values.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
 
 
-    def getTable(self): # Return Single Instance of Register Value Table Widget
-        return self.tableWidget
+    @staticmethod
+    def getInstance():
+        """ Static access method. """
+        if Register_Values.tableWidget == None:
+            Register_Values()
+        return Register_Values.tableWidget
 
-    def addRegisterValues(self,name,address,value):   # Function to add Register details in Register Value Table
-        return self.List
+
+
 
 
 
