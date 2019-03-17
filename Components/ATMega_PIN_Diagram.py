@@ -27,9 +27,9 @@ class PIN_Diagram(QtWidgets.QWidget):
             simulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
             simulatorTitle = QtWidgets.QLabel(self)
             simulatorTitle.setText("ATMega328p")
+            simulatorTitle.setStyleSheet('color : white')
             simulatorTitle.setAlignment(Qt.AlignCenter)
             simulatorTitle.setFont(simulatorFont)
-            simulatorTitle.setAlignment(Qt.AlignCenter)
 
             simulatorFrame = QFrame()
             simulatorFrame.setStyleSheet("QWidget { background-color: silver }")
