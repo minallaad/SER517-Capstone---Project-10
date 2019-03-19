@@ -32,7 +32,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             simulatorTitle.setFont(simulatorFont)
 
             simulatorFrame = QFrame()
-            simulatorFrame.setStyleSheet("QWidget { background-color: silver }")
+            simulatorFrame.setStyleSheet("QWidget { background-color: black }")
             simulatorFrame.setLineWidth(3)
             simulatorFrame.setMidLineWidth(3)
             simulatorFrame.setFrameShape(QFrame.Panel)
@@ -60,10 +60,11 @@ class PIN_Diagram(QtWidgets.QWidget):
 
                 pinl_dict[i].setText(i)
                 pinl_dict[i].setStyleSheet('color : dark grey')
+                pinl_dict[i].setEnabled(False)
                 # pinl_dict[i].setAlignment(Qt.AlignRight)
                 pinl_dict[i].setFixedSize(30, 30)
                 pinl_dict[i].setFont(pinFont)
-                pinl_dict[i].clicked.connect(lambda: self.Clicked(i))
+                pinl_dict[i].clicked.connect(lambda state , x=i : self.Clicked(x))
                 leftPinFrame.layout.setSpacing(10)
                 leftPinFrame.layout.addWidget(pinl_dict[i])
 
@@ -83,9 +84,10 @@ class PIN_Diagram(QtWidgets.QWidget):
 
                 pinr_dict[i].setText(i)
                 pinr_dict[i].setStyleSheet('color : dark grey')
+                pinr_dict[i].setEnabled(False)
                 pinr_dict[i].setFixedSize(30, 30)
                 pinr_dict[i].setFont(pinFont)
-                pinr_dict[i].clicked.connect(lambda: self.Clicked(i))
+                pinr_dict[i].clicked.connect(lambda state , x = i : self.Clicked(x))
                 rightPinFrame.layout.setSpacing(10)
                 rightPinFrame.layout.addWidget(pinr_dict[i])
 
@@ -93,12 +95,9 @@ class PIN_Diagram(QtWidgets.QWidget):
             rightPinFrame.setLayout(rightPinFrame.layout)
 
             pinl_dict['PD0'].setStyleSheet('color : red')
-            pinl_dict['PD1'].setStyleSheet('color : red')
-            pinl_dict['PD2'].setStyleSheet('color : red')
-
-            pinr_dict['PC6'].setStyleSheet('color : green')
-            pinr_dict['PC5'].setStyleSheet('color : green')
-            pinr_dict['PC4'].setStyleSheet('color : green')
+            pinl_dict['PD0'].setEnabled(True)
+            pinl_dict['PD1'].setStyleSheet('color : green')
+            pinl_dict['PD1'].setEnabled(True)
 
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
@@ -112,7 +111,11 @@ class PIN_Diagram(QtWidgets.QWidget):
         return self.rightFrame
 
     def Clicked(self, port):  # On Click opens up port circuit diagram
-        pinFrame = Components.ViewFactory.ViewFactory.getView('PD1')
+        print(port)
+        Components.Register_Values.Register_Values.clearList()
+        Components.Register_Values.Register_Values.addRegister(port,"0X0b","0")
+        Components.Register_Values.Register_Values.addRegister("DDRx", "0X0a", "0")
+        pinFrame = Components.ViewFactory.ViewFactory.getView(port)
         Components.stackedWidget.stackWidget.addWidget(pinFrame)
         Components.stackedWidget.stackWidget.incrementTopCount()
 

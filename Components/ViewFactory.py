@@ -1,4 +1,7 @@
+import Components.Port_View.PD0_View
 import Components.Port_View.PD1_View
+import Components.Port_View.PD2_View
+
 
 class ViewFactory():
 
@@ -23,6 +26,6 @@ class ViewFactory():
     @staticmethod
     def getView(viewName):
         if(viewName == 'PD0'):
-            return Components.Port_View.PD0_View.PD0_View.getPD0ViewDiagram()
+            return Components.Port_View.PD0_View.PD0_View().getPD0ViewDiagram()
         elif viewName == 'PD1':
             return Components.Port_View.PD1_View.PD1_View().getPD1ViewDiagram()
