@@ -4,12 +4,23 @@ import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
+<<<<<<< HEAD
 from PyQt5.QtWidgets import QWidget,QLabel, QSplitter,QApplication, QHBoxLayout, QGroupBox,QFrame,QVBoxLayout,QScrollArea,QListWidget,  QMessageBox,QTableWidget,QTableWidgetItem
 from PyQt5.QtGui import QPainter, QPen , QPixmap
 from PyQt5.QtCore import Qt
 
 import Components.Register_Values
 import Components.List_of_Registers
+=======
+from PyQt5.QtWidgets import QWidget,QLabel, QSplitter,QApplication, QHBoxLayout, QStackedWidget,QFrame,QVBoxLayout,QScrollArea,QListWidget,  QMessageBox,QTableWidget,QTableWidgetItem
+from PyQt5.QtGui import QPainter, QPen , QPixmap
+from PyQt5.QtCore import Qt
+
+import Components.stackedWidget
+import Components.Register_Values
+import Components.List_of_Registers
+import Components.ATMega_PIN_Diagram
+>>>>>>> master
 
 
 class Landing(QtWidgets.QWidget): 
@@ -36,6 +47,7 @@ class Landing(QtWidgets.QWidget):
 
 	def window(self):
 
+<<<<<<< HEAD
 		Register_Values = Components.Register_Values.Register_Values()  # Object of Class Register Values
 		List_of_Registers = Components.List_of_Registers.List_of_Registers() # Object of Class List of Registers
 
@@ -49,10 +61,26 @@ class Landing(QtWidgets.QWidget):
 
 		splitter.addWidget(self.listWidget)
 		splitter.addWidget(self.tableWidget)
+=======
+		Register_Values = Components.Register_Values.Register_Values().getInstance()  # Object of Class Register Values
+		List_of_Registers = Components.List_of_Registers.List_of_Registers().getInstance() # Object of Class List of Registers
+
+		PIN_Diagram = Components.ATMega_PIN_Diagram.PIN_Diagram() # Object of Class PIN Diagram
+
+		stackWidget = Components.stackedWidget.stackWidget().getInstance();
+
+
+
+		splitter = QSplitter(Qt.Vertical);
+
+		splitter.addWidget(List_of_Registers)
+		splitter.addWidget(Register_Values)
+>>>>>>> master
 		splitter.setSizes([300,150])
 
 		horizontalLayout = QHBoxLayout()
 
+<<<<<<< HEAD
 		simulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
 		simulatorTitle = QtWidgets.QLabel(self)
 		simulatorTitle.setText("ATMega328p")
@@ -140,6 +168,16 @@ class Landing(QtWidgets.QWidget):
 		horizontalSplitter = QSplitter(Qt.Horizontal)
 		horizontalLayout.addWidget(splitter)
 		horizontalSplitter.addWidget(rightFrame)
+=======
+		rightFrame = PIN_Diagram.getPIN_Digram();
+
+		stackWidget.addWidget(rightFrame);
+		print(stackWidget.currentWidget())
+
+		horizontalSplitter = QSplitter(Qt.Horizontal)
+		horizontalLayout.addWidget(splitter)
+		horizontalSplitter.addWidget(stackWidget)
+>>>>>>> master
 		horizontalSplitter.setSizes([80,320])
 		horizontalSplitter.adjustSize()
 
@@ -168,9 +206,12 @@ class Landing(QtWidgets.QWidget):
 	def getConnectionStatus(self):  # Function returns status (Connected / Disconnected)
 		return "Connected to Simulavr"
 
+<<<<<<< HEAD
 	def Clicked(self,item):  # On Click Register name calls this function
 		QMessageBox.information(self, "ListWidget", "You clicked: "+item.text())
 
+=======
+>>>>>>> master
 
 		
 if __name__ == '__main__':
