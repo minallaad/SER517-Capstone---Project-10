@@ -25,9 +25,28 @@ def callGdb(gdb):
     t1.Endless()
 
 
-def call():
-    print "hello"
+def call(dev):
+    HOST = '127.0.0.1'
+    PORT = 7777
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind((HOST, PORT))
+    s.listen(5)
+    while 1:
+        connection, client = s.accept()
+        i = 0
+        while i < 32:
+            connection.send(b'Register - ')
+            connection.send(bytes(i))
+            connection.send(b'---->')
+            connection.send(bytes(getRegisterByAddress(dev, i)))
+            connection.send(b'\n')
+            i +=1
 
+        connection.close()
+
+def getRegisterByAddress(dev, addr):
+    v = dev.GetCoreReg(addr)
+    return v
 
 if __name__ == "__main__":
     proc = "atmega128"
@@ -65,7 +84,7 @@ if __name__ == "__main__":
 
     thread1 = threading.Thread(target=callGdb(gdb))
 
-    thread = threading.Thread(target=call())
+    thread = threading.Thread(target=call(gdb))
     thread.start()
     thread1.start()
 
