@@ -10,6 +10,7 @@ from PyQt5.QtCore import Qt
 
 import Components.Register_Values
 import Components.List_of_Registers
+import Components.ATMega_Block_Diagram
 import Components.stackedWidget
 import Components.ViewFactory
 
@@ -35,6 +36,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             simulatorFrame.setStyleSheet("QWidget { background-color: black }")
             simulatorFrame.setLineWidth(3)
             simulatorFrame.setMidLineWidth(3)
+            simulatorFrame.mousePressEvent = PIN_Diagram.microcontrollerClicked
             simulatorFrame.setFrameShape(QFrame.Panel)
             simulatorFrame.setFixedSize(250, 450)
             simulatorFrame.layout = QHBoxLayout()
@@ -64,7 +66,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 # pinl_dict[i].setAlignment(Qt.AlignRight)
                 pinl_dict[i].setFixedSize(30, 30)
                 pinl_dict[i].setFont(pinFont)
-                pinl_dict[i].clicked.connect(lambda state , x=i : self.Clicked(x))
+                pinl_dict[i].clicked.connect(lambda state , x=i : self.portClicked(x))
                 leftPinFrame.layout.setSpacing(10)
                 leftPinFrame.layout.addWidget(pinl_dict[i])
 
@@ -87,7 +89,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 pinr_dict[i].setEnabled(False)
                 pinr_dict[i].setFixedSize(30, 30)
                 pinr_dict[i].setFont(pinFont)
-                pinr_dict[i].clicked.connect(lambda state , x = i : self.Clicked(x))
+                pinr_dict[i].clicked.connect(lambda state , x = i : self.portClicked(x))
                 rightPinFrame.layout.setSpacing(10)
                 rightPinFrame.layout.addWidget(pinr_dict[i])
 
@@ -110,12 +112,21 @@ class PIN_Diagram(QtWidgets.QWidget):
     def getPIN_Digram(self):
         return self.rightFrame
 
-    def Clicked(self, port):  # On Click opens up port circuit diagram
+
+    def microcontrollerClicked(self):
+        blockDiagramFrame = Components.ATMega_Block_Diagram.Block_Diagram().getBlock_Digram()
+        Components.stackedWidget.stackWidget.addWidget(blockDiagramFrame)
+        Components.stackedWidget.stackWidget.incrementTopCount()
+
+
+
+    def portClicked(self, port):  # On Click opens up port circuit diagram
         print(port)
         Components.Register_Values.Register_Values.clearList()
         Components.Register_Values.Register_Values.addRegister(port,"0X0b","0")
         Components.Register_Values.Register_Values.addRegister("DDRx", "0X0a", "0")
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
+        print(type(pinFrame))
         Components.stackedWidget.stackWidget.addWidget(pinFrame)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
