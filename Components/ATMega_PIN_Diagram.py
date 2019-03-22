@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, QStackedLayout
@@ -41,6 +41,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             simulatorFrame.layout.addWidget(simulatorTitle)
 
             simulatorFrame.setFrameShadow(simulatorFrame.Raised)
+            simulatorFrame.mouseReleaseEvent = self.microcontrollerClicked
             simulatorFrame.setLayout(simulatorFrame.layout)
 
             pinFont = QtGui.QFont("Arial", 9, QtGui.QFont.Bold)
@@ -117,7 +118,17 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.incrementTopCount()
 
 
+    def microcontrollerClicked(self, event):
+        microcontrollerBlock = uic.loadUi("Components/microcontrollerBlock.ui")
+        microcontrollerBlock.microcontrollerBlockBack.clicked.connect(lambda: self.backClicked())
+        Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
+        Components.stackedWidget.stackWidget.incrementTopCount()
 
 
-
-
+    def backClicked(self):
+        top = Components.stackedWidget.stackWidget.top
+        print(top)
+        widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(top)
+        print(widgetToRemove)
+        Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
+        Components.stackedWidget.stackWidget.decrementTopCount()
