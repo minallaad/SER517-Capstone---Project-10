@@ -10,9 +10,11 @@ from PyQt5.QtCore import Qt
 
 import Components.Register_Values
 import Components.List_of_Registers
-import Components.ATMega_Block_Diagram
+# import Components.ATMega_Block_Diagram
 import Components.stackedWidget
 import Components.ViewFactory
+
+from Components import ATMega_Block_Diagram
 
 class PIN_Diagram(QtWidgets.QWidget):
 
@@ -114,8 +116,10 @@ class PIN_Diagram(QtWidgets.QWidget):
 
 
     def microcontrollerClicked(self):
-        blockDiagramFrame = Components.ATMega_Block_Diagram.Block_Diagram().getBlock_Digram()
-        Components.stackedWidget.stackWidget.addWidget(blockDiagramFrame)
+        microcontrollerBlock = QWidget()
+        blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
+        blockDiagramFrame.setupUi(microcontrollerBlock)
+        Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
 
