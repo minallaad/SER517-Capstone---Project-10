@@ -3,7 +3,6 @@
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QPainter, QPen
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, QStackedLayout
 from PyQt5.QtGui import QPainter, QPen, QPixmap
 from PyQt5.QtCore import Qt
@@ -13,8 +12,9 @@ import Components.List_of_Registers
 # import Components.ATMega_Block_Diagram
 import Components.stackedWidget
 import Components.ViewFactory
+import Components.ATMega_Block_Diagram
 
-from Components import ATMega_Block_Diagram
+# from Components import ATMega_Block_Diagram
 
 class PIN_Diagram(QtWidgets.QWidget):
 
@@ -117,9 +117,12 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     def microcontrollerClicked(self):
         microcontrollerBlock = QWidget()
-        blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
-        blockDiagramFrame.setupUi(microcontrollerBlock)
-        Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
+        # blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
+        # blockDiagramFrame.setupUi(microcontrollerBlock)
+        # Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
+        blockDiagramFrame = Components.ATMega_Block_Diagram.Ui_microcontrollerBlock().getInstance()
+        print(type(blockDiagramFrame))
+        Components.stackedWidget.stackWidget.addWidget(blockDiagramFrame)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
 
