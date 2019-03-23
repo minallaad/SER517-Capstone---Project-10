@@ -3,6 +3,8 @@
 from PyQt5.QtWidgets import  QMessageBox , QListWidget
 from PyQt5 import  QtCore
 
+import Components.Register_Values
+
 class List_of_Registers(QListWidget):
 
     pins = ['CORE.GPIOR2', 'PORTB.PORT', 'PORTB.PIN', 'PORTB.DDR', 'PORTB.B0-Out', 'IRQ.VECTOR0', 'EEPROM.EEDR',
@@ -33,8 +35,6 @@ class List_of_Registers(QListWidget):
             for i in self.pins:
                 List_of_Registers.listWidget.addItem(i)
 
-            print('here')
-            print(List_of_Registers)
             List_of_Registers.listWidget.itemClicked.connect(List_of_Registers.Clicked)
 
 
@@ -47,8 +47,9 @@ class List_of_Registers(QListWidget):
         return List_of_Registers.listWidget
 
 
-    def Clicked(self, item):  # On Click Register name calls this function
+    def Clicked(self):  # On Click Register name calls this function
         print('there')
-        # QMessageBox.information(self, "ListWidget", "You clicked: " )
+        Components.Register_Values.Register_Values.clearList()
+        Components.Register_Values.Register_Values.addRegister(self.text(), "0X0b", "0")
 
 
