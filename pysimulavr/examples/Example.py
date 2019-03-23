@@ -19,7 +19,10 @@ class XPin(pysimulavr.Pin):
         print "%s='%s' (t=%dns)" % (self.name, pin.toChar(), sim.getCurrentTime())
 
 
-def callGdb(gdb):
+def callGdb(dev):
+    #Open Simulavr in GDB mode in a different thread to listen at port 1212
+    gdb = pysimulavr.GdbServer(dev, 1212, 0, True)
+    gdb.TryConnectGdb()
     t1 = pysimulavr.SystemClock.Instance()
     t1.Add(gdb)
     t1.Endless()
@@ -34,6 +37,9 @@ def call(dev):
     while 1:
         connection, client = s.accept()
         i = 0
+	current_thread = dev.stack.m_ThreadList.GetCurrentThreadForGDB()
+    	thread = dev.stack.m_ThreadList.GetThreadFromGDB(current_thread)
+	registers = thread.registers
         while i < 32:
             connection.send(b'Register - ')
             connection.send(bytes(i))
@@ -78,13 +84,9 @@ if __name__ == "__main__":
     print dev.eeprom.CTRL_IRQ
     sim.dmanStop()
 
-    #Open Simulavr in GDB mode in a different thread to listen at port 1212
-    gdb = pysimulavr.GdbServer(dev, 1212, 0, True)
-    gdb.TryConnectGdb()
+    thread1 = threading.Thread(target=callGdb, args=[dev])
 
-    thread1 = threading.Thread(target=callGdb(gdb))
-
-    thread = threading.Thread(target=call(gdb))
+    thread = threading.Thread(target=call, args=[dev])
     thread.start()
     thread1.start()
 
