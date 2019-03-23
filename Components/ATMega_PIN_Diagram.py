@@ -4,7 +4,8 @@ import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, QStackedLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, \
+    QStackedLayout
 from PyQt5.QtGui import QPainter, QPen, QPixmap
 from PyQt5.QtCore import Qt
 
@@ -16,8 +17,8 @@ import Components.ViewFactory
 
 from Components import ATMega_Block_Diagram
 
-class PIN_Diagram(QtWidgets.QWidget):
 
+class PIN_Diagram(QtWidgets.QWidget):
     rightFrame = None
     stackedLayout = None
 
@@ -57,7 +58,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             leftPinFrame.layout.addStretch()
 
             pinl_dict = {}
-            #.itemClicked.connect(self.Clicked)
+            # .itemClicked.connect(self.Clicked)
 
             for i in pinsl:
                 pinl_dict[i] = QtWidgets.QPushButton(self)
@@ -68,7 +69,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 # pinl_dict[i].setAlignment(Qt.AlignRight)
                 pinl_dict[i].setFixedSize(30, 30)
                 pinl_dict[i].setFont(pinFont)
-                pinl_dict[i].clicked.connect(lambda state , x=i : self.portClicked(x))
+                pinl_dict[i].clicked.connect(lambda state, x=i: self.portClicked(x))
                 leftPinFrame.layout.setSpacing(10)
                 leftPinFrame.layout.addWidget(pinl_dict[i])
 
@@ -91,7 +92,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 pinr_dict[i].setEnabled(False)
                 pinr_dict[i].setFixedSize(30, 30)
                 pinr_dict[i].setFont(pinFont)
-                pinr_dict[i].clicked.connect(lambda state , x = i : self.portClicked(x))
+                pinr_dict[i].clicked.connect(lambda state, x=i: self.portClicked(x))
                 rightPinFrame.layout.setSpacing(10)
                 rightPinFrame.layout.addWidget(pinr_dict[i])
 
@@ -110,32 +111,45 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.layout.addWidget(rightPinFrame)
             self.rightFrame.setLayout(self.rightFrame.layout)
 
-
     def getPIN_Digram(self):
         return self.rightFrame
 
-
     def microcontrollerClicked(self):
-        microcontrollerBlock = QWidget()
+        microcontrollerBlock = QFrame()
         blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
         blockDiagramFrame.setupUi(microcontrollerBlock)
+        blockDiagramFrame.eepromFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram, "EEPROM")
+        blockDiagramFrame.gpiorFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "GPIOR")
+        blockDiagramFrame.flashFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "FLASH")
+        blockDiagramFrame.tc0Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "TIMER0")
+        blockDiagramFrame.tc1Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "TIMER1")
+        blockDiagramFrame.tc2Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "TIMER2")
+        blockDiagramFrame.watchdogFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "WATCHDOG")
+        blockDiagramFrame.spiFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "SPI")
+        blockDiagramFrame.usartFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
+                                                                                                    "UART0")
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
         Components.stackedWidget.stackWidget.incrementTopCount()
-
-
 
     def portClicked(self, port):  # On Click opens up port circuit diagram
         print(port)
         Components.Register_Values.Register_Values.clearList()
-        Components.Register_Values.Register_Values.addRegister(port,"0X0b","0")
+        Components.Register_Values.Register_Values.addRegister(port, "0X0b", "0")
         Components.Register_Values.Register_Values.addRegister("DDRx", "0X0a", "0")
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
         print(type(pinFrame))
         Components.stackedWidget.stackWidget.addWidget(pinFrame)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
-
-
-
-
+    def blockComponentClicked(self, component):
+        print(component)
+        Components.Register_Values.Register_Values.clearList()
+        Components.Register_Values.Register_Values.addRegister(component, "0X0b", "0")
 
