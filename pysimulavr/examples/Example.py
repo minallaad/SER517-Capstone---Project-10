@@ -1,7 +1,8 @@
 import pysimulavr
 import SimulavrAdaptor
-import threading
-
+import socket
+import sys
+from multiprocessing import Process
 
 class XPin(pysimulavr.Pin):
 
@@ -19,10 +20,15 @@ class XPin(pysimulavr.Pin):
         print "%s='%s' (t=%dns)" % (self.name, pin.toChar(), sim.getCurrentTime())
 
 
-def callGdb(gdb):
+'''def callGdb(dev1):
+
+    gdb = pysimulavr.GdbServer(dev1, 1212, 0, True)
+    gdb.TryConnectGdb()
     t1 = pysimulavr.SystemClock.Instance()
+    t1.AddAsyncMember(dev1)
     t1.Add(gdb)
     t1.Endless()
+    print "Here"'''
 
 
 def call(dev):
@@ -34,14 +40,16 @@ def call(dev):
     while 1:
         connection, client = s.accept()
         i = 0
-        while i < 32:
-            connection.send(b'Register - ')
-            connection.send(bytes(i))
-            connection.send(b'---->')
-            connection.send(bytes(getRegisterByAddress(dev, i)))
-            connection.send(b'\n')
-            i +=1
-
+        # while i < 32:
+        #     connection.send(b'Register - ')
+        #     connection.send(bytes(i))
+        #     connection.send(b'---->')
+        #     connection.send(bytes(getRegisterByAddress(dev, i)))
+        #     connection.send(b'\n')
+        #     i +=1
+        connection.send(bytes(dev.getRWMem(0x1)))
+        connection.send(bytes(dev.getRWMem(0x50)))
+        connection.send(bytes(dev.getRWMem(0x6)))
         connection.close()
 
 def getRegisterByAddress(dev, addr):
@@ -55,6 +63,9 @@ if __name__ == "__main__":
     sim = SimulavrAdaptor.SimulavrAdapter()
     sim.dmanSingleDeviceApplication()
     dev = sim.loadDevice(proc, elffile)
+
+    Process(target=sim.runGDB, args=[dev]).start()
+    Process(target=call, args=[dev]).start()
 
     a0 = XPin(dev, "A0")
     a1 = XPin(dev, "A1", "H")
@@ -76,19 +87,18 @@ if __name__ == "__main__":
     print "value 'port_val'=0x%x" % sim.getWordByName(dev, "port_val")
     print "EEPRom"
     print dev.eeprom.CTRL_IRQ
+    print "Mem total size"
+    print dev.GetMemTotalSize()
+    print "Mem io size"
+    print dev.GetMemIOSize()
+    print "Register Size"
+    print dev.GetMemRegisterSize()
+    print "RWMemory"
+    mem = [0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B]
+    mem += [0x35, 0x36, 0x37, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x40]
+    mem += [0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x4A]
+    mem += [0x4A, 0x4B, 0x4C, 0x4D, 0x4E, 0x50, 0x53, 0x54, 0x55]
+    for memory in mem:
+        print dev.data.GetSymbolAtAddress(memory) + '-' + str(dev.getRWMem(memory))
     sim.dmanStop()
 
-    #Open Simulavr in GDB mode in a different thread to listen at port 1212
-    gdb = pysimulavr.GdbServer(dev, 1212, 0, True)
-    gdb.TryConnectGdb()
-
-    thread1 = threading.Thread(target=callGdb(gdb))
-
-    thread = threading.Thread(target=call(gdb))
-    thread.start()
-    thread1.start()
-
-    thread.join()
-    thread1.join()
-
-    del dev
