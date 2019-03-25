@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1553019691 source:/home/doug/simadc/main.c
+	"_hw5/led.h"
+	"_hw5/uart.h"
+	"_hw5/delay.h"
+	"temp.h"
+
+1518811541 /home/doug/simadc/_hw5/led.h
+
+1518811541 /home/doug/simadc/_hw5/uart.h
+
+1518811541 /home/doug/simadc/_hw5/delay.h
+
+1518807460 /home/doug/simadc/temp.h
+
+1553019620 source:/home/doug/simadc/temp.c
+
