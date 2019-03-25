@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1518812282 source:/home/doug/hw5/_hw5/led.c
+	"delay.h"
+
+1518217047 source:/home/doug/hw5/_hw5/serial.c
+	"serial.h"
+	<avr/interrupt.h>
+
+1481115385 /home/doug/hw5/_hw5/serial.h
+	<stdint.h>
+	<avr/io.h>
+	<avr/pgmspace.h>
+
+1518724924 source:/home/doug/hw5/_hw5/temp.c
+	<avr/io.h>
+
+1518811700 source:/home/doug/hw5/_hw5/uart.c
+	"serial.h"
+
+1518811700 source:/home/doug/hw5/_hw5/delay.c
+
+1518811541 /home/doug/hw5/_hw5/delay.h
+
+1518811700 source:/media/sf_Share/HW5/_hw5/delay.c
+
+1518812282 source:/media/sf_Share/HW5/_hw5/led.c
+	"delay.h"
+
+1518811541 /media/sf_Share/HW5/_hw5/delay.h
+
+1518217047 source:/media/sf_Share/HW5/_hw5/serial.c
+	"serial.h"
+	<avr/interrupt.h>
+
+1481115385 /media/sf_Share/HW5/_hw5/serial.h
+	<stdint.h>
+	<avr/io.h>
+	<avr/pgmspace.h>
+
