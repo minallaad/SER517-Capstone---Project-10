@@ -71,6 +71,11 @@ class Landing(QtWidgets.QWidget):
 		Title.setText("ATMega328p Simulator")
 		Title.setFont(titleFont)
 		Title.setAlignment(Qt.AlignCenter)
+
+		backButton = QtWidgets.QPushButton("Back")
+		backButton.clicked.connect(lambda : self.backClicked())
+
+
 		horizontalLayout.addWidget(horizontalSplitter)
 
 
@@ -84,6 +89,7 @@ class Landing(QtWidgets.QWidget):
 		verticalLayout = QVBoxLayout()
 		verticalLayout.addWidget(Title)
 		verticalLayout.addWidget(Status)
+		verticalLayout.addWidget(backButton, 0, Qt.AlignRight)
 		verticalLayout.addLayout(horizontalLayout);
 
 		self.setLayout(verticalLayout)
@@ -91,8 +97,16 @@ class Landing(QtWidgets.QWidget):
 	def getConnectionStatus(self):  # Function returns status (Connected / Disconnected)
 		return "Connected to Simulavr"
 
+	def backClicked(self):
+		topWidget = Components.stackedWidget.stackWidget.top
+		if topWidget != 0 :
+			print("TOP")
+			widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(topWidget)
+			Components.stackedWidget.stackWidget.decrementTopCount()
+			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
-		
+
+
 if __name__ == '__main__':
     
     app = QApplication(sys.argv)
