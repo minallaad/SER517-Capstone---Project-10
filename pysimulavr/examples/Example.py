@@ -1,6 +1,6 @@
 import pysimulavr
 import SimulavrAdaptor
-import threading
+import sys
 
 
 class XPin(pysimulavr.Pin):
@@ -37,9 +37,9 @@ def call(dev):
     while 1:
         connection, client = s.accept()
         i = 0
-	current_thread = dev.stack.m_ThreadList.GetCurrentThreadForGDB()
-    	thread = dev.stack.m_ThreadList.GetThreadFromGDB(current_thread)
-	registers = thread.registers
+        current_thread = dev.stack.m_ThreadList.GetCurrentThreadForGDB()
+        thread = dev.stack.m_ThreadList.GetThreadFromGDB(current_thread)
+        registers = thread.registers
         while i < 32:
             connection.send(b'Register - ')
             connection.send(bytes(i))
@@ -50,47 +50,24 @@ def call(dev):
 
         connection.close()
 
+
 def getRegisterByAddress(dev, addr):
     v = dev.GetCoreReg(addr)
     return v
 
+
 if __name__ == "__main__":
-    proc = "atmega128"
-    elffile = "example_io.elf"
+
+    proc = sys.argv[1]
+    elffile = sys.argv[2]
 
     sim = SimulavrAdaptor.SimulavrAdapter()
-    sim.dmanSingleDeviceApplication()
     dev = sim.loadDevice(proc, elffile)
 
     a0 = XPin(dev, "A0")
     a1 = XPin(dev, "A1", "H")
     a7 = XPin(dev, "A7", "H")
 
-    sim.dmanStart()
-    print "simulation start: (t=%dns)" % sim.getCurrentTime()
-    sim.doRun(sim.getCurrentTime() + 7000000)
-    a1.SetPin("L")
-    sim.doRun(sim.getCurrentTime() + 5000000)
-    a7.SetPin("L")
-    print sim.getAllRegisteredTraceValues()
-    sim.doRun(sim.getCurrentTime() + 2000000)
-    a1.SetPin("H")
-    sim.doRun(sim.getCurrentTime() + 1000000)
-    print "simulation end: (t=%dns)" % sim.getCurrentTime()
-    print dev.PC
-    print "value 'timer2_ticks'=%d" % sim.getWordByName(dev, "timer2_ticks")
-    print "value 'port_val'=0x%x" % sim.getWordByName(dev, "port_val")
-    print "EEPRom"
-    print dev.eeprom.CTRL_IRQ
-    sim.dmanStop()
+    while True:
 
-    thread1 = threading.Thread(target=callGdb, args=[dev])
-
-    thread = threading.Thread(target=call, args=[dev])
-    thread.start()
-    thread1.start()
-
-    thread.join()
-    thread1.join()
-
-    del dev
+        sim.doStep()

@@ -1,7 +1,7 @@
 import pysimulavr
 
 class SimulavrAdapter(object):
-    DEFAULT_CLOCK_SETTING = 250  # 250ns or 4MHz
+    DEFAULT_CLOCK_SETTING = 63
 
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
@@ -10,6 +10,9 @@ class SimulavrAdapter(object):
         dev.Load(e)
         dev.SetClockFreq(self.DEFAULT_CLOCK_SETTING)
         self.__sc.Add(dev)
+        gdb = pysimulavr.GdbServer(dev, 1212, 0, True)
+        self.__gdb = gdb
+        self.__sc.Add(gdb)
         return dev
 
     def doRun(self, n):
