@@ -1,6 +1,8 @@
 import Components.Port_View.PD0_View
 import Components.Port_View.PD1_View
 import Components.Port_View.PD2_View
+from Components import WatchDogTimer
+from Components import  SPI
 
 
 class ViewFactory():
@@ -29,3 +31,10 @@ class ViewFactory():
             return Components.Port_View.PD0_View.PD0_View().getPD0ViewDiagram()
         elif viewName == 'PD1':
             return Components.Port_View.PD1_View.PD1_View().getPD1ViewDiagram()
+        elif viewName == 'WATCHDOG':
+            return WatchDogTimer.Ui_watchDogFrame()
+        elif viewName == 'SPI':
+            return SPI.Ui_SPIFrame()
+        else:
+            return None
+

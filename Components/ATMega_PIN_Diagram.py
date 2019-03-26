@@ -16,6 +16,8 @@ import Components.ViewFactory
 import Components.ATMega_Block_Diagram
 
 from Components import ATMega_Block_Diagram
+from Components import WatchDogTimer
+from Components import  SPI
 
 
 class PIN_Diagram(QtWidgets.QWidget):
@@ -115,6 +117,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         return self.rightFrame
 
     def microcontrollerClicked(self):
+        print("micro")
         microcontrollerBlock = QFrame()
         blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
         blockDiagramFrame.setupUi(microcontrollerBlock)
@@ -136,6 +139,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         blockDiagramFrame.usartFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "UART0")
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
+        Components.stackedWidget.stackWidget.incrementTopCount()
 
     def portClicked(self, port):  # On Click opens up port circuit diagram
         print(port)
@@ -149,6 +153,18 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     def blockComponentClicked(self, component):
         print(component)
+        frame = Components.ViewFactory.ViewFactory.getView(component)
+        print(frame)
+
+        if frame != None:
+            block = QFrame()
+            frame.setupUi(block)
+            Components.stackedWidget.stackWidget.addWidget(block)
+            Components.stackedWidget.stackWidget.incrementTopCount()
+
         Components.Register_Values.Register_Values.clearList()
         Components.Register_Values.Register_Values.addRegister(component, "0X0b", "0")
+
+
+
 
