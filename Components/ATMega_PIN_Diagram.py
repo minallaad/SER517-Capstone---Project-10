@@ -3,9 +3,8 @@
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QPainter, QPen
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, \
-    QStackedLayout
+
+from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, QStackedLayout
 from PyQt5.QtGui import QPainter, QPen, QPixmap
 from PyQt5.QtCore import Qt
 
@@ -14,8 +13,11 @@ import Components.List_of_Registers
 # import Components.ATMega_Block_Diagram
 import Components.stackedWidget
 import Components.ViewFactory
+import Components.ATMega_Block_Diagram
 
 from Components import ATMega_Block_Diagram
+from Components import WatchDogTimer
+from Components import  SPI
 
 
 class PIN_Diagram(QtWidgets.QWidget):
@@ -115,6 +117,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         return self.rightFrame
 
     def microcontrollerClicked(self):
+        print("micro")
         microcontrollerBlock = QFrame()
         blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
         blockDiagramFrame.setupUi(microcontrollerBlock)
@@ -150,6 +153,18 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     def blockComponentClicked(self, component):
         print(component)
+        frame = Components.ViewFactory.ViewFactory.getView(component)
+        print(frame)
+
+        if frame != None:
+            block = QFrame()
+            frame.setupUi(block)
+            Components.stackedWidget.stackWidget.addWidget(block)
+            Components.stackedWidget.stackWidget.incrementTopCount()
+
         Components.Register_Values.Register_Values.clearList()
         Components.Register_Values.Register_Values.addRegister(component, "0X0b", "0")
+
+
+
 

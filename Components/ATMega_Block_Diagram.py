@@ -7,6 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QLabel, QSplitter, QApplication, QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, QStackedLayout
+
 
 class Ui_microcontrollerBlock(object):
     def setupUi(self, microcontrollerBlock):
@@ -141,4 +144,5 @@ class Ui_microcontrollerBlock(object):
         self.spiLabel.setText(_translate("microcontrollerBlock", "SPI 0            (8-bit)"))
         self.tc1Label.setText(_translate("microcontrollerBlock", "TC 1            (8-bit)"))
         self.eepromLabel.setText(_translate("microcontrollerBlock", "EEPROM"))
+
 

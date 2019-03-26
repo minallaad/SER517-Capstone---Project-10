@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="SPI">
+    <file>Images/SPI.png</file>
+  </qresource>
+</RCC>
