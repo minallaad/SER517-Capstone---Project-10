@@ -15,6 +15,15 @@ class SimulavrAdapter(object):
         self.__sc.Add(gdb)
         return dev
 
+    def runProgram(self, ui):
+
+        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Release/simadc.elf")
+
+        while True:
+            ui.setLedColor(dev.getRWMem(0x25) & 2, dev.getRWMem(0x24) & 2)
+            # print(dev.getRWMem(0x25), dev.getRWMem(0x24))
+            self.doStep()
+
     def doRun(self, n):
         ct = self.__sc.GetCurrentTime
         while ct() < n:
