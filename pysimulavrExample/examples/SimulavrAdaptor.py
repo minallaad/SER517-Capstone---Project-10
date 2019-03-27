@@ -3,6 +3,9 @@ import pysimulavr
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
 
+    def __init__(self):
+        self.mem = {0X23: "PINB", 0X24: 'DDRB', 0X25: 'PORTB'}
+
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
         self.__sc.ResetClock()
@@ -14,6 +17,13 @@ class SimulavrAdapter(object):
         self.__gdb = gdb
         self.__sc.Add(gdb)
         return dev
+
+    def runProgram(self, ui):
+        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Release/simadc.elf")
+        while True:
+            values = self.getMemoryValue(dev)
+            ui.updateUI(values)
+            self.doStep()
 
     def doRun(self, n):
         ct = self.__sc.GetCurrentTime
@@ -64,4 +74,10 @@ class SimulavrAdapter(object):
         addr += 1
         v = (dev.getRWMem(addr) << 8) + v
         return v
+
+    def getMemoryValue(self, dev):
+        values = {}
+        for key, value in self.mem.items():
+            values[value] = dev.getRWMem(key) & 2
+        return values
 

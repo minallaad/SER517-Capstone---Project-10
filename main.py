@@ -19,8 +19,8 @@ class Landing(QtWidgets.QWidget):
 
 
 	def __init__(self):
-	    super(Landing, self).__init__()
-	    self.initUI()
+		super(Landing, self).__init__()
+		self.initUI()
 
 		self.Register_Values = None
 		self.List_of_Registers = None
@@ -29,8 +29,8 @@ class Landing(QtWidgets.QWidget):
 
 		self.stackWidget = None
 		self.initUI()
-	    
-	    
+
+
 	def initUI(self):
 		self.title = "ATMega Simulator"
 		self.top = 100
@@ -64,28 +64,28 @@ class Landing(QtWidgets.QWidget):
 
 		self.horizontalLayout = QHBoxLayout()
 
-		self.rightFrame = PIN_Diagram.getPIN_Digram()
+		self.rightFrame = self.PIN_Diagram.getPIN_Digram()
 
 		self.stackWidget.addWidget(self.rightFrame)
 		print(self.stackWidget.currentWidget())
 
 		self.horizontalSplitter = QSplitter(Qt.Horizontal)
 		self.horizontalLayout.addWidget(splitter)
-		self.horizontalSplitter.addWidget(stackWidget)
+		self.horizontalSplitter.addWidget(self.stackWidget)
 		self.horizontalSplitter.setSizes([80,320])
 		self.horizontalSplitter.adjustSize()
 
 		self.titleFont =  QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
 		self.Title = QtWidgets.QLabel(self)
 		self.Title.setText("ATMega328p Simulator")
-		self.Title.setFont(titleFont)
+		self.Title.setFont(self.titleFont)
 		self.Title.setAlignment(Qt.AlignCenter)
 
 		self.backButton = QtWidgets.QPushButton("Back")
 		self.backButton.clicked.connect(lambda : self.backClicked())
 
 
-		self.horizontalLayout.addWidget(horizontalSplitter)
+		self.horizontalLayout.addWidget(self.horizontalSplitter)
 
 
 		self.StatusFont =  QtGui.QFont("Helvetica", 10, QtGui.QFont.Bold)
@@ -115,11 +115,9 @@ class Landing(QtWidgets.QWidget):
 			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
 	def updateUI(self, valueMap):
-
 		self.valueMap = valueMap
-
 		for key, value in valueMap.items():
-
+			#iterate or switch case here for different ports/poins/registers
 			if key == 'PORTB':
 				self.PIN_Diagram.setPinStatus("PD0", value)
 
@@ -134,8 +132,8 @@ class threadExample(QThread):
 		self.sim.runProgram(self.ui)
 
 if __name__ == '__main__':
-    
-    app = QApplication(sys.argv)
+
+	app = QApplication(sys.argv)
 	obj = Landing()
 	sim = SimulavrAdaptor.SimulavrAdapter()
 	thread = threadExample(obj, sim)
