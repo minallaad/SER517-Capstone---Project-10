@@ -3,6 +3,9 @@ import pysimulavr
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
 
+    def __init__(self):
+        self.mem = {0X23: "PINB", 0X24: 'DDRB', 0X25: 'PORTB'}
+
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
         self.__sc.ResetClock()
@@ -20,8 +23,12 @@ class SimulavrAdapter(object):
         dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Release/simadc.elf")
 
         while True:
-            ui.setLedColor(dev.getRWMem(0x25) & 2, dev.getRWMem(0x24) & 2)
+            #ui.setLedColor(dev.getRWMem(0x25) & 2, dev.getRWMem(0x24) & 2)
             # print(dev.getRWMem(0x25), dev.getRWMem(0x24))
+            values = self.getMemoryValue(dev)
+            ui.updateUI(values)
+            # for key, value in values:
+
             self.doStep()
 
     def doRun(self, n):
@@ -73,4 +80,10 @@ class SimulavrAdapter(object):
         addr += 1
         v = (dev.getRWMem(addr) << 8) + v
         return v
+
+    def getMemoryValue(self, dev):
+        values = {}
+        for key, value in self.mem.items():
+            values[value] = dev.getRWMem(key) & 2
+        return values
 

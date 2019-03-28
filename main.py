@@ -24,6 +24,12 @@ class Landing(QtWidgets.QWidget):
 		super(Landing, self).__init__()
 		self.portBValue = -1
 		self.ddrbValue = -1
+		self.Register_Values = None
+		self.List_of_Registers = None
+
+		self.PIN_Diagram = None
+
+		self.stackWidget = None
 		self.initUI()
 
 
@@ -70,31 +76,31 @@ class Landing(QtWidgets.QWidget):
 
 	def window(self):
 
-		Register_Values = Components.Register_Values.Register_Values().getInstance()  # Object of Class Register Values
-		List_of_Registers = Components.List_of_Registers.List_of_Registers().getInstance() # Object of Class List of Registers
+		self.Register_Values = Components.Register_Values.Register_Values().getInstance()  # Object of Class Register Values
+		self.List_of_Registers = Components.List_of_Registers.List_of_Registers().getInstance() # Object of Class List of Registers
 
-		PIN_Diagram = Components.ATMega_PIN_Diagram.PIN_Diagram() # Object of Class PIN Diagram
+		self.PIN_Diagram = Components.ATMega_PIN_Diagram.PIN_Diagram() # Object of Class PIN Diagram
 
-		stackWidget = Components.stackedWidget.stackWidget().getInstance()
+		self.stackWidget = Components.stackedWidget.stackWidget().getInstance()
 
 
 
 		splitter = QSplitter(Qt.Vertical)
 
-		splitter.addWidget(List_of_Registers)
-		splitter.addWidget(Register_Values)
+		splitter.addWidget(self.List_of_Registers)
+		splitter.addWidget(self.Register_Values)
 		splitter.setSizes([300,150])
 
 		horizontalLayout = QHBoxLayout()
 
-		rightFrame = PIN_Diagram.getPIN_Digram()
+		rightFrame = self.PIN_Diagram.getPIN_Digram()
 
-		stackWidget.addWidget(rightFrame)
-		print(stackWidget.currentWidget())
+		self.stackWidget.addWidget(rightFrame)
+		print(self.stackWidget.currentWidget())
 
 		horizontalSplitter = QSplitter(Qt.Horizontal)
 		horizontalLayout.addWidget(splitter)
-		horizontalSplitter.addWidget(stackWidget)
+		horizontalSplitter.addWidget(self.stackWidget)
 		horizontalSplitter.setSizes([80,320])
 		horizontalSplitter.adjustSize()
 
@@ -137,6 +143,13 @@ class Landing(QtWidgets.QWidget):
 			Components.stackedWidget.stackWidget.decrementTopCount()
 			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
+	def updateUI(self, valueMap):
+		self.valueMap = valueMap
+
+		for key, value in valueMap.items():
+
+			if key == 'PORTB':
+				self.PIN_Diagram.setPinStatus("PD0", value)
 
 
 class threadExample(QThread):
