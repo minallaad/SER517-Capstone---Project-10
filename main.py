@@ -20,7 +20,7 @@ class Landing(QtWidgets.QWidget):
 
 	def __init__(self):
 		super(Landing, self).__init__()
-		self.initUI()
+		# self.initUI()
 
 		self.Register_Values = None
 		self.List_of_Registers = None

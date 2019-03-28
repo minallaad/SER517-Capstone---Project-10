@@ -19,7 +19,7 @@ class SimulavrAdapter(object):
         return dev
 
     def runProgram(self, ui):
-        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Release/simadc.elf")
+        dev = self.loadDevice("atmega328", "/home/minal/Downloads/simadoc/bin/Release/simadc.elf")
         while True:
             values = self.getMemoryValue(dev)
             ui.updateUI(values)
