@@ -124,19 +124,19 @@ class PIN_Diagram(QtWidgets.QWidget):
         print(value)
         if value != 0:
             if port in PIN_Diagram.pinl_dict:
-                # PIN_Diagram.pinl_dict[port].setStyleSheet('color : green')
-                PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 9, QtGui.QFont.ExtraBold))
+                PIN_Diagram.pinl_dict[port].setStyleSheet('color : green')
+                # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 9, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
-                # PIN_Diagram.pinr_dict[port].setStyleSheet('color : green')
-                PIN_Diagram.pinr_dict[port].setEnabled(True)
+                PIN_Diagram.pinr_dict[port].setStyleSheet('color : green')
+                # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
         else:
             if port in PIN_Diagram.pinl_dict:
-                # PIN_Diagram.pinl_dict[port].setStyleSheet('color : red')
-                PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 5, QtGui.QFont.ExtraBold))
+                PIN_Diagram.pinl_dict[port].setStyleSheet('color : red')
+                # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 5, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
-                # PIN_Diagram.pinr_dict[port].setStyleSheet('color : red')
-                PIN_Diagram.pinr_dict[port].setEnabled(True)
+                PIN_Diagram.pinr_dict[port].setStyleSheet('color : red')
+                # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
     def microcontrollerClicked(self):
         print("micro")

@@ -13,6 +13,7 @@ import Components.stackedWidget
 import Components.Register_Values
 import Components.List_of_Registers
 import Components.ATMega_PIN_Diagram
+import Components.Globalmap
 
 
 class Landing(QtWidgets.QWidget): 
@@ -116,6 +117,7 @@ class Landing(QtWidgets.QWidget):
 
 	def updateUI(self, valueMap):
 		self.valueMap = valueMap
+		Components.Globalmap.Map.setGlobalMap(valueMap)
 		for key, value in valueMap.items():
 			#iterate or switch case here for different ports/poins/registers
 			if key == 'PORTB':

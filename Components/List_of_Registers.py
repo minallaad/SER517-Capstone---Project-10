@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import  QMessageBox , QListWidget
 from PyQt5 import  QtCore
 
 import Components.Register_Values
+import Components.Globalmap
 
 class List_of_Registers(QListWidget):
 
@@ -49,7 +50,12 @@ class List_of_Registers(QListWidget):
 
     def Clicked(self):  # On Click Register name calls this function
         print('there')
+        value = Components.Globalmap.Map.getValue(self.text())
         Components.Register_Values.Register_Values.clearList()
-        Components.Register_Values.Register_Values.addRegister(self.text(), "0X0b", "0")
+
+        if value !=None:
+            Components.Register_Values.Register_Values.addRegister(self.text(), "0X0b", value)
+        else:
+            Components.Register_Values.Register_Values.addRegister(self.text(), "0X0b", "0")
 
 
