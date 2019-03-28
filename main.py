@@ -119,6 +119,7 @@ class Landing(QtWidgets.QWidget):
 		self.valueMap = valueMap
 		Components.Globalmap.Map.setGlobalMap(valueMap)
 		for key, value in valueMap.items():
+			# print(key,value)
 			#iterate or switch case here for different ports/poins/registers
 			if key == 'PORTB':
 				self.PIN_Diagram.setPinStatus("PD0", value)

@@ -10,14 +10,13 @@ from PyQt5.QtCore import Qt
 
 import Components.Register_Values
 import Components.List_of_Registers
-# import Components.ATMega_Block_Diagram
 import Components.stackedWidget
 import Components.ViewFactory
 import Components.ATMega_Block_Diagram
+import Components.Globalmap
 
 from Components import ATMega_Block_Diagram
-from Components import WatchDogTimer
-from Components import  SPI
+
 
 
 class PIN_Diagram(QtWidgets.QWidget):
@@ -166,8 +165,16 @@ class PIN_Diagram(QtWidgets.QWidget):
     def portClicked(self, port):  # On Click opens up port circuit diagram
         print(port)
         Components.Register_Values.Register_Values.clearList()
-        Components.Register_Values.Register_Values.addRegister(port, "0X0b", "0")
-        Components.Register_Values.Register_Values.addRegister("DDRx", "0X0a", "0")
+        pinValue = Components.Globalmap.Map.getValue(port)
+        ddrValue = Components.Globalmap.Map.getValue("DDR"+port[1])
+        if pinValue!=None:
+            Components.Register_Values.Register_Values.addRegister(port, "0X0b", pinValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(port, "0X0b", "0")
+        if ddrValue!=None:
+            Components.Register_Values.Register_Values.addRegister("DDR"+port[1], "0X0a", ddrValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister("DDR"+port[1], "0X0a", "0")
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
         print(type(pinFrame))
         Components.stackedWidget.stackWidget.addWidget(pinFrame)
