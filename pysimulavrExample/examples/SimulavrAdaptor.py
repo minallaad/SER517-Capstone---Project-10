@@ -4,7 +4,9 @@ class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
 
     def __init__(self):
-        self.mem = {0X23: "PINB", 0X24: 'DDRB', 0X25: 'PORTB'}
+        self.port_address_map = {0X2B: "PORTD", 0X28: 'PORTC', 0X23: 'PORTB'}
+        self.port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
+
 
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
@@ -19,7 +21,7 @@ class SimulavrAdapter(object):
         return dev
 
     def runProgram(self, ui):
-        dev = self.loadDevice("atmega328", "/home/minal/Downloads/simadoc/bin/Release/simadc.elf")
+        dev = self.loadDevice("atmega328", "/home/saheb/Downloads/simadc.elf")
         while True:
             values = self.getMemoryValue(dev)
             ui.updateUI(values)
@@ -77,7 +79,17 @@ class SimulavrAdapter(object):
 
     def getMemoryValue(self, dev):
         values = {}
-        for key, value in self.mem.items():
-            values[value] = dev.getRWMem(key) & 2
+        for key, value in self.port_address_map.items():
+
+            val = dev.getRWMem(key) & 2
+
+            #code to change if required
+            binVal = bin(val)[2:]
+            if len(binVal) < 7:
+                binVal = '0'*(7-len(binVal)) + binVal
+            #till here
+            for i in range(len(binVal)-1, -1, -1):
+                values[self.port_register_map[value] + str(len(binVal) - i - 1)] = binVal[i]
+
         return values
 

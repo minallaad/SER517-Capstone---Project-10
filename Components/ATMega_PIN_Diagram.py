@@ -119,9 +119,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     @staticmethod
     def setPinStatus(port, value):
-        print(port)
-        print(value)
-        if value != 0:
+        if value != "0":
             if port in PIN_Diagram.pinl_dict:
                 PIN_Diagram.pinl_dict[port].setStyleSheet('color : green')
                 # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 9, QtGui.QFont.ExtraBold))
