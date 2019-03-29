@@ -1,33 +1,28 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtGui import QPainter, QPen
-from PyQt5.QtCore import Qt, QThread
-from PyQt5.QtWidgets import QWidget,QLabel, QSplitter,QApplication, QHBoxLayout, QStackedWidget,QFrame,QVBoxLayout,QScrollArea,QListWidget,  QMessageBox,QTableWidget,QTableWidgetItem
-from PyQt5.QtGui import QPainter, QPen , QPixmap
-from PyQt5.QtCore import Qt
-from pysimulavrExample.examples import SimulavrAdaptor
 
-import Components.stackedWidget
-import Components.Register_Values
-import Components.List_of_Registers
+from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtCore import QThread
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QSplitter, QApplication, QHBoxLayout, QVBoxLayout
+
 import Components.ATMega_PIN_Diagram
 import Components.Globalmap
+import Components.List_of_Registers
+import Components.Register_Values
+import Components.stackedWidget
+from pysimulavrExample.examples import SimulavrAdaptor
 
 
-class Landing(QtWidgets.QWidget): 
+class Landing(QtWidgets.QWidget):
 
 
 	def __init__(self):
 		super(Landing, self).__init__()
-		# self.initUI()
-
 		self.Register_Values = None
 		self.List_of_Registers = None
-
 		self.PIN_Diagram = None
-
 		self.stackWidget = None
 		self.initUI()
 
@@ -41,10 +36,9 @@ class Landing(QtWidgets.QWidget):
 		self.setWindowTitle(self.title)
 		self.setStyleSheet("background-color: white")
 		self.window()
-		self.setGeometry(self.top ,self.left,self.width ,self.height)
+		self.setGeometry(self.top, self.left, self.width, self.height)
 
 		self.show()
-
 
 	def window(self):
 
@@ -53,15 +47,15 @@ class Landing(QtWidgets.QWidget):
 
 		self.PIN_Diagram = Components.ATMega_PIN_Diagram.PIN_Diagram() # Object of Class PIN Diagram
 
-		self.stackWidget = Components.stackedWidget.stackWidget().getInstance();
+		self.stackWidget = Components.stackedWidget.stackWidget().getInstance()
 
 
 
-		splitter = QSplitter(Qt.Vertical)
+		self.splitter = QSplitter(Qt.Vertical)
 
-		splitter.addWidget(self.List_of_Registers)
-		splitter.addWidget(self.Register_Values)
-		splitter.setSizes([300, 150])
+		self.splitter.addWidget(self.List_of_Registers)
+		self.splitter.addWidget(self.Register_Values)
+		self.splitter.setSizes([300,150])
 
 		self.horizontalLayout = QHBoxLayout()
 
@@ -71,7 +65,7 @@ class Landing(QtWidgets.QWidget):
 		print(self.stackWidget.currentWidget())
 
 		self.horizontalSplitter = QSplitter(Qt.Horizontal)
-		self.horizontalLayout.addWidget(splitter)
+		self.horizontalLayout.addWidget(self.splitter)
 		self.horizontalSplitter.addWidget(self.stackWidget)
 		self.horizontalSplitter.setSizes([80,320])
 		self.horizontalSplitter.adjustSize()
@@ -130,7 +124,6 @@ class threadExample(QThread):
 		self.sim.runProgram(self.ui)
 
 if __name__ == '__main__':
-
 	app = QApplication(sys.argv)
 	obj = Landing()
 	sim = SimulavrAdaptor.SimulavrAdapter()

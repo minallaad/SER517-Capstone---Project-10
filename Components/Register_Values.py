@@ -40,11 +40,9 @@ class Register_Values():
     def updateTable():
         i = 0
         j = 0
-        print(len(Register_Values.List))
         Register_Values.tableWidget.setRowCount(len(Register_Values.List)+1)
 
         while( i<len(Register_Values.List) ):
-            print(type(Register_Values.List[0]))
             j = 0
             Register_Values.tableWidget.setItem(i+1, j, QTableWidgetItem(str(Register_Values.List[i].name)))
             j = j+1
@@ -57,11 +55,7 @@ class Register_Values():
 
     @staticmethod
     def addRegister(name,address,value):
-        print(name,address,value)
         rowObj =row(name,address,value)
-        print(rowObj.name)
-        print(rowObj.address)
-        print(rowObj.value)
         Register_Values.List.append(rowObj)
         Register_Values.updateTable()
 
