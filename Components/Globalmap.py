@@ -9,6 +9,8 @@ class Map():    # Used to switch between multiple layout
 
 
     map = None
+    port_address_map = {0X2B: "PORTD", 0X28: 'PORTC', 0X23: 'PORTB'}
+    port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
 
 
     def __init__(self):
@@ -38,7 +40,15 @@ class Map():    # Used to switch between multiple layout
     @staticmethod
     def setGlobalMap(valueMap):
         """ Static access method. """
-        Map.map = valueMap;
+        Map.map = valueMap
 
+    @staticmethod
+    def getPortAddressMap():
+        """ Static access method. """
+        return Map.port_address_map
 
+    @staticmethod
+    def getPortRegisterMap():
+        """ Static access method. """
+        return Map.port_register_map
 

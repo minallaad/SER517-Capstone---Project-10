@@ -1,12 +1,9 @@
 import pysimulavr
+import Components.Globalmap
+
 
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
-
-    def __init__(self):
-        self.port_address_map = {0X2B: "PORTD", 0X28: 'PORTC', 0X23: 'PORTB'}
-        self.port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
-
 
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
@@ -79,7 +76,7 @@ class SimulavrAdapter(object):
 
     def getMemoryValue(self, dev):
         values = {}
-        for key, value in self.port_address_map.items():
+        for key, value in Components.Globalmap.Map.port_address_map.items():
 
             val = dev.getRWMem(key) & 2
 
@@ -89,7 +86,7 @@ class SimulavrAdapter(object):
                 binVal = '0'*(7-len(binVal)) + binVal
             #till here
             for i in range(len(binVal)-1, -1, -1):
-                values[self.port_register_map[value] + str(len(binVal) - i - 1)] = binVal[i]
+                values[Components.Globalmap.Map.port_register_map[value] + str(len(binVal) - i - 1)] = binVal[i]
 
         return values
 

@@ -61,7 +61,7 @@ class Landing(QtWidgets.QWidget):
 
 		splitter.addWidget(self.List_of_Registers)
 		splitter.addWidget(self.Register_Values)
-		splitter.setSizes([300,150])
+		splitter.setSizes([300, 150])
 
 		self.horizontalLayout = QHBoxLayout()
 
