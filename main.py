@@ -115,10 +115,8 @@ class Landing(QtWidgets.QWidget):
 			Components.stackedWidget.stackWidget.decrementTopCount()
 			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
-	def updateUI(self, valueMap):
-		self.valueMap = valueMap
-		Components.Globalmap.Map.setGlobalMap(valueMap)
-		for key, value in valueMap.items():
+	def updateUI(self):
+		for key, value in Components.Globalmap.Map.map.items():
 			self.PIN_Diagram.setPinStatus(key, value)
 
 class threadExample(QThread):

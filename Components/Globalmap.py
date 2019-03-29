@@ -8,10 +8,9 @@ from PyQt5.QtWidgets import QStackedWidget
 class Map():    # Used to switch between multiple layout
 
 
-    map = None
+    map = {}
     port_address_map = {0X2B: "PORTD", 0X28: 'PORTC', 0X23: 'PORTB'}
     port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
-
 
     def __init__(self):
         """ Virtually private constructor. """
