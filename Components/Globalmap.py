@@ -9,9 +9,9 @@ class Map():    # Used to switch between multiple layout
 
 
     map = {}
-    port_address_map = {0X2B: "PORTD", 0X28: 'PORTC', 0X23: 'PORTB'}
+    port_address_map = {"PORTD":0X2B, 'PORTC':0X28, 'PORTB':0X23}
     port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
-    ddr_address_map = {0X2A: "DDRD", 0X27: 'DDRC', 0X24: 'DDRB'}
+    ddr_address_map = {"DDRD": 0X2A, 'DDRC': 0X27, 'DDRB': 0X24}
 
     def __init__(self):
         """ Virtually private constructor. """

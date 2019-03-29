@@ -101,11 +101,15 @@ class PIN_Diagram(QtWidgets.QWidget):
 
             rightPinFrame.layout.addStretch()
             rightPinFrame.setLayout(rightPinFrame.layout)
+            #enable pin clicks for left
+            for val in pinsl:
+                self.pinl_dict[val].setEnabled(True)
+                self.pinl_dict[val].setStyleSheet('color : red')
 
-            self.pinl_dict['PD0'].setStyleSheet('color : red')
-            self.pinl_dict['PD0'].setEnabled(True)
-            self.pinl_dict['PD1'].setStyleSheet('color : green')
-            self.pinl_dict['PD1'].setEnabled(True)
+            #enable pin clicks for right
+            for val in pinsr:
+                self.pinr_dict[val].setEnabled(True)
+                self.pinr_dict[val].setStyleSheet('color : red')
 
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
@@ -164,20 +168,27 @@ class PIN_Diagram(QtWidgets.QWidget):
         print(port)
         Components.Register_Values.Register_Values.clearList()
         pinValue = Components.Globalmap.Map.getValue(port)
-        ddrValue = Components.Globalmap.Map.getValue("DDR"+port[1])
+        ddr = "DDR" + port[1]
+
+        ddrValue = Components.Globalmap.Map.getValue(ddr)
+        ddrAdress = hex(Components.Globalmap.Map.ddr_address_map[ddr])
+        pinAddress = hex(Components.Globalmap.Map.port_address_map["PORT" + port[1]])
 
         if pinValue!=None:
-            Components.Register_Values.Register_Values.addRegister(port, "0X0b", pinValue)
+            Components.Register_Values.Register_Values.addRegister(port, pinAddress, pinValue)
         else:
-            Components.Register_Values.Register_Values.addRegister(port, "0X0b", "0")
+            Components.Register_Values.Register_Values.addRegister(port, pinAddress, "0")
+
         if ddrValue!=None:
-            Components.Register_Values.Register_Values.addRegister("DDR"+port[1], "0X0a", ddrValue)
+            Components.Register_Values.Register_Values.addRegister(ddr,ddrAdress , ddrValue)
         else:
-            Components.Register_Values.Register_Values.addRegister("DDR"+port[1], "0X0a", "0")
-        pinFrame = Components.ViewFactory.ViewFactory.getView(port)
-        print(type(pinFrame))
-        Components.stackedWidget.stackWidget.addWidget(pinFrame)
-        Components.stackedWidget.stackWidget.incrementTopCount()
+            Components.Register_Values.Register_Values.addRegister(ddr, ddrAdress, "0")
+
+        #uncomment this code for showing pin diagrams
+        #pinFrame = Components.ViewFactory.ViewFactory.getView(port)
+        #print(type(pinFrame))
+        #Components.stackedWidget.stackWidget.addWidget(pinFrame)
+        #Components.stackedWidget.stackWidget.incrementTopCount()
 
     def blockComponentClicked(self, component):
         print(component)
