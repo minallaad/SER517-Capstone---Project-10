@@ -73,3 +73,4 @@ class List_of_Registers(QListWidget):
             Components.Register_Values.Register_Values.addRegister(self.text(), "NA", "NA")
 
 
+

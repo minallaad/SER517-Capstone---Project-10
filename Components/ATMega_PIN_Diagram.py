@@ -10,14 +10,13 @@ from PyQt5.QtCore import Qt
 
 import Components.Register_Values
 import Components.List_of_Registers
-# import Components.ATMega_Block_Diagram
 import Components.stackedWidget
 import Components.ViewFactory
 import Components.ATMega_Block_Diagram
+import Components.Globalmap
 
 from Components import ATMega_Block_Diagram
-from Components import WatchDogTimer
-from Components import  SPI
+
 
 
 class PIN_Diagram(QtWidgets.QWidget):
@@ -100,6 +99,10 @@ class PIN_Diagram(QtWidgets.QWidget):
 
             rightPinFrame.layout.addStretch()
             rightPinFrame.setLayout(rightPinFrame.layout)
+            #enable pin clicks for left
+            for val in pinsl:
+                self.pinl_dict[val].setEnabled(True)
+                self.pinl_dict[val].setStyleSheet('color : red')
 
             # enable pin clicks for left
             for val in pinsl:

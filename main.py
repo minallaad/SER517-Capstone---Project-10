@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtGui import QPainter, QPen
-from PyQt5.QtCore import Qt, QThread
-from PyQt5.QtWidgets import QWidget,QLabel, QSplitter,QApplication, QHBoxLayout, QStackedWidget,QFrame,QVBoxLayout,QScrollArea,QListWidget,  QMessageBox,QTableWidget,QTableWidgetItem
-from PyQt5.QtGui import QPainter, QPen , QPixmap
+
+from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtCore import QThread
 from PyQt5.QtCore import Qt
-from pysimulavrExample.examples import SimulavrAdaptor
-from threading import Thread
+from PyQt5.QtWidgets import QSplitter, QApplication, QHBoxLayout, QVBoxLayout
 
-
-import Components.stackedWidget
-import Components.Register_Values
-import Components.List_of_Registers
 import Components.ATMega_PIN_Diagram
+import Components.Globalmap
+import Components.List_of_Registers
+import Components.Register_Values
+import Components.stackedWidget
+from pysimulavrExample.examples import SimulavrAdaptor
 
 
 class Landing(QtWidgets.QWidget):
@@ -115,7 +113,6 @@ class Landing(QtWidgets.QWidget):
 		for key, value in Components.Globalmap.Map.map.items():
 			self.PIN_Diagram.setPinStatus(key, value)
 
-
 class threadExample(QThread):
 	def __init__(self, ui, sim):
 		QThread.__init__(self)
@@ -126,16 +123,9 @@ class threadExample(QThread):
 	def run(self):
 		self.sim.runProgram(self.ui)
 
-
 if __name__ == '__main__':
-
 	app = QApplication(sys.argv)
 	obj = Landing()
 	sim = SimulavrAdaptor.SimulavrAdapter()
 	thread = threadExample(obj, sim)
 	app.exec_()
-
-
-
-
-
