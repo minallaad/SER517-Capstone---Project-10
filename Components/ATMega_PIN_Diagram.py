@@ -165,6 +165,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.Register_Values.Register_Values.clearList()
         pinValue = Components.Globalmap.Map.getValue(port)
         ddrValue = Components.Globalmap.Map.getValue("DDR"+port[1])
+
         if pinValue!=None:
             Components.Register_Values.Register_Values.addRegister(port, "0X0b", pinValue)
         else:

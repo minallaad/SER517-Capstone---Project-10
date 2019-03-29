@@ -100,7 +100,7 @@ class Landing(QtWidgets.QWidget):
 		self.verticalLayout.addWidget(self.Title)
 		self.verticalLayout.addWidget(self.Status)
 		self.verticalLayout.addWidget(self.backButton, 0, Qt.AlignRight)
-		self.verticalLayout.addLayout(self.horizontalLayout);
+		self.verticalLayout.addLayout(self.horizontalLayout)
 
 		self.setLayout(self.verticalLayout)
 
@@ -109,7 +109,7 @@ class Landing(QtWidgets.QWidget):
 
 	def backClicked(self):
 		topWidget = Components.stackedWidget.stackWidget.top
-		if topWidget != 0 :
+		if topWidget != 0:
 			print("TOP")
 			widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(topWidget)
 			Components.stackedWidget.stackWidget.decrementTopCount()
