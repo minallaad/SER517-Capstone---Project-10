@@ -22,13 +22,9 @@ class Landing(QtWidgets.QWidget):
 
 	def __init__(self):
 		super(Landing, self).__init__()
-		self.portBValue = -1
-		self.ddrbValue = -1
 		self.Register_Values = None
 		self.List_of_Registers = None
-
 		self.PIN_Diagram = None
-
 		self.stackWidget = None
 		self.initUI()
 
@@ -46,34 +42,6 @@ class Landing(QtWidgets.QWidget):
 
 		self.show()
 
-	def setLedColor(self, portbValue, ddrbValue):
-		# if the window is not yet created, just return
-		if self.window == None: return
-
-		# if the hardware state has not changed, just return
-		if (self.portBValue == portbValue) and (self.ddrbValue == ddrbValue): return
-
-		# update the LED state based on the port direction and value
-		if (ddrbValue != 0):
-			# port set to output - set the color based on the value of portb
-			if (portbValue != 0):
-				# led is driven on
-				self.setStyleSheet("background-color: white")
-			else:
-				# led is driven off
-				self.setStyleSheet("background-color: black")
-		else:
-			# port is set to input - set the color based on the pullup value
-			if (portbValue != 0):
-				# led will be on due to pullup
-				self.setStyleSheet("background-color: white")
-			else:
-				# led state is not driven
-				self.setStyleSheet("background-color: black")
-		self.portBValue = portbValue
-		self.ddrbValue = ddrbValue
-
-
 	def window(self):
 
 		self.Register_Values = Components.Register_Values.Register_Values().getInstance()  # Object of Class Register Values
@@ -85,71 +53,67 @@ class Landing(QtWidgets.QWidget):
 
 
 
-		splitter = QSplitter(Qt.Vertical)
+		self.splitter = QSplitter(Qt.Vertical)
 
-		splitter.addWidget(self.List_of_Registers)
-		splitter.addWidget(self.Register_Values)
-		splitter.setSizes([300,150])
+		self.splitter.addWidget(self.List_of_Registers)
+		self.splitter.addWidget(self.Register_Values)
+		self.splitter.setSizes([300,150])
 
-		horizontalLayout = QHBoxLayout()
+		self.horizontalLayout = QHBoxLayout()
 
-		rightFrame = self.PIN_Diagram.getPIN_Digram()
+		self.rightFrame = self.PIN_Diagram.getPIN_Digram()
 
-		self.stackWidget.addWidget(rightFrame)
+		self.stackWidget.addWidget(self.rightFrame)
 		print(self.stackWidget.currentWidget())
 
-		horizontalSplitter = QSplitter(Qt.Horizontal)
-		horizontalLayout.addWidget(splitter)
-		horizontalSplitter.addWidget(self.stackWidget)
-		horizontalSplitter.setSizes([80,320])
-		horizontalSplitter.adjustSize()
+		self.horizontalSplitter = QSplitter(Qt.Horizontal)
+		self.horizontalLayout.addWidget(self.splitter)
+		self.horizontalSplitter.addWidget(self.stackWidget)
+		self.horizontalSplitter.setSizes([80,320])
+		self.horizontalSplitter.adjustSize()
 
-		titleFont =  QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
-		Title = QtWidgets.QLabel(self)
-		Title.setText("ATMega328p Simulator")
-		Title.setFont(titleFont)
-		Title.setAlignment(Qt.AlignCenter)
+		self.titleFont =  QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
+		self.Title = QtWidgets.QLabel(self)
+		self.Title.setText("ATMega328p Simulator")
+		self.Title.setFont(self.titleFont)
+		self.Title.setAlignment(Qt.AlignCenter)
 
-		backButton = QtWidgets.QPushButton("Back")
-		backButton.clicked.connect(lambda : self.backClicked())
-
-
-		horizontalLayout.addWidget(horizontalSplitter)
+		self.backButton = QtWidgets.QPushButton("Back")
+		self.backButton.clicked.connect(lambda : self.backClicked())
 
 
-		StatusFont =  QtGui.QFont("Helvetica", 10, QtGui.QFont.Bold)
-		Status = QtWidgets.QLabel(self)
-		Status.setText(self.getConnectionStatus())
-		Status.setFont(StatusFont)
-		Status.setStyleSheet('color : green')
-		Status.setAlignment(Qt.AlignCenter)
+		self.horizontalLayout.addWidget(self.horizontalSplitter)
 
-		verticalLayout = QVBoxLayout()
-		verticalLayout.addWidget(Title)
-		verticalLayout.addWidget(Status)
-		verticalLayout.addWidget(backButton, 0, Qt.AlignRight)
-		verticalLayout.addLayout(horizontalLayout)
 
-		self.setLayout(verticalLayout)
+		self.StatusFont =  QtGui.QFont("Helvetica", 10, QtGui.QFont.Bold)
+		self.Status = QtWidgets.QLabel(self)
+		self.Status.setText(self.getConnectionStatus())
+		self.Status.setFont(self.StatusFont)
+		self.Status.setStyleSheet('color : green')
+		self.Status.setAlignment(Qt.AlignCenter)
+
+		self.verticalLayout = QVBoxLayout()
+		self.verticalLayout.addWidget(self.Title)
+		self.verticalLayout.addWidget(self.Status)
+		self.verticalLayout.addWidget(self.backButton, 0, Qt.AlignRight)
+		self.verticalLayout.addLayout(self.horizontalLayout)
+
+		self.setLayout(self.verticalLayout)
 
 	def getConnectionStatus(self):  # Function returns status (Connected / Disconnected)
 		return "Connected to Simulavr"
 
 	def backClicked(self):
 		topWidget = Components.stackedWidget.stackWidget.top
-		if topWidget != 0 :
+		if topWidget != 0:
 			print("TOP")
 			widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(topWidget)
 			Components.stackedWidget.stackWidget.decrementTopCount()
 			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
-	def updateUI(self, valueMap):
-		self.valueMap = valueMap
-
-		for key, value in valueMap.items():
-
-			if key == 'PORTB':
-				self.PIN_Diagram.setPinStatus("PD0", value)
+	def updateUI(self):
+		for key, value in Components.Globalmap.Map.map.items():
+			self.PIN_Diagram.setPinStatus(key, value)
 
 
 class threadExample(QThread):

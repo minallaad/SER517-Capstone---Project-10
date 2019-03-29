@@ -101,10 +101,15 @@ class PIN_Diagram(QtWidgets.QWidget):
             rightPinFrame.layout.addStretch()
             rightPinFrame.setLayout(rightPinFrame.layout)
 
-            self.pinl_dict['PD0'].setStyleSheet('color : red')
-            self.pinl_dict['PD0'].setEnabled(True)
-            self.pinl_dict['PD1'].setStyleSheet('color : green')
-            self.pinl_dict['PD1'].setEnabled(True)
+            # enable pin clicks for left
+            for val in pinsl:
+                self.pinl_dict[val].setEnabled(True)
+                self.pinl_dict[val].setStyleSheet('color : red')
+
+            # enable pin clicks for right
+            for val in pinsr:
+                self.pinr_dict[val].setEnabled(True)
+                self.pinr_dict[val].setStyleSheet('color : red')
 
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
@@ -118,31 +123,28 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     @staticmethod
     def setPinStatus(port, value):
-        print(port)
-        print(value)
-        if value != 0:
+        if value != "0":
             if port in PIN_Diagram.pinl_dict:
-
                 PIN_Diagram.pinl_dict[port].setStyleSheet('color : green')
-                PIN_Diagram.pinl_dict[port].setEnabled(True)
+                # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 9, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
                 PIN_Diagram.pinr_dict[port].setStyleSheet('color : green')
-                PIN_Diagram.pinr_dict[port].setEnabled(True)
+                # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
         else:
             if port in PIN_Diagram.pinl_dict:
                 PIN_Diagram.pinl_dict[port].setStyleSheet('color : red')
-                PIN_Diagram.pinl_dict[port].setEnabled(True)
+                # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 5, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
                 PIN_Diagram.pinr_dict[port].setStyleSheet('color : red')
-                PIN_Diagram.pinr_dict[port].setEnabled(True)
+                # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
     def microcontrollerClicked(self):
         print("micro")
         microcontrollerBlock = QFrame()
         blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
         blockDiagramFrame.setupUi(microcontrollerBlock)
-        blockDiagramFrame.eepromFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram, "EEPROM")
+        blockDiagramFrame.eepromFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram, "EEPROM", ['EEPROM.EEARL', 'EEPROM.EEARH', 'EEPROM.EEDR', 'EEPROM.EECR'])
         blockDiagramFrame.gpiorFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "GPIOR")
         blockDiagramFrame.flashFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
@@ -154,7 +156,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         blockDiagramFrame.tc2Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "TIMER2")
         blockDiagramFrame.watchdogFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "WATCHDOG")
+                                                                                                    "WATCHDOG", [])
         blockDiagramFrame.spiFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "SPI")
         blockDiagramFrame.usartFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
@@ -165,17 +167,43 @@ class PIN_Diagram(QtWidgets.QWidget):
     def portClicked(self, port):  # On Click opens up port circuit diagram
         print(port)
         Components.Register_Values.Register_Values.clearList()
-        Components.Register_Values.Register_Values.addRegister(port, "0X0b", "0")
-        Components.Register_Values.Register_Values.addRegister("DDRx", "0X0a", "0")
-        pinFrame = Components.ViewFactory.ViewFactory.getView(port)
-        print(type(pinFrame))
-        Components.stackedWidget.stackWidget.addWidget(pinFrame)
-        Components.stackedWidget.stackWidget.incrementTopCount()
 
-    def blockComponentClicked(self, component):
-        print(component)
+        pinRegister = "PORT" + port[1] + ".PIN"
+        pinValue = Components.Globalmap.Map.getValue(pinRegister)
+        pinAddress = Components.Globalmap.Map.getRegisterAddress(pinRegister)
+
+
+        ddrRegister = "PORT" + port[1] + ".DDR"
+        ddrValue = Components.Globalmap.Map.getValue(ddrRegister)
+        ddrAddress = Components.Globalmap.Map.getRegisterAddress(ddrRegister)
+
+        portRegister = "PORT" + port[1] + ".PORT"
+        portValue = Components.Globalmap.Map.getValue(portRegister)
+        portAddress = Components.Globalmap.Map.getRegisterAddress(portRegister)
+
+        if pinValue!=None:
+            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), pinValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), "0")
+
+        if ddrValue!=None:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister,hex(ddrAddress) , ddrValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), "0")
+
+        if portValue!=None:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(portAddress), portValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(portAddress), "0")
+
+        #uncomment this code for showing pin diagrams
+        #pinFrame = Components.ViewFactory.ViewFactory.getView(port)
+        #print(type(pinFrame))
+        #Components.stackedWidget.stackWidget.addWidget(pinFrame)
+        #Components.stackedWidget.stackWidget.incrementTopCount()
+
+    def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
-        print(frame)
 
         if frame != None:
             block = QFrame()
@@ -184,7 +212,11 @@ class PIN_Diagram(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.incrementTopCount()
 
         Components.Register_Values.Register_Values.clearList()
-        Components.Register_Values.Register_Values.addRegister(component, "0X0b", "0")
+        for key in registers:
+            registerAddress = Components.Globalmap.Map.getRegisterAddress(key)
+            registerValue = Components.Globalmap.Map.getValue(key)
+            Components.Register_Values.Register_Values.addRegister(key, hex(registerAddress), registerValue)
+
 
 
 
