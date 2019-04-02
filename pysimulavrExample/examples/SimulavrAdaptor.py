@@ -1,4 +1,7 @@
 import pysimulavr
+import Components.Globalmap
+import time
+
 
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
@@ -14,6 +17,14 @@ class SimulavrAdapter(object):
         self.__gdb = gdb
         self.__sc.Add(gdb)
         return dev
+
+    def runProgram(self, ui):
+        dev = self.loadDevice("atmega328", "pysimulavrExample/examples/simadc.elf")
+        while True:
+            self.getMemoryValue(dev)
+            ui.updateUI()
+            self.doStep()
+            time.sleep(2)
 
     def doRun(self, n):
         ct = self.__sc.GetCurrentTime
@@ -65,3 +76,28 @@ class SimulavrAdapter(object):
         v = (dev.getRWMem(addr) << 8) + v
         return v
 
+    def getMemoryValue(self, dev):
+        values = {}
+
+        # self.getPortValues(dev)
+        self.getDDRValues(dev)
+
+        return values
+
+    def getDDRValues(self, dev):
+        for key, value in Components.Globalmap.Map.registerAddressMap.items():
+            val = dev.getRWMem(value)
+            Components.Globalmap.Map.map[key] = val
+
+    def getPortValues(self, dev):
+
+        for key, value in Components.Globalmap.Map.port_address_map.items():
+            val = dev.getRWMem(value) & 2
+            #code to change if required
+            binVal = bin(val)[2:]
+            if len(binVal) < 7:
+                binVal = '0'*(7-len(binVal)) + binVal
+            #till here
+            for i in range(len(binVal)-1, -1, -1):
+                update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
+                Components.Globalmap.Map.map[update] = binVal[i]
