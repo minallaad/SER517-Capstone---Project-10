@@ -19,7 +19,7 @@ class SimulavrAdapter(object):
         return dev
 
     def runProgram(self, ui):
-        dev = self.loadDevice("atmega328", "pysimulavrExample/examples/simadc.elf")
+        dev = self.loadDevice("atmega328", "pysimulavrExample/examples/example_io.elf")
         while True:
             self.getMemoryValue(dev)
             ui.updateUI()
