@@ -114,11 +114,23 @@ class PIN_Diagram(QtWidgets.QWidget):
                 self.pinr_dict[val].setEnabled(True)
                 self.pinr_dict[val].setStyleSheet('color : red')
 
+            self.verticalSlider = QtWidgets.QSlider()
+            self.verticalSlider.setGeometry(QtCore.QRect(10, 10, 10, 10))
+            self.verticalSlider.setMinimum(0)
+            self.verticalSlider.setMaximum(100)
+            self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
+            self.verticalSlider.setObjectName("verticalSlider")
+            self.verticalSlider.setFocusPolicy(Qt.StrongFocus)
+            self.verticalSlider.setTickPosition(QtWidgets.QSlider.TicksBothSides)
+            self.verticalSlider.setTickInterval(10)
+            self.verticalSlider.setSingleStep(1)
+
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
             self.rightFrame.layout.addWidget(leftPinFrame)
             self.rightFrame.layout.addWidget(simulatorFrame)
             self.rightFrame.layout.addWidget(rightPinFrame)
+            self.rightFrame.layout.addWidget(self.verticalSlider)
             self.rightFrame.setLayout(self.rightFrame.layout)
 
     def getPIN_Digram(self):
