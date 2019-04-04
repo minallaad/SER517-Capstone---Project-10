@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'pinLevelDiagram.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Resources import imageResource_rc
+
 
 class Ui_Frame(object):
     def setupUi(self, Frame):
@@ -56,6 +58,9 @@ class Ui_Frame(object):
         self.muxFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.muxFrame.setLineWidth(0)
         self.muxFrame.setObjectName("muxFrame")
+        self.label_2 = QtWidgets.QLabel(self.muxFrame)
+        self.label_2.setGeometry(QtCore.QRect(0, 0, 66, 51))
+        self.label_2.setObjectName("label_2")
         self.line_3 = QtWidgets.QFrame(Frame)
         self.line_3.setGeometry(QtCore.QRect(260, 140, 20, 201))
         self.line_3.setFrameShadow(QtWidgets.QFrame.Plain)
@@ -76,17 +81,22 @@ class Ui_Frame(object):
         self.pinOutputFrame.setLineWidth(3)
         self.pinOutputFrame.setObjectName("pinOutputFrame")
         self.line_5 = QtWidgets.QFrame(Frame)
-        self.line_5.setGeometry(QtCore.QRect(170, 170, 20, 191))
+        self.line_5.setGeometry(QtCore.QRect(180, 170, 20, 191))
         self.line_5.setFrameShadow(QtWidgets.QFrame.Plain)
         self.line_5.setLineWidth(3)
         self.line_5.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_5.setObjectName("line_5")
         self.pullUpFrame = QtWidgets.QFrame(Frame)
-        self.pullUpFrame.setGeometry(QtCore.QRect(160, 90, 41, 81))
+        self.pullUpFrame.setGeometry(QtCore.QRect(150, 120, 51, 51))
         self.pullUpFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.pullUpFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.pullUpFrame.setLineWidth(0)
         self.pullUpFrame.setObjectName("pullUpFrame")
+        self.label = QtWidgets.QLabel(self.pullUpFrame)
+        self.label.setGeometry(QtCore.QRect(0, -10, 61, 81))
+        self.label.setObjectName("label")
+        self.label.raise_()
+        self.label.raise_()
         self.ddrLabel = QtWidgets.QLabel(Frame)
         self.ddrLabel.setGeometry(QtCore.QRect(420, 80, 67, 17))
         self.ddrLabel.setStyleSheet("color: rgb(0, 0, 0);")
@@ -106,6 +116,9 @@ class Ui_Frame(object):
         Frame.setWindowTitle(_translate("Frame", "Frame"))
         self.ddrValueLabel.setText(_translate("Frame", "0"))
         self.ddrValueLabel_2.setText(_translate("Frame", "0"))
+        self.label_2.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/multiplexer.png\"/></p></body></html>"))
+        self.label.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/rheostat.png\"/></p></body></html>"))
         self.ddrLabel.setText(_translate("Frame", "DDR"))
         self.portLabel.setText(_translate("Frame", "PORT"))
+
 
