@@ -241,9 +241,9 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>90</y>
-     <width>41</width>
-     <height>81</height>
+     <y>100</y>
+     <width>61</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -255,6 +255,19 @@
    <property name="lineWidth">
     <number>0</number>
    </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-20</y>
+      <width>66</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/rheostat.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="ddrLabel">
    <property name="geometry">
@@ -295,6 +308,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources/img.qrc"/>
+ </resources>
  <connections/>
 </ui>

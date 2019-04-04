@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ATMega_Block_Diagram2.ui'
+# Form implementation generated from reading ui file 'ATMega_Block_Diagram.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #

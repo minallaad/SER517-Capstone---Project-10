@@ -161,7 +161,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         blockDiagramFrame.watchdogFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "WATCHDOG", [])
         blockDiagramFrame.spiFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "SPI")
+                                                                                                    "SPI", [])
         blockDiagramFrame.usartFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "UART0")
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
@@ -200,10 +200,10 @@ class PIN_Diagram(QtWidgets.QWidget):
             Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(portAddress), "0")
 
         #uncomment this code for showing pin diagrams
-        #pinFrame = Components.ViewFactory.ViewFactory.getView(port)
-        #print(type(pinFrame))
-        #Components.stackedWidget.stackWidget.addWidget(pinFrame)
-        #Components.stackedWidget.stackWidget.incrementTopCount()
+        pinFrame = Components.ViewFactory.ViewFactory.getView(port)
+        print(type(pinFrame))
+        Components.stackedWidget.stackWidget.addWidget(pinFrame)
+        Components.stackedWidget.stackWidget.incrementTopCount()
 
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
