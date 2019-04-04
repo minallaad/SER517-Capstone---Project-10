@@ -173,7 +173,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         blockDiagramFrame.watchdogFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "WATCHDOG", [])
         blockDiagramFrame.spiFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "SPI", [])
+                                                                                                    "SPI")
         blockDiagramFrame.usartFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "UART0")
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)

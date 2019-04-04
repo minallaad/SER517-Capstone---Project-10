@@ -1,15 +1,7 @@
 <RCC>
   <qresource prefix="image">
-    <file>Images/arr0w3.png</file>
-    <file>Images/arrow1.png</file>
-    <file>Images/arrow2.png</file>
-    <file>Images/arrow4.png</file>
-    <file>Images/arrow5.png</file>
-    <file>Images/arrow6.png</file>
-    <file>Images/atmega328p.png</file>
-    <file>Images/multiplexer.png</file>
-    <file>Images/rheostat.png</file>
-    <file>Images/SPI.png</file>
     <file>Images/WatchDogTimer.png</file>
+    <file>Images/rheostat.png</file>
+    <file>Images/multiplexer.png</file>
   </qresource>
 </RCC>
