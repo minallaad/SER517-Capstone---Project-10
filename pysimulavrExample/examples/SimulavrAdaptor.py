@@ -89,7 +89,7 @@ class SimulavrAdapter(object):
             val = dev.getRWMem(value)
             Components.Globalmap.Map.map[key] = val
 
-        print(Components.Globalmap.Map.map)
+        # print(Components.Globalmap.Map.map)
 
     def getPortValues(self, dev):
 
