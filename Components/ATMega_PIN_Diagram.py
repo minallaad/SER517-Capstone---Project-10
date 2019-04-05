@@ -114,6 +114,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 self.pinr_dict[val].setEnabled(True)
                 self.pinr_dict[val].setStyleSheet('color : red')
 
+
             self.verticalSlider = QtWidgets.QSlider()
             self.verticalSlider.setGeometry(QtCore.QRect(10, 10, 10, 10))
             self.verticalSlider.setMinimum(0)
@@ -121,9 +122,26 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
             self.verticalSlider.setObjectName("verticalSlider")
             self.verticalSlider.setFocusPolicy(Qt.StrongFocus)
-            self.verticalSlider.setTickPosition(QtWidgets.QSlider.TicksBothSides)
+            self.verticalSlider.setTickPosition(QtWidgets.QSlider.TicksRight)
             self.verticalSlider.setTickInterval(10)
             self.verticalSlider.setSingleStep(1)
+
+            temperature = ["120","110","100" , "90" , "80", "70", "60", "50", "40","30","20","10","0"]
+            self.temperatureFrame = QFrame()
+            self.temperatureFrame.layout = QVBoxLayout()
+            self.temperatureFrame.layout.setAlignment(Qt.AlignLeft)
+            self.temperatureFrame.layout.addStretch()
+
+
+            for val in temperature:
+                print(val)
+                temp = QLabel()
+                temp.setText(val)
+                self.temperatureFrame.layout.setSpacing(37)
+                self.temperatureFrame.layout.addWidget(temp)
+
+            self.temperatureFrame.layout.addStretch()
+            self.temperatureFrame.setLayout(self.temperatureFrame.layout)
 
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
@@ -131,6 +149,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.layout.addWidget(simulatorFrame)
             self.rightFrame.layout.addWidget(rightPinFrame)
             self.rightFrame.layout.addWidget(self.verticalSlider)
+            self.rightFrame.layout.addWidget(self.temperatureFrame)
             self.rightFrame.setLayout(self.rightFrame.layout)
 
     def getPIN_Digram(self):
@@ -212,10 +231,10 @@ class PIN_Diagram(QtWidgets.QWidget):
             Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(portAddress), "0")
 
         #uncomment this code for showing pin diagrams
-        #pinFrame = Components.ViewFactory.ViewFactory.getView(port)
-        #print(type(pinFrame))
-        #Components.stackedWidget.stackWidget.addWidget(pinFrame)
-        #Components.stackedWidget.stackWidget.incrementTopCount()
+        pinFrame = Components.ViewFactory.ViewFactory.getView(port)
+        print(type(pinFrame))
+        Components.stackedWidget.stackWidget.addWidget(pinFrame)
+        Components.stackedWidget.stackWidget.incrementTopCount()
 
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
