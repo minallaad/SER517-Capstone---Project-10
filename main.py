@@ -119,12 +119,11 @@ class Landing(QtWidgets.QWidget):
 	def setPortValues(self, key, value):
 		# code to change if required
 		binVal = bin(value)[2:]
-		if len(binVal) < 7:
-			binVal = '0' * (7 - len(binVal)) + binVal
+		if len(binVal) < 8:
+			binVal = '0' * (8 - len(binVal)) + binVal
 		# till here
 		for i in range(len(binVal) - 1, -1, -1):
 			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-			# Components.Globalmap.Map.map[update] = binVal[i]
 			self.PIN_Diagram.setPinStatus(update, binVal[i])
 
 class threadExample(QThread):
