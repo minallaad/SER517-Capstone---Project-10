@@ -124,7 +124,7 @@ class Landing(QtWidgets.QWidget):
 		# till here
 		for i in range(len(binVal) - 1, -1, -1):
 			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-			Components.Globalmap.Map.map[update] = binVal[i]
+			# Components.Globalmap.Map.map[update] = binVal[i]
 			self.PIN_Diagram.setPinStatus(update, binVal[i])
 
 class threadExample(QThread):
