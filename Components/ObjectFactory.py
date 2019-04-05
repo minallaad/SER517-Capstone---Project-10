@@ -33,7 +33,7 @@ class ObjectFactory():
         elif objectName == 'PD1':
             return Components.Port_View.PD1_View.PD1_View().getInstance()
         elif objectName == 'PD2':
-            return Components.Port_View.PD1_View.PD2_View().getInstance()
+            return Components.Port_View.PD1_View.PD1_View().getInstance()
         else:
             return None
 
