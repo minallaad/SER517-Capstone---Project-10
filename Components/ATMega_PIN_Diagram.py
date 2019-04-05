@@ -14,6 +14,7 @@ import Components.stackedWidget
 import Components.ViewFactory
 import Components.ATMega_Block_Diagram
 import Components.Globalmap
+import Components.ObjectFactory
 
 from Components import ATMega_Block_Diagram
 
@@ -232,7 +233,8 @@ class PIN_Diagram(QtWidgets.QWidget):
 
         #uncomment this code for showing pin diagrams
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
-        print(type(pinFrame))
+        obj = Components.ObjectFactory.ObjectFactory.getObject(port)
+        obj.setDDR(1)
         Components.stackedWidget.stackWidget.addWidget(pinFrame)
         Components.stackedWidget.stackWidget.incrementTopCount()
 

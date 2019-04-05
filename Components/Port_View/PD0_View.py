@@ -54,8 +54,12 @@ class PD0_View(QtWidgets.QWidget):
         return PD0_View.PD0Frame
 
     @staticmethod
+    def getInstance():
+        return PD0_View
+
+    @staticmethod
     def setDDR(value):
-        PD0_View.pinFrame.ddrValueLabel.setText(value)
+        PD0_View.pinFrame.ddrValueLabel.setText(str(value))
 
 
 
