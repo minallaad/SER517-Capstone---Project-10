@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="image">
+    <file>Images/connection.png</file>
     <file>Images/WatchDogTimer.png</file>
     <file>Images/multiplexer.png</file>
     <file>Images/pullupResistor.png</file>

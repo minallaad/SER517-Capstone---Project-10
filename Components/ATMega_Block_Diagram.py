@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Resources import imageResource_rc
 
+
 class Ui_microcontrollerBlock(object):
     def setupUi(self, microcontrollerBlock):
         microcontrollerBlock.setObjectName("microcontrollerBlock")
@@ -186,5 +187,4 @@ class Ui_microcontrollerBlock(object):
         self.label_9.setText(_translate("microcontrollerBlock", "<html><head/><body><p><img src=\":/blockImages/Images/arrow4.png\"/></p></body></html>"))
         self.label_10.setText(_translate("microcontrollerBlock", "<html><head/><body><p><img src=\":/blockImages/Images/arrow4.png\"/></p></body></html>"))
         self.label_11.setText(_translate("microcontrollerBlock", "<html><head/><body><p><img src=\":/blockImages/Images/arrow4.png\"/></p></body></html>"))
-
 

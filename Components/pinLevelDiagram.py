@@ -93,6 +93,9 @@ class Ui_Frame(object):
         self.label_2 = QtWidgets.QLabel(Frame)
         self.label_2.setGeometry(QtCore.QRect(250, 340, 41, 31))
         self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(Frame)
+        self.label_3.setGeometry(QtCore.QRect(180, 350, 16, 16))
+        self.label_3.setObjectName("label_3")
 
         self.retranslateUi(Frame)
         QtCore.QMetaObject.connectSlotsByName(Frame)
@@ -106,5 +109,6 @@ class Ui_Frame(object):
         self.portLabel.setText(_translate("Frame", "PORT"))
         self.label.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/pullupResistor.png\"/></p></body></html>"))
         self.label_2.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/multiplexer.png\"/></p></body></html>"))
+        self.label_3.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/connection.png\"/></p></body></html>"))
 
 
