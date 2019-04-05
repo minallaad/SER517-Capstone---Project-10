@@ -12,6 +12,7 @@ from Components import pinLevelDiagram
 class PD0_View(QtWidgets.QWidget):
 
     PD0Frame = None
+    pinFrame = None
 
     def __init__(self):
         super(PD0_View, self).__init__()
@@ -19,9 +20,10 @@ class PD0_View(QtWidgets.QWidget):
         if PD0_View.PD0Frame == None:
             PD0_View.PD0Frame = QFrame()
 
-            pinFrame = pinLevelDiagram.Ui_Frame()
-            pinFrame.setupUi(PD0_View.PD0Frame)
-            # simulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
+            PD0_View.pinFrame = pinLevelDiagram.Ui_Frame()
+            PD0_View.pinFrame.setupUi(PD0_View.PD0Frame)
+
+            # simPD0FrameulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
             # simulatorTitle = QtWidgets.QLabel(self)
             # simulatorTitle.setText("Port PD0")
             # simulatorTitle.setAlignment(Qt.AlignCenter)
@@ -50,6 +52,16 @@ class PD0_View(QtWidgets.QWidget):
     @staticmethod
     def getPD0ViewDiagram():
         return PD0_View.PD0Frame
+
+    @staticmethod
+    def getInstance():
+        return PD0_View
+
+    @staticmethod
+    def setDDR(value):
+        PD0_View.pinFrame.ddrValueLabel.setText(str(value))
+
+
 
     # def getPortDiagramLayout(self):
     #     print("Here")

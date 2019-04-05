@@ -14,6 +14,7 @@ import Components.stackedWidget
 import Components.ViewFactory
 import Components.ATMega_Block_Diagram
 import Components.Globalmap
+import Components.ObjectFactory
 
 from Components import ATMega_Block_Diagram
 
@@ -53,7 +54,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
             pinFont = QtGui.QFont("Arial", 9, QtGui.QFont.Bold)
 
-            pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5', 'PD6', 'PB3', 'PB4', 'PB5', 'PB6']
+            pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5', 'PD6', 'PD7', 'PB3', 'PB4', 'PB5', 'PB6', 'PB7']
 
             leftPinFrame = QFrame()
             leftPinFrame.layout = QVBoxLayout()
@@ -83,7 +84,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             rightPinFrame.layout.setAlignment(Qt.AlignLeft)
             rightPinFrame.layout.addStretch()
 
-            pinsr = ['PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0', 'PB1', 'PB2', 'VCC', 'GND']
+            pinsr = ['PC7','PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0','PB0', 'PB1', 'PB2', 'VCC', 'GND']
 
             for i in pinsr:
                 self.pinr_dict[i] = QtWidgets.QPushButton(self)
@@ -114,6 +115,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 self.pinr_dict[val].setEnabled(True)
                 self.pinr_dict[val].setStyleSheet('color : red')
 
+
             self.verticalSlider = QtWidgets.QSlider()
             self.verticalSlider.setGeometry(QtCore.QRect(10, 10, 10, 10))
             self.verticalSlider.setMinimum(0)
@@ -121,9 +123,26 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
             self.verticalSlider.setObjectName("verticalSlider")
             self.verticalSlider.setFocusPolicy(Qt.StrongFocus)
-            self.verticalSlider.setTickPosition(QtWidgets.QSlider.TicksBothSides)
+            self.verticalSlider.setTickPosition(QtWidgets.QSlider.TicksRight)
             self.verticalSlider.setTickInterval(10)
             self.verticalSlider.setSingleStep(1)
+
+            temperature = ["120","110","100" , "90" , "80", "70", "60", "50", "40","30","20","10","0"]
+            self.temperatureFrame = QFrame()
+            self.temperatureFrame.layout = QVBoxLayout()
+            self.temperatureFrame.layout.setAlignment(Qt.AlignLeft)
+            self.temperatureFrame.layout.addStretch()
+
+
+            for val in temperature:
+                print(val)
+                temp = QLabel()
+                temp.setText(val)
+                self.temperatureFrame.layout.setSpacing(37)
+                self.temperatureFrame.layout.addWidget(temp)
+
+            self.temperatureFrame.layout.addStretch()
+            self.temperatureFrame.setLayout(self.temperatureFrame.layout)
 
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
@@ -131,6 +150,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.layout.addWidget(simulatorFrame)
             self.rightFrame.layout.addWidget(rightPinFrame)
             self.rightFrame.layout.addWidget(self.verticalSlider)
+            self.rightFrame.layout.addWidget(self.temperatureFrame)
             self.rightFrame.setLayout(self.rightFrame.layout)
 
     def getPIN_Digram(self):
@@ -180,7 +200,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.incrementTopCount()
 
     def portClicked(self, port):  # On Click opens up port circuit diagram
-        print(port)
+        print("port clicked is " + str(port))
         Components.Register_Values.Register_Values.clearList()
 
         pinRegister = "PORT" + port[1] + ".PIN"
@@ -213,17 +233,21 @@ class PIN_Diagram(QtWidgets.QWidget):
 
         #uncomment this code for showing pin diagrams
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
-        print(type(pinFrame))
+        obj = Components.ObjectFactory.ObjectFactory.getObject(port)
+        obj.setDDR(1)
         Components.stackedWidget.stackWidget.addWidget(pinFrame)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
-        if frame != None:
+        if type(frame) != QFrame:
             block = QFrame()
             frame.setupUi(block)
             Components.stackedWidget.stackWidget.addWidget(block)
+            Components.stackedWidget.stackWidget.incrementTopCount()
+        else:
+            Components.stackedWidget.stackWidget.addWidget(frame)
             Components.stackedWidget.stackWidget.incrementTopCount()
 
         Components.Register_Values.Register_Values.clearList()

@@ -22,8 +22,8 @@ class PD1_View(QtWidgets.QWidget):
             PD1_View.PD1Frame = QFrame()
             print("Now here")
 
-            pinFrame = pinLevelDiagram.Ui_Frame()
-            pinFrame.setupUi(PD1_View.PD1Frame)
+            PD1_View.pinFrame = pinLevelDiagram.Ui_Frame()
+            PD1_View.pinFrame.setupUi(PD1_View.PD1Frame)
 
             # simulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
             # simulatorTitle = QtWidgets.QLabel(self)
@@ -52,6 +52,14 @@ class PD1_View(QtWidgets.QWidget):
     @staticmethod
     def getPD1ViewDiagram():
         return PD1_View.PD1Frame
+
+    @staticmethod
+    def getInstance():
+        return PD1_View
+
+    @staticmethod
+    def setDDR(value):
+        PD1_View.pinFrame.ddrValueLabel.setText(str(value))
 
 
     # def getLayout(self):
