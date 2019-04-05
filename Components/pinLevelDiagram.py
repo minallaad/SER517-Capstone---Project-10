@@ -66,13 +66,14 @@ class Ui_Frame(object):
         self.pinLine.setObjectName("pinLine")
         self.pinOutputFrame = QtWidgets.QFrame(Frame)
         self.pinOutputFrame.setGeometry(QtCore.QRect(80, 340, 41, 41))
-        self.pinOutputFrame.setStyleSheet("background-color: rgb(239, 41, 41);")
         self.pinOutputFrame.setFrameShape(QtWidgets.QFrame.Panel)
         self.pinOutputFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.pinOutputFrame.setStyleSheet("background-color: rgb(239, 41, 41);")
         self.pinOutputFrame.setLineWidth(3)
         self.pinOutputFrame.setObjectName("pinOutputFrame")
         self.pullupLine = QtWidgets.QFrame(Frame)
         self.pullupLine.setGeometry(QtCore.QRect(180, 170, 20, 191))
+        self.pullupLine.setStyleSheet("")
         self.pullupLine.setFrameShadow(QtWidgets.QFrame.Plain)
         self.pullupLine.setLineWidth(3)
         self.pullupLine.setFrameShape(QtWidgets.QFrame.VLine)
@@ -110,5 +111,6 @@ class Ui_Frame(object):
         self.label.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/pullupResistor.png\"/></p></body></html>"))
         self.label_2.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/multiplexer.png\"/></p></body></html>"))
         self.label_3.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/connection.png\"/></p></body></html>"))
+
 
 

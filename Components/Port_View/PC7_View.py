@@ -9,22 +9,22 @@ import Components.stackedWidget
 from Components import pinLevelDiagram
 
 
-class PD0_View(QtWidgets.QWidget):
+class PC7_View(QtWidgets.QWidget):
 
-    PD0Frame = None
+    PC7Frame = None
     pinFrame = None
 
     def __init__(self):
-        super(PD0_View, self).__init__()
+        super(PC7_View, self).__init__()
 
-        if PD0_View.PD0Frame == None:
-            PD0_View.PD0Frame = QFrame()
+        if PC7_View.PC7Frame == None:
+            PC7_View.PC7Frame = QFrame()
 
-            PD0_View.pinFrame = pinLevelDiagram.Ui_Frame()
-            PD0_View.pinFrame.setupUi(PD0_View.PD0Frame)
+            PC7_View.pinFrame = pinLevelDiagram.Ui_Frame()
+            PC7_View.pinFrame.setupUi(PC7_View.PC7Frame)
 
 
-            # simPD0FrameulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
+            # simPC7FrameulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
             # simulatorTitle = QtWidgets.QLabel(self)
             # simulatorTitle.setText("Port PD0")
             # simulatorTitle.setAlignment(Qt.AlignCenter)
@@ -43,51 +43,51 @@ class PD0_View(QtWidgets.QWidget):
             # simulatorFrame.setFrameShadow(simulatorFrame.Raised)
             # simulatorFrame.setLayout(simulatorFrame.layout)
             #
-            # PD0_View.PD0Frame.setFrameShape(QFrame.StyledPanel)
-            # PD0_View.PD0Frame.layout = QHBoxLayout()
-            # PD0_View.PD0Frame.layout.addWidget(simulatorFrame)
-            # PD0_View.PD0Frame.setLayout(PD0_View.PD0Frame.layout)
+            # PC7_View.PC7Frame.setFrameShape(QFrame.StyledPanel)
+            # PC7_View.PC7Frame.layout = QHBoxLayout()
+            # PC7_View.PC7Frame.layout.addWidget(simulatorFrame)
+            # PC7_View.PC7Frame.setLayout(PC7_View.PC7Frame.layout)
 
 
 
     @staticmethod
-    def getPD0ViewDiagram():
-        return PD0_View.PD0Frame
+    def getPC7ViewDiagram():
+        return PC7_View.PC7Frame
 
     @staticmethod
     def getInstance():
-        return PD0_View
+        return PC7_View
 
     @staticmethod
     def setDDR(value):
-        PD0_View.pinFrame.ddrValueLabel.setText(str(value))
+        PC7_View.pinFrame.ddrValueLabel.setText(str(value))
 
         if value == 1:
-            PD0_View.pinFrame.ddrLine1.setStyleSheet("color : green")
-            PD0_View.pinFrame.ddrLine2.setStyleSheet("color : green")
+            PC7_View.pinFrame.ddrLine1.setStyleSheet("color : green")
+            PC7_View.pinFrame.ddrLine2.setStyleSheet("color : green")
         else:
-            PD0_View.pinFrame.ddrLine1.setStyleSheet("color : red")
-            PD0_View.pinFrame.ddrLine2.setStyleSheet("color : red")
+            PC7_View.pinFrame.ddrLine1.setStyleSheet("color : red")
+            PC7_View.pinFrame.ddrLine2.setStyleSheet("color : red")
 
     @staticmethod
     def setPort(value):
-        PD0_View.pinFrame.portValueLabel.setText(str(value))
+        PC7_View.pinFrame.portValueLabel.setText(str(value))
 
         if value == 1:
-            PD0_View.pinFrame.portLine.setStyleSheet('color : green')
+            PC7_View.pinFrame.portLine.setStyleSheet('color : green')
             print('here2', value)
         else:
-            PD0_View.pinFrame.portLine.setStyleSheet('color : red')
+            PC7_View.pinFrame.portLine.setStyleSheet('color : red')
 
     @staticmethod
     def setPin(value):
         if value == 1:
-            PD0_View.pinFrame.pinLine.setStyleSheet('color : green')
-            PD0_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: green;")
+            PC7_View.pinFrame.pinLine.setStyleSheet('color : green')
+            PC7_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: green;")
             print('here2', value)
         else:
-            PD0_View.pinFrame.pinLine.setStyleSheet('color : red')
-            PD0_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: red;")
+            PC7_View.pinFrame.pinLine.setStyleSheet('color : red')
+            PC7_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: red;")
 
 
     # def getPortDiagramLayout(self):

@@ -158,7 +158,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     @staticmethod
     def setPinStatus(port, value):
-        if value != "0":
+        if value != 0:
             if port in PIN_Diagram.pinl_dict:
                 PIN_Diagram.pinl_dict[port].setStyleSheet('color : green')
                 # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 9, QtGui.QFont.ExtraBold))
@@ -181,26 +181,33 @@ class PIN_Diagram(QtWidgets.QWidget):
         blockDiagramFrame.setupUi(microcontrollerBlock)
         blockDiagramFrame.eepromFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram, "EEPROM", ['EEPROM.EEARL', 'EEPROM.EEARH', 'EEPROM.EEDR', 'EEPROM.EECR'])
         blockDiagramFrame.gpiorFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "GPIOR")
+                                                                                                    "GPIOR", ['CORE.GPIOR0', 'CORE.GPIOR1', 'CORE.GPIOR2'])
         blockDiagramFrame.flashFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "FLASH")
+                                                                                                    "FLASH", [])
         blockDiagramFrame.tc0Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "TIMER0")
-        blockDiagramFrame.tc1Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "TIMER1")
+                                                                                                    "TIMER0", ['TMRIRQ0.TIMSK0',
+                                                                                                               'TMRIRQ0.TIFR0', 'TIMER0.Counter',
+                                                                                                               'TIMER0.TCNT', 'TIMER0.OCRA',
+                                                                                                               'TIMER0.OCRB', 'TIMER0.TCCRA','TIMER0.TCCRB'])
+        blockDiagramFrame.tc1Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram, "TIMER1", ['TMRIRQ1.TIMSK1', 'TMRIRQ1.TIFR1', 'TIMER1.TCNTH',
+                                                                                                 'TIMER1.TCNTL', 'TIMER1.OCRAH', 'TIMER1.OCRAL', 'TIMER1.OCRBH',
+                                                                                                 'TIMER1.OCRBL', 'TIMER1.ICRH', 'TIMER1.ICRL', 'TIMER1.TCCRA',
+                                                                                                 'TIMER1.TCCRB', 'TIMER1.TCCRC'])
         blockDiagramFrame.tc2Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "TIMER2")
+                                                                                                    "TIMER2", ['TMRIRQ2.TIMSK2', 'TMRIRQ2.TIFR2', 'TIMER2.TCNT',
+                                                                                                               'TIMER2.OCRA', 'TIMER2.OCRB', 'TIMER2.TCCRA', 'TIMER2.TCCRB'])
         blockDiagramFrame.watchdogFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "WATCHDOG", [])
         blockDiagramFrame.spiFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "SPI")
+                                                                                                    "SPI", ['SPI.SPDR', 'SPI.SPSR', 'SPI.SPCR'])
         blockDiagramFrame.usartFrame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
-                                                                                                    "UART0")
+                                                                                                    "UART0", ['UART0.UDR', 'UART0.UCSRA', 'UART0.UCSRB'])
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
     def portClicked(self, port):  # On Click opens up port circuit diagram
         print("port clicked is " + str(port))
+
         Components.Register_Values.Register_Values.clearList()
 
         pinRegister = "PORT" + port[1] + ".PIN"
@@ -233,28 +240,37 @@ class PIN_Diagram(QtWidgets.QWidget):
 
         #uncomment this code for showing pin diagrams
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
+
         obj = Components.ObjectFactory.ObjectFactory.getObject(port)
-        obj.setDDR(1)
-        Components.stackedWidget.stackWidget.addWidget(pinFrame)
-        Components.stackedWidget.stackWidget.incrementTopCount()
+        print('here',obj)
+        if obj != None:
+
+            obj.setDDR(Components.Globalmap.Map.pin_ddrRegisterValue_map[port])
+            obj.setPort(Components.Globalmap.Map.pin_portRegisterValue_map[port])
+            obj.setPin(Components.Globalmap.Map.pin_pinRegisterValue_map[port])
+
+        if pinFrame != None:
+            Components.stackedWidget.stackWidget.addWidget(pinFrame)
+            Components.stackedWidget.stackWidget.incrementTopCount()
 
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
-        if type(frame) != QFrame:
-            block = QFrame()
-            frame.setupUi(block)
-            Components.stackedWidget.stackWidget.addWidget(block)
-            Components.stackedWidget.stackWidget.incrementTopCount()
-        else:
-            Components.stackedWidget.stackWidget.addWidget(frame)
-            Components.stackedWidget.stackWidget.incrementTopCount()
+        if frame != None:
+            if type(frame) != QFrame:
+                block = QFrame()
+                frame.setupUi(block)
+                Components.stackedWidget.stackWidget.addWidget(block)
+                Components.stackedWidget.stackWidget.incrementTopCount()
+            else:
+                Components.stackedWidget.stackWidget.addWidget(frame)
+                Components.stackedWidget.stackWidget.incrementTopCount()
 
         Components.Register_Values.Register_Values.clearList()
         for key in registers:
             registerAddress = Components.Globalmap.Map.getRegisterAddress(key)
             registerValue = Components.Globalmap.Map.getValue(key)
-            Components.Register_Values.Register_Values.addRegister(key, hex(registerAddress), registerValue)
+            Components.Register_Values.Register_Values.addRegister(key.split('.')[1], hex(registerAddress), registerValue)
 
 
 

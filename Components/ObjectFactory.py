@@ -34,6 +34,8 @@ class ObjectFactory():
             return Components.Port_View.PD1_View.PD1_View().getInstance()
         elif objectName == 'PD2':
             return Components.Port_View.PD1_View.PD1_View().getInstance()
+        elif objectName == 'PC7':
+            return Components.Port_View.PC7_View.PC7_View().getInstance()
         else:
             return None
 

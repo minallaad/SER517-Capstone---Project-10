@@ -111,9 +111,14 @@ class Landing(QtWidgets.QWidget):
 
 	def updateUI(self):
 		for key, value in Components.Globalmap.Map.map.items():
-			if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
-				port = key.split('.')[0]
+			port = key.split('.')[0]
+			if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
 				self.setPortValues(port, value)
+			if key in ['PORTB.DDR', 'PORTC.DDR', 'PORTD.DDR']:
+				self.setDdrValues(port, value)
+			if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
+				self.setPinValues(port, value)
+
 
 
 	def setPortValues(self, key, value):
@@ -124,7 +129,31 @@ class Landing(QtWidgets.QWidget):
 		# till here
 		for i in range(len(binVal) - 1, -1, -1):
 			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-			self.PIN_Diagram.setPinStatus(update, binVal[i])
+			value = int(binVal[i])
+			Components.Globalmap.Map.pin_portRegisterValue_map[update] = value
+
+	def setDdrValues(self, key, value):
+		# code to change if required
+		binVal = bin(value)[2:]
+		if len(binVal) < 8:
+			binVal = '0' * (8 - len(binVal)) + binVal
+		# till here
+		for i in range(len(binVal) - 1, -1, -1):
+			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
+			value = int(binVal[i])
+			Components.Globalmap.Map.pin_ddrRegisterValue_map[update] = value
+
+	def setPinValues(self, key, value):
+		# code to change if required
+		binVal = bin(value)[2:]
+		if len(binVal) < 8:
+			binVal = '0' * (8 - len(binVal)) + binVal
+		# till here
+		for i in range(len(binVal) - 1, -1, -1):
+			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
+			value = int(binVal[i])
+			Components.Globalmap.Map.pin_pinRegisterValue_map[update] = value
+			self.PIN_Diagram.setPinStatus(update, value)
 
 class threadExample(QThread):
 	def __init__(self, ui, sim):

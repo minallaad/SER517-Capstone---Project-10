@@ -10,6 +10,16 @@ class Map():  # Used to switch between multiple layout
     map = {}
     port_address_map = {"PORTD": 0X2B, 'PORTC': 0X28, 'PORTB': 0X23}
     port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
+    pin_portRegisterValue_map = {"PD0":0, "PD1":0, "PD2":0, "PD3":0, "PD4":0, "PD5":0, "PD6":0, "PD7":0, "PC0":0, "PC1":0, "PC2":0, "PC3":0, "PC3":0,
+                             "PC5":0, "PC6":0, "PC7":0, "PB0":0, "PB1":0, "PB2":0, "PB3":0, "PB4":0, "PB5":0, "PB6":0, "PB7":0, }
+    pin_ddrRegisterValue_map = {"PD0": 0, "PD1": 0, "PD2": 0, "PD3": 0, "PD4": 0, "PD5": 0, "PD6": 0, "PD7": 0,
+                                 "PC0": 0, "PC1": 0, "PC2": 0, "PC3": 0, "PC3": 0,
+                                 "PC5": 0, "PC6": 0, "PC7": 0, "PB0": 0, "PB1": 0, "PB2": 0, "PB3": 0, "PB4": 0,
+                                 "PB5": 0, "PB6": 0, "PB7": 0, }
+    pin_pinRegisterValue_map = {"PD0": 0, "PD1": 0, "PD2": 0, "PD3": 0, "PD4": 0, "PD5": 0, "PD6": 0, "PD7": 0,
+                                "PC0": 0, "PC1": 0, "PC2": 0, "PC3": 0, "PC3": 0,
+                                "PC5": 0, "PC6": 0, "PC7": 0, "PB0": 0, "PB1": 0, "PB2": 0, "PB3": 0, "PB4": 0,
+                                "PB5": 0, "PB6": 0, "PB7": 0, }
     # ddr_address_map = {'DDRD': 0X2A, 'DDRC': 0X27, 'PORTB.DDR': 0X24}
 
     registerAddressMap = {'CORE.SREG': 0x5F, 'CORE.GTCCR': 0x43, 'CORE.ASSR': 0xB6, 'CORE.CLKPR': 0x61,

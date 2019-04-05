@@ -64,6 +64,31 @@ class PD2_View(QtWidgets.QWidget):
     @staticmethod
     def setDDR(value):
         PD2_View.pinFrame.ddrValueLabel.setText(str(value))
+        if value == 1:
+            PD2_View.pinFrame.ddrLine1.setStyleSheet('color : green')
+            PD2_View.pinFrame.ddrLine2.setStyleSheet('color : green')
+        else:
+            PD2_View.pinFrame.ddrLine1.setStyleSheet('color : red')
+            PD2_View.pinFrame.ddrLine2.setStyleSheet('color : red')
+
+    @staticmethod
+    def setPort(value):
+        if value == 1:
+            PD2_View.pinFrame.portLine.setStyleSheet('color : green')
+        else:
+            PD2_View.pinFrame.portLine.setStyleSheet('color : red')
+
+    @staticmethod
+    def setPin(value):
+        PD2_View.pinFrame.pinLine.setText(str(value))
+
+        if value == 1:
+            PD2_View.pinFrame.pinLine.setStyleSheet('color : green')
+            PD2_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: green;")
+            print('here2', value)
+        else:
+            PD2_View.pinFrame.pinLine.setStyleSheet('color : green')
+            PD2_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: red;")
     # def getLayout(self):
     #     print("Here")
     #     Components.stackedWidget.stackWidget.addWidget(self.PD1Frame)
