@@ -239,10 +239,13 @@ class PIN_Diagram(QtWidgets.QWidget):
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
-        if frame != None:
+        if type(frame) != QFrame:
             block = QFrame()
             frame.setupUi(block)
             Components.stackedWidget.stackWidget.addWidget(block)
+            Components.stackedWidget.stackWidget.incrementTopCount()
+        else:
+            Components.stackedWidget.stackWidget.addWidget(frame)
             Components.stackedWidget.stackWidget.incrementTopCount()
 
         Components.Register_Values.Register_Values.clearList()
