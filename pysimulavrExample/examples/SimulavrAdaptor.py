@@ -19,7 +19,7 @@ class SimulavrAdapter(object):
         return dev
 
     def runProgram(self, ui):
-        dev = self.loadDevice("atmega328", "pysimulavrExample/examples/example_io.elf")
+        dev = self.loadDevice("atmega328", "/home/aman/Downloads/simadoc/bin/Release/simadc.elf")
         while True:
             self.getMemoryValue(dev)
             ui.updateUI()
@@ -89,15 +89,12 @@ class SimulavrAdapter(object):
             val = dev.getRWMem(value)
             Components.Globalmap.Map.map[key] = val
 
-    def getPortValues(self, dev):
-
-        for key, value in Components.Globalmap.Map.port_address_map.items():
-            val = dev.getRWMem(value) & 2
-            #code to change if required
-            binVal = bin(val)[2:]
-            if len(binVal) < 7:
-                binVal = '0'*(7-len(binVal)) + binVal
-            #till here
-            for i in range(len(binVal)-1, -1, -1):
-                update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-                Components.Globalmap.Map.map[update] = binVal[i]
+    def getPortValues(self, key, value):
+        #code to change if required
+        binVal = bin(value)[2:]
+        if len(binVal) < 7:
+            binVal = '0'*(7-len(binVal)) + binVal
+        #till here
+        for i in range(len(binVal)-1, -1, -1):
+            update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
+            Components.Globalmap.Map.map[update] = binVal[i]
