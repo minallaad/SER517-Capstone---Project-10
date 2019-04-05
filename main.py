@@ -111,7 +111,21 @@ class Landing(QtWidgets.QWidget):
 
 	def updateUI(self):
 		for key, value in Components.Globalmap.Map.map.items():
-			self.PIN_Diagram.setPinStatus(key, value)
+			if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
+				port = key.split('.')[0]
+				self.setPortValues(port, value)
+
+
+	def setPortValues(self, key, value):
+		# code to change if required
+		binVal = bin(value)[2:]
+		if len(binVal) < 7:
+			binVal = '0' * (7 - len(binVal)) + binVal
+		# till here
+		for i in range(len(binVal) - 1, -1, -1):
+			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
+			Components.Globalmap.Map.map[update] = binVal[i]
+			self.PIN_Diagram.setPinStatus(update, binVal[i])
 
 class threadExample(QThread):
 	def __init__(self, ui, sim):
