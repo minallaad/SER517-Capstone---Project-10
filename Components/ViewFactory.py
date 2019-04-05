@@ -3,6 +3,7 @@ import Components.Port_View.PD1_View
 import Components.Port_View.PD2_View
 from Components import WatchDogTimer
 from Components import  SPI
+from Components import EEPROM
 
 
 class ViewFactory():
@@ -33,6 +34,8 @@ class ViewFactory():
             return Components.Port_View.PD1_View.PD1_View().getPD1ViewDiagram()
         elif viewName == 'WATCHDOG':
             return WatchDogTimer.Ui_watchDogFrame()
+        elif viewName == 'EEPROM':
+            return EEPROM.memoryDump().getMemoryDump()
         elif viewName == 'SPI':
             return SPI.Ui_SPIFrame()
         else:
