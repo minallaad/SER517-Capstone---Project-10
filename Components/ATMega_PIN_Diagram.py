@@ -53,7 +53,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
             pinFont = QtGui.QFont("Arial", 9, QtGui.QFont.Bold)
 
-            pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5', 'PD6', 'PB3', 'PB4', 'PB5', 'PB6']
+            pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5', 'PD6', 'PD7', 'PB3', 'PB4', 'PB5', 'PB6', 'PB7']
 
             leftPinFrame = QFrame()
             leftPinFrame.layout = QVBoxLayout()
@@ -83,7 +83,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             rightPinFrame.layout.setAlignment(Qt.AlignLeft)
             rightPinFrame.layout.addStretch()
 
-            pinsr = ['PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0', 'PB1', 'PB2', 'VCC', 'GND']
+            pinsr = ['PC7','PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0','PB0', 'PB1', 'PB2', 'VCC', 'GND']
 
             for i in pinsr:
                 self.pinr_dict[i] = QtWidgets.QPushButton(self)
@@ -199,7 +199,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.incrementTopCount()
 
     def portClicked(self, port):  # On Click opens up port circuit diagram
-        print(port)
+        print("port clicked is " + str(port))
         Components.Register_Values.Register_Values.clearList()
 
         pinRegister = "PORT" + port[1] + ".PIN"
