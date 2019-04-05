@@ -79,7 +79,7 @@ class SimulavrAdapter(object):
     def getMemoryValue(self, dev):
         values = {}
 
-        # self.getPortValues(dev)
+        #self.getPortValues(dev)
         self.getDDRValues(dev)
 
         return values
@@ -88,6 +88,7 @@ class SimulavrAdapter(object):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
             val = dev.getRWMem(value)
             Components.Globalmap.Map.map[key] = val
+
 
     def getPortValues(self, key, value):
         #code to change if required
@@ -98,3 +99,4 @@ class SimulavrAdapter(object):
         for i in range(len(binVal)-1, -1, -1):
             update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
             Components.Globalmap.Map.map[update] = binVal[i]
+

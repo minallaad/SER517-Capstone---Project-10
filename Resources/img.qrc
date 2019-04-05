@@ -1,7 +1,16 @@
 <RCC>
   <qresource prefix="image">
+    <file>Images/connection.png</file>
     <file>Images/WatchDogTimer.png</file>
-    <file>Images/rheostat.png</file>
     <file>Images/multiplexer.png</file>
+    <file>Images/pullupResistor.png</file>
+  </qresource>
+  <qresource prefix="blockImages">
+    <file>Images/arr0w3.png</file>
+    <file>Images/arrow1.png</file>
+    <file>Images/arrow2.png</file>
+    <file>Images/arrow4.png</file>
+    <file>Images/arrow5.png</file>
+    <file>Images/arrow6.png</file>
   </qresource>
 </RCC>

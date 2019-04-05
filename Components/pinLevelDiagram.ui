@@ -84,7 +84,7 @@
    <property name="lineWidth">
     <number>3</number>
    </property>
-   <widget class="QLabel" name="ddrValueLabel_2">
+   <widget class="QLabel" name="portValueLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -101,7 +101,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="Line" name="line">
+  <widget class="Line" name="portLine">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -120,7 +120,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="Line" name="line_2">
+  <widget class="Line" name="ddrLine1">
    <property name="geometry">
     <rect>
      <x>270</x>
@@ -139,39 +139,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QFrame" name="muxFrame">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>340</y>
-     <width>51</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <property name="lineWidth">
-    <number>0</number>
-   </property>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>66</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/multiplexer.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="Line" name="line_3">
+  <widget class="Line" name="ddrLine2">
    <property name="geometry">
     <rect>
      <x>260</x>
@@ -190,13 +158,13 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="Line" name="line_4">
+  <widget class="Line" name="pinLine">
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>360</y>
-     <width>118</width>
-     <height>3</height>
+     <y>350</y>
+     <width>131</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -231,7 +199,7 @@
     <number>3</number>
    </property>
   </widget>
-  <widget class="Line" name="line_5">
+  <widget class="Line" name="pullupLine">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -249,40 +217,6 @@
    <property name="orientation">
     <enum>Qt::Vertical</enum>
    </property>
-  </widget>
-  <widget class="QFrame" name="pullUpFrame">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>120</y>
-     <width>51</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <property name="lineWidth">
-    <number>0</number>
-   </property>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>-10</y>
-      <width>61</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/rheostat.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <zorder>label</zorder>
-   <zorder>label</zorder>
   </widget>
   <widget class="QLabel" name="ddrLabel">
    <property name="geometry">
@@ -320,6 +254,45 @@
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>110</y>
+     <width>81</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/pullupResistor.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>340</y>
+     <width>41</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/multiplexer.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>350</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/connection.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>
