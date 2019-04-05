@@ -4,4 +4,7 @@
     <file>Images/rheostat.png</file>
     <file>Images/multiplexer.png</file>
   </qresource>
+  <qresource prefix="blockImages">
+    <file>Images/arrow2.png</file>
+  </qresource>
 </RCC>

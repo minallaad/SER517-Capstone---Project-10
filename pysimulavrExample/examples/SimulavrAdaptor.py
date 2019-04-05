@@ -19,7 +19,7 @@ class SimulavrAdapter(object):
         return dev
 
     def runProgram(self, ui):
-        dev = self.loadDevice("atmega328", "pysimulavrExample/examples/example_io.elf")
+        dev = self.loadDevice("atmega328", "pysimulavrExample/examples/simadc.elf")
         while True:
             self.getMemoryValue(dev)
             ui.updateUI()
@@ -79,7 +79,7 @@ class SimulavrAdapter(object):
     def getMemoryValue(self, dev):
         values = {}
 
-        # self.getPortValues(dev)
+        #self.getPortValues(dev)
         self.getDDRValues(dev)
 
         return values
@@ -88,6 +88,8 @@ class SimulavrAdapter(object):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
             val = dev.getRWMem(value)
             Components.Globalmap.Map.map[key] = val
+
+        print(Components.Globalmap.Map.map)
 
     def getPortValues(self, dev):
 

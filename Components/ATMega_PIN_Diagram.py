@@ -207,9 +207,9 @@ class PIN_Diagram(QtWidgets.QWidget):
             Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), "0")
 
         if portValue!=None:
-            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(portAddress), portValue)
+            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), portValue)
         else:
-            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(portAddress), "0")
+            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), "0")
 
         #uncomment this code for showing pin diagrams
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
