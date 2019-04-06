@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import QStackedWidget
 class Map():  # Used to switch between multiple layout
 
     map = {}
+    refresh_flag = False
+    eeprom_address = 0
     port_address_map = {"PORTD": 0X2B, 'PORTC': 0X28, 'PORTB': 0X23}
     port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
     pin_portRegisterValue_map = {"PD0":0, "PD1":0, "PD2":0, "PD3":0, "PD4":0, "PD5":0, "PD6":0, "PD7":0, "PC0":0, "PC1":0, "PC2":0, "PC3":0, "PC3":0,
@@ -46,6 +48,8 @@ class Map():  # Used to switch between multiple layout
                           'AD.ADCSRA': 0x7A,
                           'AD.ADCSRB': 0x7B, 'AD.ADMUX': 0x7C, 'SPI.SPDR': 0x4E, 'SPI.SPSR': 0x4D, 'SPI.SPCR': 0x4C,
                           'UART0.UDR': 0xC6, 'UART0.UCSRA': 0xC0, 'UART0.UCSRB': 0xC0}
+
+    memory_map = {}
 
     def __init__(self):
         """ Virtually private constructor. """
@@ -91,3 +95,8 @@ class Map():  # Used to switch between multiple layout
             return Map.registerAddressMap[key]
         else:
             return None
+
+    @staticmethod
+    def getMemoryDumpMap():
+        """ Static access method. """
+        return Map.memory_map
