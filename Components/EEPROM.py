@@ -60,7 +60,7 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget = QTableWidget()
             memoryDump.tableWidget.setRowCount(2)
             memoryDump.tableWidget.setColumnCount(3)
-            memoryDump.List = []
+            memoryDump.map = {}
 
             memoryDump.tableWidget.setItem(0, 0, QTableWidgetItem("Address  (in hex)  "))
             memoryDump.tableWidget.setItem(0, 1, QTableWidgetItem("1 byte hexadecimal number (needs to be 16 of them)"))
@@ -99,17 +99,20 @@ class memoryDump(QtWidgets.QWidget):
 
     def reloadMemoryDump(self):
         Components.Globalmap.Map.refresh_flag = True
+        self.clearMap()
+        self.updateTable()
         print("refreshing to get EEPROM content")
 
     def submitClicked(self):
+        Components.Globalmap.Map.eeprom_address = int(self.line.text(), 16)
         Components.Globalmap.Map.refresh_flag = True
-        Components.Globalmap.Map.eeprom_address = self.line.text()
 
 
     @staticmethod
     def updateTable():
         i = 0
-        memoryDump.tableWidget.setRowCount(len(Components.Globalmap.Map.memory_map) + 1)
+        memoryDump.map = Components.Globalmap.Map.memory_map
+        memoryDump.tableWidget.setRowCount(len(memoryDump.map) + 1)
         for key, Value in Components.Globalmap.Map.memory_map.items():
             j = 0
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(hex(key))))
@@ -122,11 +125,11 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(s))
             i = i + 1
         memoryDump.tableWidget.resizeColumnsToContents()
-        memoryDump.tableWidget.repaint()
+        # memoryDump.tableWidget.repaint()
 
     @staticmethod
-    def clearList():
-        memoryDump.List = []
+    def clearMap():
+        memoryDump.map = {}
 
     @staticmethod
     def UpdateEEPROM():
