@@ -93,7 +93,6 @@ class memoryDump(QtWidgets.QWidget):
         Components.Globalmap.Map.refresh_flag = True
         self.clearMap()
         self.updateTable()
-        print("refreshing to get EEPROM content")
 
     def submitClicked(self):
         Components.Globalmap.Map.eeprom_address = int(self.line.text(), 16)

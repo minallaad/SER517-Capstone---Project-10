@@ -1,6 +1,5 @@
 import pysimulavr
 import Components.Globalmap
-import time
 import Components.EEPROM
 
 class SimulavrAdapter(object):
@@ -18,19 +17,25 @@ class SimulavrAdapter(object):
         self.__sc.Add(gdb)
         return dev
 
-    def runProgram(self, ui):
+    def runProgram(self, ui, thread):
         dev = self.loadDevice("atmega328", "pysimulavrExample/examples/simadc.elf")
-        while True:
-            self.getMemoryValue(dev)
-            ui.updateUI()
 
-            if Components.Globalmap.Map.refresh_flag:
-                print(Components.Globalmap.Map.refresh_flag)
-                Components.Globalmap.Map.refresh_flag = False
-                self.getMemoryDumpRange(dev)
-                Components.EEPROM.memoryDump.UpdateEEPROM()
+        i = 0
+        while True:
+
+            if i == 10000:
+                self.getMemoryValue(dev)
+                ui.updateUI()
+
+                if Components.Globalmap.Map.refresh_flag:
+
+                    Components.Globalmap.Map.refresh_flag = False
+                    self.getMemoryDumpRange(dev)
+                    Components.EEPROM.memoryDump.UpdateEEPROM()
+                i = 0
+
+            i = i + 1
             self.doStep()
-            time.sleep(2)
 
     def doRun(self, n):
         ct = self.__sc.GetCurrentTime

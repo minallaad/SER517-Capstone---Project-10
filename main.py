@@ -151,7 +151,7 @@ class threadExample(QThread):
 		self.start()
 
 	def run(self):
-		self.sim.runProgram(self.ui)
+		self.sim.runProgram(self.ui, self)
 
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
