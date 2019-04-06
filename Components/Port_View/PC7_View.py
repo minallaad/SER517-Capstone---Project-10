@@ -13,6 +13,7 @@ class PC7_View(QtWidgets.QWidget):
 
     PC7Frame = None
     pinFrame = None
+    standard = None
 
     def __init__(self):
         super(PC7_View, self).__init__()
@@ -20,34 +21,9 @@ class PC7_View(QtWidgets.QWidget):
         if PC7_View.PC7Frame == None:
             PC7_View.PC7Frame = QFrame()
 
+            PC7_View.standard = Components.Standard.value
             PC7_View.pinFrame = pinLevelDiagram.Ui_Frame()
             PC7_View.pinFrame.setupUi(PC7_View.PC7Frame)
-
-
-            # simPC7FrameulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
-            # simulatorTitle = QtWidgets.QLabel(self)
-            # simulatorTitle.setText("Port PD0")
-            # simulatorTitle.setAlignment(Qt.AlignCenter)
-            # simulatorTitle.setFont(simulatorFont)
-            # simulatorTitle.setAlignment(Qt.AlignCenter)
-            #
-            # simulatorFrame = QFrame()
-            # simulatorFrame.setStyleSheet("QWidget { background-color: black }")
-            # simulatorFrame.setLineWidth(3)
-            # simulatorFrame.setMidLineWidth(3)
-            # simulatorFrame.setFrameShape(QFrame.Panel)
-            # simulatorFrame.setFixedSize(250, 450)
-            # simulatorFrame.layout = QHBoxLayout()
-            # simulatorFrame.layout.addWidget(simulatorTitle)
-            #
-            # simulatorFrame.setFrameShadow(simulatorFrame.Raised)
-            # simulatorFrame.setLayout(simulatorFrame.layout)
-            #
-            # PC7_View.PC7Frame.setFrameShape(QFrame.StyledPanel)
-            # PC7_View.PC7Frame.layout = QHBoxLayout()
-            # PC7_View.PC7Frame.layout.addWidget(simulatorFrame)
-            # PC7_View.PC7Frame.setLayout(PC7_View.PC7Frame.layout)
-
 
 
     @staticmethod
@@ -63,37 +39,33 @@ class PC7_View(QtWidgets.QWidget):
         PC7_View.pinFrame.ddrValueLabel.setText(str(value))
 
         if value == 1:
-            PC7_View.pinFrame.ddrLine1.setStyleSheet("color : green")
-            PC7_View.pinFrame.ddrLine2.setStyleSheet("color : green")
+            PC7_View.pinFrame.ddrLine1.setStyleSheet(PC7_View.standard.high)
+            PC7_View.pinFrame.ddrLine2.setStyleSheet(PC7_View.standard.high)
         else:
-            PC7_View.pinFrame.ddrLine1.setStyleSheet("color : red")
-            PC7_View.pinFrame.ddrLine2.setStyleSheet("color : red")
+            PC7_View.pinFrame.ddrLine1.setStyleSheet(PC7_View.standard.low)
+            PC7_View.pinFrame.ddrLine2.setStyleSheet(PC7_View.standard.low)
 
     @staticmethod
     def setPort(value):
         PC7_View.pinFrame.portValueLabel.setText(str(value))
 
         if value == 1:
-            PC7_View.pinFrame.portLine.setStyleSheet('color : green')
+            PC7_View.pinFrame.portLine.setStyleSheet(PC7_View.standard.high)
             print('here2', value)
         else:
-            PC7_View.pinFrame.portLine.setStyleSheet('color : red')
+            PC7_View.pinFrame.portLine.setStyleSheet(PC7_View.standard.low)
 
     @staticmethod
     def setPin(value):
         if value == 1:
-            PC7_View.pinFrame.pinLine.setStyleSheet('color : green')
-            PC7_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: green;")
+            PC7_View.pinFrame.pinLine.setStyleSheet(PC7_View.standard.high)
+            PC7_View.pinFrame.pinOutputFrame.setStyleSheet(PC7_View.standard.highBackground)
             print('here2', value)
         else:
-            PC7_View.pinFrame.pinLine.setStyleSheet('color : red')
-            PC7_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: red;")
+            PC7_View.pinFrame.pinLine.setStyleSheet(PC7_View.standard.low)
+            PC7_View.pinFrame.pinOutputFrame.setStyleSheet(PC7_View.standard.lowBackground)
 
 
-    # def getPortDiagramLayout(self):
-    #     print("Here")
-    #     Components.stackedWidget.stackWidget.addWidget(self.PD1Frame)
-    #     Components.stackedWidget.stackWidget.incrementTopCount()
 
 
 

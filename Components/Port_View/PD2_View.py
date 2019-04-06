@@ -13,6 +13,7 @@ class PD2_View(QtWidgets.QWidget):
 
     PD2Frame = None
     pinFrame = None
+    standard = None
 
     def __init__(self):
         super(PD2_View, self).__init__()
@@ -20,6 +21,7 @@ class PD2_View(QtWidgets.QWidget):
         if PD2_View.PD1Frame == None:
             # self.rightFrame = None
 
+            PD2_View.standard = Components.Standard.value
             PD2_View.PD1Frame = QFrame()
             print("Now here")
 
@@ -65,30 +67,30 @@ class PD2_View(QtWidgets.QWidget):
     def setDDR(value):
         PD2_View.pinFrame.ddrValueLabel.setText(str(value))
         if value == 1:
-            PD2_View.pinFrame.ddrLine1.setStyleSheet('color : green')
-            PD2_View.pinFrame.ddrLine2.setStyleSheet('color : green')
+            PD2_View.pinFrame.ddrLine1.setStyleSheet(PD2_View.standard.high)
+            PD2_View.pinFrame.ddrLine2.setStyleSheet(PD2_View.standard.high)
         else:
-            PD2_View.pinFrame.ddrLine1.setStyleSheet('color : red')
-            PD2_View.pinFrame.ddrLine2.setStyleSheet('color : red')
+            PD2_View.pinFrame.ddrLine1.setStyleSheet(PD2_View.standard.low)
+            PD2_View.pinFrame.ddrLine2.setStyleSheet(PD2_View.standard.low)
 
     @staticmethod
     def setPort(value):
         if value == 1:
-            PD2_View.pinFrame.portLine.setStyleSheet('color : green')
+            PD2_View.pinFrame.portLine.setStyleSheet(PD2_View.standard.high)
         else:
-            PD2_View.pinFrame.portLine.setStyleSheet('color : red')
+            PD2_View.pinFrame.portLine.setStyleSheet(PD2_View.standard.low)
 
     @staticmethod
     def setPin(value):
         PD2_View.pinFrame.pinLine.setText(str(value))
 
         if value == 1:
-            PD2_View.pinFrame.pinLine.setStyleSheet('color : green')
-            PD2_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: green;")
+            PD2_View.pinFrame.pinLine.setStyleSheet(PD2_View.standard.high)
+            PD2_View.pinFrame.pinOutputFrame.setStyleSheet(PD2_View.standard.highBackground)
             print('here2', value)
         else:
-            PD2_View.pinFrame.pinLine.setStyleSheet('color : green')
-            PD2_View.pinFrame.pinOutputFrame.setStyleSheet("background-color: red;")
+            PD2_View.pinFrame.pinLine.setStyleSheet(PD2_View.standard.low)
+            PD2_View.pinFrame.pinOutputFrame.setStyleSheet(PD2_View.standard.lowBackground)
     # def getLayout(self):
     #     print("Here")
     #     Components.stackedWidget.stackWidget.addWidget(self.PD1Frame)

@@ -15,21 +15,27 @@ import Components.ViewFactory
 import Components.ATMega_Block_Diagram
 import Components.Globalmap
 import Components.ObjectFactory
+import Components.Standard
 
 from Components import ATMega_Block_Diagram
 
 
 
 class PIN_Diagram(QtWidgets.QWidget):
+
     rightFrame = None
     stackedLayout = None
     pinr_dict = {}
     pinl_dict = {}
+    standard = None
 
     def __init__(self):
         super(PIN_Diagram, self).__init__()
 
         if self.rightFrame == None:
+
+            PIN_Diagram.standard = Components.Standard.value
+
             self.rightFrame = QFrame()
 
             simulatorFont = QtGui.QFont("Arial", 15, QtGui.QFont.Bold)
@@ -45,7 +51,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             simulatorFrame.setMidLineWidth(3)
             simulatorFrame.mousePressEvent = PIN_Diagram.microcontrollerClicked
             simulatorFrame.setFrameShape(QFrame.Panel)
-            simulatorFrame.setFixedSize(250, 450)
+            simulatorFrame.setFixedSize(270, 490)
             simulatorFrame.layout = QHBoxLayout()
             simulatorFrame.layout.addWidget(simulatorTitle)
 
@@ -54,7 +60,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
             pinFont = QtGui.QFont("Arial", 9, QtGui.QFont.Bold)
 
-            pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5', 'PD6', 'PD7', 'PB3', 'PB4', 'PB5', 'PB6', 'PB7']
+            pinsl = ['PD0', 'PD1', 'PD2', 'PD3', 'PD4', 'PD5', 'PD6', 'PD7','PB4', 'PB5', 'PB6', 'PB7']
 
             leftPinFrame = QFrame()
             leftPinFrame.layout = QVBoxLayout()
@@ -67,7 +73,7 @@ class PIN_Diagram(QtWidgets.QWidget):
                 self.pinl_dict[i] = QtWidgets.QPushButton(self)
 
                 self.pinl_dict[i].setText(i)
-                self.pinl_dict[i].setStyleSheet('color : dark grey')
+                self.pinl_dict[i].setStyleSheet(PIN_Diagram.standard.deactivated)
                 self.pinl_dict[i].setEnabled(False)
                 # pinl_dict[i].setAlignment(Qt.AlignRight)
                 self.pinl_dict[i].setFixedSize(30, 30)
@@ -84,13 +90,13 @@ class PIN_Diagram(QtWidgets.QWidget):
             rightPinFrame.layout.setAlignment(Qt.AlignLeft)
             rightPinFrame.layout.addStretch()
 
-            pinsr = ['PC7','PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0','PB0', 'PB1', 'PB2', 'VCC', 'GND']
+            pinsr = ['PC7','PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0','PB0', 'PB1', 'PB2','PB3']
 
             for i in pinsr:
                 self.pinr_dict[i] = QtWidgets.QPushButton(self)
 
                 self.pinr_dict[i].setText(i)
-                self.pinr_dict[i].setStyleSheet('color : dark grey')
+                self.pinr_dict[i].setStyleSheet(PIN_Diagram.standard.deactivated)
                 self.pinr_dict[i].setEnabled(False)
                 self.pinr_dict[i].setFixedSize(30, 30)
                 self.pinr_dict[i].setFont(pinFont)
@@ -103,17 +109,17 @@ class PIN_Diagram(QtWidgets.QWidget):
             #enable pin clicks for left
             for val in pinsl:
                 self.pinl_dict[val].setEnabled(True)
-                self.pinl_dict[val].setStyleSheet('color : red')
+                self.pinl_dict[val].setStyleSheet(self.standard.low)
 
             # enable pin clicks for left
             for val in pinsl:
                 self.pinl_dict[val].setEnabled(True)
-                self.pinl_dict[val].setStyleSheet('color : red')
+                self.pinl_dict[val].setStyleSheet(self.standard.low)
 
             # enable pin clicks for right
             for val in pinsr:
                 self.pinr_dict[val].setEnabled(True)
-                self.pinr_dict[val].setStyleSheet('color : red')
+                self.pinr_dict[val].setStyleSheet(self.standard.low)
 
 
             self.verticalSlider = QtWidgets.QSlider()
@@ -160,18 +166,18 @@ class PIN_Diagram(QtWidgets.QWidget):
     def setPinStatus(port, value):
         if value != 0:
             if port in PIN_Diagram.pinl_dict:
-                PIN_Diagram.pinl_dict[port].setStyleSheet('color : green')
+                PIN_Diagram.pinl_dict[port].setStyleSheet(PIN_Diagram.standard.high)
                 # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 9, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
-                PIN_Diagram.pinr_dict[port].setStyleSheet('color : green')
+                PIN_Diagram.pinr_dict[port].setStyleSheet(PIN_Diagram.standard.high)
                 # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
         else:
             if port in PIN_Diagram.pinl_dict:
-                PIN_Diagram.pinl_dict[port].setStyleSheet('color : red')
+                PIN_Diagram.pinl_dict[port].setStyleSheet(PIN_Diagram.standard.low)
                 # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 5, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
-                PIN_Diagram.pinr_dict[port].setStyleSheet('color : red')
+                PIN_Diagram.pinr_dict[port].setStyleSheet(PIN_Diagram.standard.low)
                 # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
     def microcontrollerClicked(self):
