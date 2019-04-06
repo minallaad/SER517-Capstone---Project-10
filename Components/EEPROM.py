@@ -7,6 +7,7 @@ from PyQt5.QtCore import Qt, QRect
 
 import Components.stackedWidget
 from Components import pinLevelDiagram
+import Components.GlobalMap.Map
 
 
 class memoryDump(QtWidgets.QWidget):
@@ -112,10 +113,13 @@ class memoryDump(QtWidgets.QWidget):
 
 
     def reloadMemoryDump(self):
+        Components.GlobalMap.Map.refresh_flag = True
         print("refreshing to get EEPROM content")
 
     def submitClicked(self):
-        print(self.line.text());
+        Components.GlobalMap.Map.refresh_flag = True
+        Components.GlobalMap.Map.eeprom_address = self.line.text()
+
 
     @staticmethod
     def updateTable():
@@ -140,10 +144,11 @@ class memoryDump(QtWidgets.QWidget):
 
     @staticmethod
     def UpdateEEPROM(address, hexNumber, value):
-        hexNumber= bin(hexNumber)
-        rowObj = row( address,hexNumber, value)
+        Components.GlobalMap.Map.memory_map
+        '''hexNumber= bin(hexNumber)
+        rowObj = row(address,hexNumber, value)
         memoryDump.List.append(rowObj)
-        memoryDump.updateTable()
+        memoryDump.updateTable()'''
 
 class row():
     name = None
