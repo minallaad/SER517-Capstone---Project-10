@@ -129,14 +129,17 @@ class memoryDump(QtWidgets.QWidget):
         print(Components.Globalmap.Map.memory_map)
         for key, Value in Components.Globalmap.Map.memory_map.items():
             j = 0
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(key)))
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(hex(key))))
             j = j + 1
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(''.join(Value))))
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(' '.join(Value))))
             j = j + 1
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem("."))
+            s = ''
+            for val in Value:
+                s += chr(int(val)) if int(val) < 256 else '.'
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(s))
             i = i + 1
-
-            memoryDump.tableWidget.repaint()
+        memoryDump.tableWidget.resizeColumnsToContents()
+        memoryDump.tableWidget.repaint()
 
     @staticmethod
     def clearList():
