@@ -141,7 +141,6 @@ class PIN_Diagram(QtWidgets.QWidget):
 
 
             for val in temperature:
-                print(val)
                 temp = QLabel()
                 temp.setText(val)
                 self.temperatureFrame.layout.setSpacing(37)
@@ -181,7 +180,6 @@ class PIN_Diagram(QtWidgets.QWidget):
                 # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
     def microcontrollerClicked(self):
-        print("micro")
         microcontrollerBlock = QFrame()
         blockDiagramFrame = ATMega_Block_Diagram.Ui_microcontrollerBlock()
         blockDiagramFrame.setupUi(microcontrollerBlock)
@@ -212,7 +210,6 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.incrementTopCount()
 
     def portClicked(self, port):  # On Click opens up port circuit diagram
-        print("port clicked is " + str(port))
 
         Components.Register_Values.Register_Values.clearList()
 
@@ -248,7 +245,6 @@ class PIN_Diagram(QtWidgets.QWidget):
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
 
         obj = Components.ObjectFactory.ObjectFactory.getObject(port)
-        print('here',obj)
         if obj != None:
 
             obj.setDDR(Components.Globalmap.Map.pin_ddrRegisterValue_map[port])
