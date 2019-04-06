@@ -119,8 +119,6 @@ class Landing(QtWidgets.QWidget):
 			if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
 				self.setPinValues(port, value)
 
-
-
 	def setPortValues(self, key, value):
 		# code to change if required
 		binVal = bin(value)[2:]
