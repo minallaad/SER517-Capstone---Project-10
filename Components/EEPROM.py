@@ -2,7 +2,7 @@
 
 import sys
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import  QHBoxLayout, QGroupBox, QFrame, QVBoxLayout, QTableWidget , QTableWidgetItem
+from PyQt5.QtWidgets import  QHBoxLayout, QLabel, QFrame, QVBoxLayout, QTableWidget , QTableWidgetItem,QLineEdit,QPushButton
 from PyQt5.QtCore import Qt, QRect
 
 import Components.stackedWidget
@@ -29,8 +29,31 @@ class memoryDump(QtWidgets.QWidget):
             Title.setAlignment(Qt.AlignCenter)
             Title.setGeometry(QRect(290, 40, 191, 31))
 
+
+
             self.refreshButton = QtWidgets.QPushButton("Refresh")
             self.refreshButton.clicked.connect(lambda: self.reloadMemoryDump())
+
+            self.memoryAddressLabel = QLabel(self)
+            self.memoryAddressLabel.setText('Memory Address:')
+            self.line = QLineEdit(self)
+
+            self.line.move(80, 20)
+            self.line.resize(100, 32)
+            self.memoryAddressLabel.move(20, 20)
+
+            submitbutton = QPushButton('Submit', self)
+            submitbutton.clicked.connect(self.submitClicked)
+            submitbutton.resize(100, 32)
+            submitbutton.move(80, 60)
+
+            self.inputFrame = QFrame()
+            self.inputFrame.layout = QHBoxLayout()
+            self.inputFrame.layout.addWidget(self.memoryAddressLabel)
+            self.inputFrame.layout.addWidget(self.line)
+            self.inputFrame.layout.addWidget(submitbutton)
+            self.inputFrame.layout.addWidget(self.refreshButton,0, Qt.AlignRight)
+            self.inputFrame.setLayout(self.inputFrame.layout)
 
             headerfont = QtGui.QFont()
             headerfont.setFamily("Arial Black")
@@ -69,7 +92,7 @@ class memoryDump(QtWidgets.QWidget):
             simulatorFrame = QFrame()
             simulatorFrame.layout = QVBoxLayout()
             simulatorFrame.layout.addWidget(Title)
-            simulatorFrame.layout.addWidget(self.refreshButton,0, Qt.AlignRight)
+            simulatorFrame.layout.addWidget(self.inputFrame)
             simulatorFrame.layout.addWidget(memoryDump.tableWidget)
             simulatorFrame.setFrameShadow(simulatorFrame.Raised)
             simulatorFrame.setLayout(simulatorFrame.layout)
@@ -90,6 +113,9 @@ class memoryDump(QtWidgets.QWidget):
 
     def reloadMemoryDump(self):
         print("refreshing to get EEPROM content")
+
+    def submitClicked(self):
+        print(self.line.text());
 
     @staticmethod
     def updateTable():
