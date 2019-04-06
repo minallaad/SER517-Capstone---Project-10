@@ -49,8 +49,6 @@ class Landing(QtWidgets.QWidget):
 
 		self.stackWidget = Components.stackedWidget.stackWidget().getInstance()
 
-
-
 		self.splitter = QSplitter(Qt.Vertical)
 
 		self.splitter.addWidget(self.List_of_Registers)
@@ -79,9 +77,7 @@ class Landing(QtWidgets.QWidget):
 		self.backButton = QtWidgets.QPushButton("Back")
 		self.backButton.clicked.connect(lambda : self.backClicked())
 
-
 		self.horizontalLayout.addWidget(self.horizontalSplitter)
-
 
 		self.StatusFont =  QtGui.QFont("Helvetica", 10, QtGui.QFont.Bold)
 		self.Status = QtWidgets.QLabel(self)
@@ -120,38 +116,32 @@ class Landing(QtWidgets.QWidget):
 				self.setPinValues(port, value)
 
 	def setPortValues(self, key, value):
-		# code to change if required
-		binVal = bin(value)[2:]
-		if len(binVal) < 8:
-			binVal = '0' * (8 - len(binVal)) + binVal
-		# till here
+		binVal = self.convertValueToBin(value)
 		for i in range(len(binVal) - 1, -1, -1):
 			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
 			value = int(binVal[i])
 			Components.Globalmap.Map.pin_portRegisterValue_map[update] = value
 
 	def setDdrValues(self, key, value):
-		# code to change if required
-		binVal = bin(value)[2:]
-		if len(binVal) < 8:
-			binVal = '0' * (8 - len(binVal)) + binVal
-		# till here
+		binVal = self.convertValueToBin(value)
 		for i in range(len(binVal) - 1, -1, -1):
 			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
 			value = int(binVal[i])
 			Components.Globalmap.Map.pin_ddrRegisterValue_map[update] = value
 
 	def setPinValues(self, key, value):
-		# code to change if required
-		binVal = bin(value)[2:]
-		if len(binVal) < 8:
-			binVal = '0' * (8 - len(binVal)) + binVal
-		# till here
+		binVal = self.convertValueToBin(value)
 		for i in range(len(binVal) - 1, -1, -1):
 			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
 			value = int(binVal[i])
 			Components.Globalmap.Map.pin_pinRegisterValue_map[update] = value
 			self.PIN_Diagram.setPinStatus(update, value)
+
+	def convertValueToBin(self, value):
+		binVal = bin(value)[2:]
+		if len(binVal) < 8:
+			binVal = '0' * (8 - len(binVal)) + binVal
+		return binVal
 
 class threadExample(QThread):
 	def __init__(self, ui, sim):

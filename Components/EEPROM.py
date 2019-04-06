@@ -66,11 +66,6 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget.setItem(0, 1, QTableWidgetItem("1 byte hexadecimal number (needs to be 16 of them)"))
             memoryDump.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
 
-            #Comment this code when showing EEPROM memory dump at runtime
-            # memoryDump.tableWidget.setItem(1, 0, QTableWidgetItem("0X23"))
-            # memoryDump.tableWidget.setItem(1, 1, QTableWidgetItem(bin(0X23)))
-            # memoryDump.tableWidget.setItem(1, 2, QTableWidgetItem("A"))
-
             tableview = QtWidgets.QTableView()
             tableview.setAlternatingRowColors(True)
             tableview.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
@@ -90,12 +85,9 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.memoryDumpFrame.layout.addWidget(simulatorFrame)
             memoryDump.memoryDumpFrame.setLayout(memoryDump.memoryDumpFrame.layout)
 
-
-
     @staticmethod
     def getMemoryDump():
         return memoryDump.memoryDumpFrame
-
 
     def reloadMemoryDump(self):
         Components.Globalmap.Map.refresh_flag = True

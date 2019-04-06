@@ -29,8 +29,6 @@ class SimulavrAdapter(object):
                 Components.Globalmap.Map.refresh_flag = False
                 self.getMemoryDumpRange(dev)
                 Components.EEPROM.memoryDump.UpdateEEPROM()
-
-
             self.doStep()
             time.sleep(2)
 
@@ -85,12 +83,7 @@ class SimulavrAdapter(object):
         return v
 
     def getMemoryValue(self, dev):
-        values = {}
-
-        #self.getPortValues(dev)
         self.getDDRValues(dev)
-
-        return values
 
     def getDDRValues(self, dev):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
