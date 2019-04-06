@@ -28,7 +28,7 @@ class SimulavrAdapter(object):
                 ui.updateUI()
 
                 if Components.Globalmap.Map.refresh_flag:
-                    print(Components.Globalmap.Map.refresh_flag)
+
                     Components.Globalmap.Map.refresh_flag = False
                     self.getMemoryDumpRange(dev)
                     Components.EEPROM.memoryDump.UpdateEEPROM()
