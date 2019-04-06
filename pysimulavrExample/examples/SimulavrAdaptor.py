@@ -23,6 +23,11 @@ class SimulavrAdapter(object):
         while True:
             self.getMemoryValue(dev)
             ui.updateUI()
+
+            if Components.Globalmap.Map.refresh_flag:
+                self.getMemoryDumpRange(dev)
+                Components.Globalmap.Map.refresh_flag = False
+
             self.doStep()
             time.sleep(2)
 
@@ -100,3 +105,20 @@ class SimulavrAdapter(object):
             update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
             Components.Globalmap.Map.map[update] = binVal[i]
 
+    def getMemoryDumpRange(self, dev):
+
+        map = {}
+        address = Components.Globalmap.Map.eeprom_address
+
+        for i in range(0, 20):
+            address += i
+            value_list = []
+            new_address = 0
+            for j in range(0, 16):
+                new_address = address + j
+                val = dev.eeprom.ReadFromAddress(new_address)
+                value_list.append(chr(val))
+            map[address] = value_list
+            address = new_address
+
+        Components.Globalmap.Map.memory_map = map
