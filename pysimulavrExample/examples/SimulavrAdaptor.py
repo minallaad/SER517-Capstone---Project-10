@@ -25,9 +25,11 @@ class SimulavrAdapter(object):
             ui.updateUI()
 
             if Components.Globalmap.Map.refresh_flag:
+                print(Components.Globalmap.Map.refresh_flag)
+                Components.Globalmap.Map.refresh_flag = False
                 self.getMemoryDumpRange(dev)
                 Components.EEPROM.memoryDump.UpdateEEPROM()
-                Components.Globalmap.Map.refresh_flag = False
+
 
             self.doStep()
             time.sleep(2)
@@ -109,7 +111,7 @@ class SimulavrAdapter(object):
     def getMemoryDumpRange(self, dev):
 
         map = {}
-        address = int(Components.Globalmap.Map.eeprom_address)
+        address = Components.Globalmap.Map.eeprom_address
 
         for i in range(0, 20):
             address += i
@@ -119,6 +121,7 @@ class SimulavrAdapter(object):
                 new_address = address + j
                 val = dev.eeprom.ReadFromAddress(new_address)
                 value_list.append(str(val))
+            print(hex(address), address)
             map[address] = value_list
             address = new_address
 

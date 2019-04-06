@@ -64,7 +64,7 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget = QTableWidget()
             memoryDump.tableWidget.setRowCount(2)
             memoryDump.tableWidget.setColumnCount(3)
-            memoryDump.List = []
+            memoryDump.map = {}
 
 
 
@@ -114,18 +114,21 @@ class memoryDump(QtWidgets.QWidget):
 
     def reloadMemoryDump(self):
         Components.Globalmap.Map.refresh_flag = True
+        self.clearMap()
+        self.updateTable()
         print("refreshing to get EEPROM content")
 
     def submitClicked(self):
+        Components.Globalmap.Map.eeprom_address = int(self.line.text(), 16)
         Components.Globalmap.Map.refresh_flag = True
-        Components.Globalmap.Map.eeprom_address = self.line.text()
 
 
     @staticmethod
     def updateTable():
         i = 0
         j = 0
-        memoryDump.tableWidget.setRowCount(len(Components.Globalmap.Map.memory_map) + 1)
+        memoryDump.map = Components.Globalmap.Map.memory_map
+        memoryDump.tableWidget.setRowCount(len(memoryDump.map) + 1)
         print(Components.Globalmap.Map.memory_map)
         for key, Value in Components.Globalmap.Map.memory_map.items():
             j = 0
@@ -139,11 +142,11 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(s))
             i = i + 1
         memoryDump.tableWidget.resizeColumnsToContents()
-        memoryDump.tableWidget.repaint()
+        # memoryDump.tableWidget.repaint()
 
     @staticmethod
-    def clearList():
-        memoryDump.List = []
+    def clearMap():
+        memoryDump.map = {}
 
     @staticmethod
     def UpdateEEPROM():
