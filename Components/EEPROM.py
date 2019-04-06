@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt, QRect
 
 import Components.stackedWidget
 from Components import pinLevelDiagram
-import Components.GlobalMap.Map
+import Components.Globalmap
 
 
 class memoryDump(QtWidgets.QWidget):
@@ -73,9 +73,9 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
 
             #Comment this code when showing EEPROM memory dump at runtime
-            memoryDump.tableWidget.setItem(1, 0, QTableWidgetItem("0X23"))
-            memoryDump.tableWidget.setItem(1, 1, QTableWidgetItem(bin(0X23)))
-            memoryDump.tableWidget.setItem(1, 2, QTableWidgetItem("A"))
+            # memoryDump.tableWidget.setItem(1, 0, QTableWidgetItem("0X23"))
+            # memoryDump.tableWidget.setItem(1, 1, QTableWidgetItem(bin(0X23)))
+            # memoryDump.tableWidget.setItem(1, 2, QTableWidgetItem("A"))
 
             tableview = QtWidgets.QTableView()
             tableview.setAlternatingRowColors(True)
@@ -113,27 +113,27 @@ class memoryDump(QtWidgets.QWidget):
 
 
     def reloadMemoryDump(self):
-        Components.GlobalMap.Map.refresh_flag = True
+        Components.Globalmap.Map.refresh_flag = True
         print("refreshing to get EEPROM content")
 
     def submitClicked(self):
-        Components.GlobalMap.Map.refresh_flag = True
-        Components.GlobalMap.Map.eeprom_address = self.line.text()
+        Components.Globalmap.Map.refresh_flag = True
+        Components.Globalmap.Map.eeprom_address = self.line.text()
 
 
     @staticmethod
     def updateTable():
         i = 0
         j = 0
-        memoryDump.tableWidget.setRowCount(len(memoryDump.List) + 1)
-
-        while (i < len(memoryDump.List)):
+        memoryDump.tableWidget.setRowCount(len(Components.Globalmap.Map.memory_map) + 1)
+        print(Components.Globalmap.Map.memory_map)
+        for key, Value in Components.Globalmap.Map.memory_map.items():
             j = 0
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(memoryDump.List[i].address)))
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(key)))
             j = j + 1
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(memoryDump.List[i].hexNumber)))
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(''.join(Value))))
             j = j + 1
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(memoryDump.List[i].value)))
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem("."))
             i = i + 1
 
             memoryDump.tableWidget.repaint()
@@ -143,8 +143,8 @@ class memoryDump(QtWidgets.QWidget):
         memoryDump.List = []
 
     @staticmethod
-    def UpdateEEPROM(address, hexNumber, value):
-        Components.GlobalMap.Map.memory_map
+    def UpdateEEPROM():
+        memoryDump.updateTable()
         '''hexNumber= bin(hexNumber)
         rowObj = row(address,hexNumber, value)
         memoryDump.List.append(rowObj)

@@ -1,7 +1,7 @@
 import pysimulavr
 import Components.Globalmap
 import time
-import EEPROM
+import Components.EEPROM
 
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
@@ -26,7 +26,7 @@ class SimulavrAdapter(object):
 
             if Components.Globalmap.Map.refresh_flag:
                 self.getMemoryDumpRange(dev)
-                EEPROM.UpdateEEPROM()
+                Components.EEPROM.memoryDump.UpdateEEPROM()
                 Components.Globalmap.Map.refresh_flag = False
 
             self.doStep()
@@ -109,7 +109,7 @@ class SimulavrAdapter(object):
     def getMemoryDumpRange(self, dev):
 
         map = {}
-        address = Components.Globalmap.Map.eeprom_address
+        address = int(Components.Globalmap.Map.eeprom_address)
 
         for i in range(0, 20):
             address += i
