@@ -91,6 +91,9 @@ class memoryDump(QtWidgets.QWidget):
 
     def reloadMemoryDump(self):
         Components.Globalmap.Map.refresh_flag = True
+        self.movie = QMovie("{filename}.gif")
+        self.movie.frameChanged.connect(self.repaint)
+        self.movie.start()
         self.clearMap()
         self.updateTable()
 
@@ -112,7 +115,7 @@ class memoryDump(QtWidgets.QWidget):
             j = j + 1
             s = ''
             for val in Value:
-                s += chr(int(val)) if int(val) < 256 else '.'
+                s += chr(int(val)) if int(val) < 176 and int(val) > 32 and int(val) != 127 else ' . '
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(s))
             i = i + 1
         memoryDump.tableWidget.resizeColumnsToContents()
