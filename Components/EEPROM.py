@@ -62,9 +62,9 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget.setColumnCount(3)
             memoryDump.map = {}
 
-            memoryDump.tableWidget.setItem(0, 0, QTableWidgetItem("Address  (in hex)  "))
-            memoryDump.tableWidget.setItem(0, 1, QTableWidgetItem("1 byte hexadecimal number (needs to be 16 of them)"))
-            memoryDump.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
+            memoryDump.tableWidget.setItem(0, 0, QTableWidgetItem("Address   "))
+            memoryDump.tableWidget.setItem(0, 1, QTableWidgetItem("Hex Values"))
+            memoryDump.tableWidget.setItem(0, 2, QTableWidgetItem("Text Values"))
 
             tableview = QtWidgets.QTableView()
             tableview.setAlternatingRowColors(True)
