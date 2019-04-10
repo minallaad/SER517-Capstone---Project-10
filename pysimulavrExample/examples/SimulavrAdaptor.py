@@ -54,39 +54,6 @@ class SimulavrAdapter(object):
     def getCurrentTime(self):
         return self.__sc.GetCurrentTime()
 
-    def getAllRegisteredTraceValues(self):
-        os = pysimulavr.ostringstream()
-        pysimulavr.DumpManager.Instance().save(os)
-        return filter(None, [i.strip() for i in os.str().split("\n")])
-
-    def dmanSingleDeviceApplication(self):
-        pysimulavr.DumpManager.Instance().SetSingleDeviceApp()
-
-    def dmanStart(self):
-        pysimulavr.DumpManager.Instance().start()
-
-    def dmanStop(self):
-        pysimulavr.DumpManager.Instance().stopApplication()
-
-    def setVCDDump(self, vcdname, signals, rstrobe=False, wstrobe=False):
-        dman = pysimulavr.DumpManager.Instance()
-        sigs = ["+ " + i for i in signals]
-        dman.addDumpVCD(vcdname, "\n".join(sigs), "ns", rstrobe, wstrobe)
-
-    def getWordByName(self, dev, label):
-        addr = dev.data.GetAddressAtSymbol(label)
-        v = dev.getRWMem(addr)
-        addr += 1
-        v = (dev.getRWMem(addr) << 8) + v
-        return v
-
-    def getFlashWordByName(self, dev, label):
-        addr = dev.Flash.GetAddressAtSymbol(label)
-        v = dev.getRWMem(addr)
-        addr += 1
-        v = (dev.getRWMem(addr) << 8) + v
-        return v
-
     def getMemoryValue(self, dev):
         self.getDDRValues(dev)
 
@@ -95,22 +62,9 @@ class SimulavrAdapter(object):
             val = dev.getRWMem(value)
             Components.Globalmap.Map.map[key] = val
 
-
-    def getPortValues(self, key, value):
-        #code to change if required
-        binVal = bin(value)[2:]
-        if len(binVal) < 7:
-            binVal = '0'*(7-len(binVal)) + binVal
-        #till here
-        for i in range(len(binVal)-1, -1, -1):
-            update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-            Components.Globalmap.Map.map[update] = binVal[i]
-
     def getMemoryDumpRange(self, dev):
-
         map = {}
         address = Components.Globalmap.Map.eeprom_address
-
         for i in range(0, 20):
             address += i
             value_list = []
