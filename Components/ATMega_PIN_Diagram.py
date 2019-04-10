@@ -241,7 +241,8 @@ class PIN_Diagram(QtWidgets.QWidget):
         else:
             Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), "0")
 
-        #uncomment this code for showing pin diagrams
+
+        print(port)
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
 
         obj = Components.ObjectFactory.ObjectFactory.getObject(port)
