@@ -54,20 +54,6 @@ class SimulavrAdapter(object):
     def getCurrentTime(self):
         return self.__sc.GetCurrentTime()
 
-    def getAllRegisteredTraceValues(self):
-        os = pysimulavr.ostringstream()
-        pysimulavr.DumpManager.Instance().save(os)
-        return filter(None, [i.strip() for i in os.str().split("\n")])
-
-    def dmanSingleDeviceApplication(self):
-        pysimulavr.DumpManager.Instance().SetSingleDeviceApp()
-
-    def dmanStart(self):
-        pysimulavr.DumpManager.Instance().start()
-
-    def dmanStop(self):
-        pysimulavr.DumpManager.Instance().stopApplication()
-
     def setVCDDump(self, vcdname, signals, rstrobe=False, wstrobe=False):
         dman = pysimulavr.DumpManager.Instance()
         sigs = ["+ " + i for i in signals]
