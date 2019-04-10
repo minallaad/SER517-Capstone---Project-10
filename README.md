@@ -15,14 +15,9 @@ Saheb Johar
 
 Aman Maheshwari
 
-**Overview**
+## Overview
 
-
-
-
-
-
-
+The brief requirement of client was to develop a clock accurate simulator which can simulate the microcontroller Atmega328P and provide a graphical visualization for the same. However, with the availability of Simulavr - simulator for AVR Microcontrollers, the project scope was reduced down to the development of the graphical visualization for Simulavr. The client requires a GUI which can display the current state of the ATMEGA328 microcontroller being simulated by Simulavr.  The problem statement of the project is to create a GUI which displays the internal states and values of the various components of the microcontroller. The application should allow the users to debug programs for Atmega328 (simulated device) using a debugger, specifically GDB. The final deliverable must consist of a GUI which displays the data of the internal states of the microcontroller throughout the program debugging. The GUI must be able to fetch the updated states of the microcontroller pins, registers and other components and should display it to the users. The project is focused on helping students working on microcontroller programming for simulation purposes.
 
 
 ## Tools
