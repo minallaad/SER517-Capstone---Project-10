@@ -39,7 +39,19 @@ The brief requirement of client was to develop a clock accurate simulator which 
 
 ## Installation Direction
 
-Run this command to install PyQt5
+Run this command to install Pysimulavr：
+
+```
+~$ cd simulavr
+~$ ./bootstrap
+~$ ./configure --enable-python
+~$ Make
+~$ Sudo python setup.py install
+~$ Python --version
+~$ In ./bash_profile add $LD_LIBRARY_PATH = /usr/local/lib/
+~$ python
+~$ Import pysimulavr
+```
 
 
 
