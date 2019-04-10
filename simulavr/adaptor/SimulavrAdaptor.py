@@ -18,12 +18,12 @@ class SimulavrAdapter(object):
         return dev
 
     def runProgram(self, ui, thread):
-        dev = self.loadDevice("atmega328", "pysimulavrExample/examples/simadc.elf")
+        dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
 
         i = 0
         while True:
 
-            if i == 10000:
+            if i == 5000:
                 self.getMemoryValue(dev)
                 ui.updateUI()
 
@@ -73,7 +73,6 @@ class SimulavrAdapter(object):
                 new_address = address + j
                 val = dev.eeprom.ReadFromAddress(new_address)
                 value_list.append(str(val))
-            print(hex(address), address)
             map[address] = value_list
             address = new_address
 

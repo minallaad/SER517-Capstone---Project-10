@@ -116,7 +116,6 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(s))
             i = i + 1
         memoryDump.tableWidget.resizeColumnsToContents()
-        # memoryDump.tableWidget.repaint()
 
     @staticmethod
     def clearMap():

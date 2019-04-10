@@ -60,11 +60,8 @@ class List_of_Registers(QListWidget):
 
 
     def Clicked(self):  # On Click Register name calls this function
-        print('there', self.text())
         value = Components.Globalmap.Map.getValue(self.text())
         address = Components.Globalmap.Map.getRegisterAddress(self.text())
-        print('there2', value)
-        print('map', Components.Globalmap.Map.map)
         Components.Register_Values.Register_Values.clearList()
 
         if value !=None and address!= None:
