@@ -90,9 +90,6 @@ class memoryDump(QtWidgets.QWidget):
         return memoryDump.memoryDumpFrame
 
     def reloadMemoryDump(self):
-        Components.Globalmap.Map.refresh_flag = True
-        self.movie = QMovie("{filename}.gif")
-        self.movie.frameChanged.connect(self.repaint)
         self.movie.start()
         self.clearMap()
         self.updateTable()

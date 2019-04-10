@@ -25,6 +25,7 @@ class Register_Values():
             Register_Values.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
 
 
+
     @staticmethod
     def getInstance():
         """ Static access method. """
@@ -51,6 +52,7 @@ class Register_Values():
             Register_Values.tableWidget.setItem(i+1, j, QTableWidgetItem(str(Register_Values.List[i].value)))
             i = i+1
 
+        Register_Values.tableWidget.resizeColumnsToContents()
         Register_Values.tableWidget.repaint()
 
     @staticmethod

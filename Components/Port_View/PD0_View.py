@@ -56,7 +56,7 @@ class PD0_View(QtWidgets.QWidget):
 
 
     @staticmethod
-    def getPD0ViewDiagram():
+    def getViewFrame():
         return PD0_View.PD0Frame
 
     @staticmethod

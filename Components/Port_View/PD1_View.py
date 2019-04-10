@@ -29,7 +29,7 @@ class PD1_View(QtWidgets.QWidget):
 
 
     @staticmethod
-    def getPD1ViewDiagram():
+    def getViewFrame():
         return PD1_View.PD1Frame
 
     @staticmethod
