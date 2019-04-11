@@ -132,7 +132,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.verticalSlider.setTickPosition(QtWidgets.QSlider.TicksRight)
             self.verticalSlider.setTickInterval(0.1)
             self.verticalSlider.setSingleStep(1)
-            self.verticalSlider.setStyleSheet('QSlider::handle:vertical{background:grey; border: 20px; width : 16px; height : 20px; line-height: 20px ; margin-top:-5px; margin-bottom: -5px; border-radius:10px} QSlider::add-page:vertical{background:red} QSlider::sub-page:vertical{background:lightgrey}')
+            self.verticalSlider.setStyleSheet('QSlider{max-height:500px} QSlider::handle:vertical{background:grey} QSlider::add-page:vertical{background:red} QSlider::sub-page:vertical{background:lightgrey}')
 
             temperature = ["120","110","100" , "90" , "80", "70", "60", "50", "40","30","20","10","0"]
             self.temperatureFrame = QFrame()
@@ -144,7 +144,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             for val in temperature:
                 temp = QLabel()
                 temp.setText(val)
-                self.temperatureFrame.layout.setSpacing(37)
+                self.temperatureFrame.layout.setSpacing(22)
                 self.temperatureFrame.layout.addWidget(temp)
 
             self.temperatureFrame.layout.addStretch()
