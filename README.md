@@ -43,6 +43,12 @@ The above list of requirements broadly list out all the necessary features of th
 
 ## Installation Direction
 
+Run this command to install PyQt5：
+
+```
+sudo apt-get install python3-pyqt5
+```
+
 Run this command to install Pysimulavr：
 
 ```
