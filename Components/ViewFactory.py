@@ -7,6 +7,14 @@ import Components.Port_View.PD5_View
 import Components.Port_View.PD6_View
 import Components.Port_View.PD7_View
 
+
+import Components.Port_View.PC0_View
+import Components.Port_View.PC1_View
+import Components.Port_View.PC2_View
+import Components.Port_View.PC3_View
+import Components.Port_View.PC4_View
+import Components.Port_View.PC5_View
+import Components.Port_View.PC6_View
 import Components.Port_View.PC7_View
 
 from Components import WatchDogTimer
@@ -48,10 +56,24 @@ class ViewFactory():
             return Components.Port_View.PD4_View.PD4_View().getViewFrame()
         elif viewName == 'PD5':
             return Components.Port_View.PD5_View.PD5_View().getViewFrame()
-        elif (viewName == 'PD6'):
+        elif viewName == 'PD6':
             return Components.Port_View.PD6_View.PD6_View().getViewFrame()
         elif viewName == 'PD7':
             return Components.Port_View.PD7_View.PD7_View().getViewFrame()
+        elif viewName == 'PC0':
+            return Components.Port_View.PC0_View.PC0_View().getViewFrame()
+        elif viewName == 'PC1':
+            return Components.Port_View.PC1_View.PC1_View().getViewFrame()
+        elif viewName == 'PC2':
+            return Components.Port_View.PC2_View.PC2_View().getViewFrame()
+        elif viewName == 'PC3':
+            return Components.Port_View.PC3_View.PC3_View().getViewFrame()
+        elif viewName == 'PC4':
+            return Components.Port_View.PC4_View.PC4_View().getViewFrame()
+        elif viewName == 'PC5':
+            return Components.Port_View.PC5_View.PC5_View().getViewFrame()
+        elif viewName == 'PC6':
+            return Components.Port_View.PC6_View.PC6_View().getViewFrame()
         elif viewName == 'PC7':
             return Components.Port_View.PC7_View.PC7_View().getViewFrame()
         elif viewName == 'WATCHDOG':

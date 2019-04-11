@@ -167,18 +167,15 @@ class PIN_Diagram(QtWidgets.QWidget):
         if value != 0:
             if port in PIN_Diagram.pinl_dict:
                 PIN_Diagram.pinl_dict[port].setStyleSheet(PIN_Diagram.standard.high)
-                # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 9, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
                 PIN_Diagram.pinr_dict[port].setStyleSheet(PIN_Diagram.standard.high)
-                # PIN_Diagram.pinr_dict[port].setEnabled(True)
 
         else:
             if port in PIN_Diagram.pinl_dict:
                 PIN_Diagram.pinl_dict[port].setStyleSheet(PIN_Diagram.standard.low)
-                # PIN_Diagram.pinl_dict[port].setFont(QtGui.QFont("Arial", 5, QtGui.QFont.ExtraBold))
             elif port in PIN_Diagram.pinr_dict:
                 PIN_Diagram.pinr_dict[port].setStyleSheet(PIN_Diagram.standard.low)
-                # PIN_Diagram.pinr_dict[port].setEnabled(True)
+
 
     def microcontrollerClicked(self):
         microcontrollerBlock = QFrame()
