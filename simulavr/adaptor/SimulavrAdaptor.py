@@ -23,7 +23,7 @@ class SimulavrAdapter(object):
 
         i = 0
         while True:
-            print('loop')
+            
             if i == 5000:
                 self.getMemoryValue(dev)
 
@@ -40,6 +40,7 @@ class SimulavrAdapter(object):
                 i = 0
 
             i = i + 1
+            print(i)
             self.doStep()
 
     def doRun(self, n):
