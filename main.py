@@ -12,7 +12,7 @@ import Components.Globalmap
 import Components.List_of_Registers
 import Components.Register_Values
 import Components.stackedWidget
-from pysimulavrExample.examples import SimulavrAdaptor
+from simulavr.adaptor import SimulavrAdaptor
 
 
 class Landing(QtWidgets.QWidget):
@@ -60,7 +60,6 @@ class Landing(QtWidgets.QWidget):
 		self.rightFrame = self.PIN_Diagram.getPIN_Digram()
 
 		self.stackWidget.addWidget(self.rightFrame)
-		print(self.stackWidget.currentWidget())
 
 		self.horizontalSplitter = QSplitter(Qt.Horizontal)
 		self.horizontalLayout.addWidget(self.splitter)
@@ -100,7 +99,6 @@ class Landing(QtWidgets.QWidget):
 	def backClicked(self):
 		topWidget = Components.stackedWidget.stackWidget.top
 		if topWidget != 0:
-			print("TOP")
 			widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(topWidget)
 			Components.stackedWidget.stackWidget.decrementTopCount()
 			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
@@ -143,7 +141,7 @@ class Landing(QtWidgets.QWidget):
 			binVal = '0' * (8 - len(binVal)) + binVal
 		return binVal
 
-class threadExample(QThread):
+class simulavrThread(QThread):
 	def __init__(self, ui, sim):
 		QThread.__init__(self)
 		self.sim = sim
@@ -157,5 +155,5 @@ if __name__ == '__main__':
 	app = QApplication(sys.argv)
 	obj = Landing()
 	sim = SimulavrAdaptor.SimulavrAdapter()
-	thread = threadExample(obj, sim)
+	thread = simulavrThread(obj, sim)
 	app.exec_()

@@ -57,14 +57,6 @@ class PD2_View(QtWidgets.QWidget):
         if value == 1:
             PD2_View.pinFrame.pinLine.setStyleSheet(PD2_View.standard.high)
             PD2_View.pinFrame.pinOutputFrame.setStyleSheet(PD2_View.standard.highBackground)
-            print('here2', value)
         else:
             PD2_View.pinFrame.pinLine.setStyleSheet(PD2_View.standard.low)
             PD2_View.pinFrame.pinOutputFrame.setStyleSheet(PD2_View.standard.lowBackground)
-
-
-
-
-
-
-

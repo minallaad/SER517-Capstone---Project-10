@@ -1,6 +1,7 @@
 import pysimulavr
-import SimulavrAdaptor
+from simulavr.adaptor import SimulavrAdaptor
 import sys
+import socket
 
 
 class XPin(pysimulavr.Pin):
@@ -16,7 +17,6 @@ class XPin(pysimulavr.Pin):
 
     def SetInState(self, pin):
         pysimulavr.Pin.SetInState(self, pin)
-        print "%s='%s' (t=%dns)" % (self.name, pin.toChar(), sim.getCurrentTime())
 
 
 def callGdb(dev):
