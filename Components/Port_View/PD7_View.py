@@ -54,14 +54,6 @@ class PD7_View(QtWidgets.QWidget):
         if value == 1:
             PD7_View.pinFrame.pinLine.setStyleSheet(PD7_View.standard.high)
             PD7_View.pinFrame.pinOutputFrame.setStyleSheet(PD7_View.standard.highBackground)
-            print('here2', value)
         else:
             PD7_View.pinFrame.pinLine.setStyleSheet(PD7_View.standard.low)
             PD7_View.pinFrame.pinOutputFrame.setStyleSheet(PD7_View.standard.lowBackground)
-
-
-
-
-
-
-
