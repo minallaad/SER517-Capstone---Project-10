@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QStackedWidget
 
 class Map():  # Used to switch between multiple layout
 
+    port_clicked = None
     map = {}
     refresh_flag = False
     eeprom_address = 0
