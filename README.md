@@ -33,6 +33,7 @@ The above list of requirements broadly list out all the necessary features of th
 </td>
 </tr>
 </table>
+
 ## Tools
 
 [Pycharm IDE](https://www.jetbrains.com/pycharm/) - We require this IDE to help us better understand the code base for pysimulavr, as it provides easy run configuration options and good debugging to view runtime data.
