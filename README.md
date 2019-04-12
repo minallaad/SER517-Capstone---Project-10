@@ -46,24 +46,29 @@ The above list of requirements broadly list out all the necessary features of th
 Run this command to install PyQt5：
 
 ```
-sudo apt-get install python3-pyqt5
+$  sudo apt-get install python3-pyqt5
 ```
 
 Run this command to install Pysimulavr：
 
 ```
-~$ cd simulavr
-~$ ./bootstrap
-~$ ./configure --enable-python
-~$ Make
-~$ Sudo python setup.py install
-~$ Python --version
-~$ In ./bash_profile add $LD_LIBRARY_PATH = /usr/local/lib/
-~$ python
-~$ Import pysimulavr
+$ cd simulavr
+$ ./bootstrap
+$ ./configure --enable-python
+$ Make
+$ Sudo python setup.py install
+$ Python --version
+$ In ./bash_profile add $LD_LIBRARY_PATH = /usr/local/lib/
+$ python
+$ Import pysimulavr
 ```
 
+Install GUI dependencies:
 
+```
+$ cd SER517-Capstone---Project-10/
+$ pip install -r requirements.txt
+```
 
 ## Build and Run Directions
 
