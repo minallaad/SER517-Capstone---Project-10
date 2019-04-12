@@ -18,11 +18,9 @@ class PD1_View(QtWidgets.QWidget):
         super(PD1_View, self).__init__()
 
         if PD1_View.PD1Frame == None:
-            # self.rightFrame = None
 
             PD1_View.standard = Components.Standard.value
             PD1_View.PD1Frame = QFrame()
-            print("Now here")
 
             PD1_View.pinFrame = pinLevelDiagram.Ui_Frame()
             PD1_View.pinFrame.setupUi(PD1_View.PD1Frame)
@@ -59,14 +57,6 @@ class PD1_View(QtWidgets.QWidget):
         if value == 1:
             PD1_View.pinFrame.pinLine.setStyleSheet(PD1_View.standard.high)
             PD1_View.pinFrame.pinOutputFrame.setStyleSheet(PD1_View.standard.highBackground)
-            print('here2', value)
         else:
             PD1_View.pinFrame.pinLine.setStyleSheet(PD1_View.standard.low)
             PD1_View.pinFrame.pinOutputFrame.setStyleSheet(PD1_View.standard.lowBackground)
-
-
-
-
-
-
-
