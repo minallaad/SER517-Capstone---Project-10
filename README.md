@@ -52,6 +52,9 @@ $  sudo apt-get install python3-pyqt5
 Run this command to install Pysimulavr：
 
 ```
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.61
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.72
+$ sudo update-alternatives --config python
 $ cd simulavr
 $ ./bootstrap
 $ ./configure --enable-python
@@ -72,7 +75,10 @@ $ pip install -r requirements.txt
 
 ## Build and Run Directions
 
-
+```
+$ cd SER517-Capstone---Project-10/
+$ python3 main.py
+```
 ## Design Details
 
 
