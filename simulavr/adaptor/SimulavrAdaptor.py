@@ -40,7 +40,7 @@ class SimulavrAdapter(object):
                 i = 0
 
             i = i + 1
-            print(i)
+            
             self.doStep()
 
     def doRun(self, n):
