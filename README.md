@@ -97,7 +97,7 @@ $ python3 main.py
 
 
 ## Main Page
-<img src="/Resources/Images/MainPage.png", alt="Main Page UI"/>
+<img src="/Resources/Images/MainPage.png">
 
 
 
