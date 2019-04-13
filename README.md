@@ -96,5 +96,8 @@ $ python3 main.py
 ## Design Details
 
 
+## Main Page
+<img src="/Resources/Images/MainPafe.png", alt="Main Page UI"/>
+
 
 
