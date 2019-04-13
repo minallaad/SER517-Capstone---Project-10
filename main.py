@@ -97,6 +97,7 @@ class Landing(QtWidgets.QWidget):
 		return "Connected to Simulavr"
 
 	def backClicked(self):
+		self.refreshItems()
 		topWidget = Components.stackedWidget.stackWidget.top
 		if topWidget != 0:
 			widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(topWidget)
@@ -104,6 +105,7 @@ class Landing(QtWidgets.QWidget):
 			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
 	def updateUI(self):
+
 		for key, value in Components.Globalmap.Map.map.items():
 			port = key.split('.')[0]
 			if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
@@ -112,6 +114,9 @@ class Landing(QtWidgets.QWidget):
 				self.setDdrValues(port, value)
 			if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
 				self.setPinValues(port, value)
+
+		if Components.Globalmap.Map.port_clicked != None:
+			self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
 
 	def setPortValues(self, key, value):
 		binVal = self.convertValueToBin(value)
@@ -140,6 +145,9 @@ class Landing(QtWidgets.QWidget):
 		if len(binVal) < 8:
 			binVal = '0' * (8 - len(binVal)) + binVal
 		return binVal
+
+	def refreshItems(self):
+		Components.Globalmap.Map.port_clicked = None
 
 class simulavrThread(QThread):
 	def __init__(self, ui, sim):

@@ -90,7 +90,6 @@ class memoryDump(QtWidgets.QWidget):
         return memoryDump.memoryDumpFrame
 
     def reloadMemoryDump(self):
-        self.movie.start()
         self.clearMap()
         self.updateTable()
 

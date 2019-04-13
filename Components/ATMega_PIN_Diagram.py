@@ -189,8 +189,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         blockDiagramFrame.tc0Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram,
                                                                                                     "TIMER0", ['TMRIRQ0.TIMSK0',
                                                                                                                'TMRIRQ0.TIFR0', 'TIMER0.Counter',
-                                                                                                               'TIMER0.TCNT', 'TIMER0.OCRA',
-                                                                                                               'TIMER0.OCRB', 'TIMER0.TCCRA','TIMER0.TCCRB'])
+                                                                                                               'TIMER0.TCNT', 'TIMER0.OCRA',                                                                                               'TIMER0.OCRB', 'TIMER0.TCCRA','TIMER0.TCCRB'])
         blockDiagramFrame.tc1Frame.mousePressEvent = lambda x: PIN_Diagram.blockComponentClicked(PIN_Diagram, "TIMER1", ['TMRIRQ1.TIMSK1', 'TMRIRQ1.TIFR1', 'TIMER1.TCNTH',
                                                                                                  'TIMER1.TCNTL', 'TIMER1.OCRAH', 'TIMER1.OCRAL', 'TIMER1.OCRBH',
                                                                                                  'TIMER1.OCRBL', 'TIMER1.ICRH', 'TIMER1.ICRL', 'TIMER1.TCCRA',
@@ -208,6 +207,8 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.incrementTopCount()
 
     def portClicked(self, port):  # On Click opens up port circuit diagram
+
+        Components.Globalmap.Map.port_clicked = port
 
         Components.Register_Values.Register_Values.clearList()
 
@@ -241,12 +242,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
 
-        obj = Components.ObjectFactory.ObjectFactory.getObject(port)
-        if obj != None:
-
-            obj.setDDR(Components.Globalmap.Map.pin_ddrRegisterValue_map[port])
-            obj.setPort(Components.Globalmap.Map.pin_portRegisterValue_map[port])
-            obj.setPin(Components.Globalmap.Map.pin_pinRegisterValue_map[port])
+        self.refreshPortValues(port)
 
         if pinFrame != None:
             Components.stackedWidget.stackWidget.addWidget(pinFrame)
@@ -271,7 +267,12 @@ class PIN_Diagram(QtWidgets.QWidget):
             registerValue = Components.Globalmap.Map.getValue(key)
             Components.Register_Values.Register_Values.addRegister(key.split('.')[1], hex(registerAddress), registerValue)
 
-
-
+    @staticmethod
+    def refreshPortValues(port):
+        obj = Components.ObjectFactory.ObjectFactory.getObject(port)
+        if obj != None:
+            obj.setDDR(Components.Globalmap.Map.pin_ddrRegisterValue_map[port])
+            obj.setPort(Components.Globalmap.Map.pin_portRegisterValue_map[port])
+            obj.setPin(Components.Globalmap.Map.pin_pinRegisterValue_map[port])
 
 
