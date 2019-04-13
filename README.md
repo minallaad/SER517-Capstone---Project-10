@@ -1,5 +1,6 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![build status][travis-image]][travis-url]
 
 # SER517-Capstone---Project-10 with Professor Douglas
 
