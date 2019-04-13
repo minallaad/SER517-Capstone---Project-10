@@ -27,7 +27,7 @@ class PC7_View(QtWidgets.QWidget):
 
 
     @staticmethod
-    def getPC7ViewDiagram():
+    def getViewFrame():
         return PC7_View.PC7Frame
 
     @staticmethod
