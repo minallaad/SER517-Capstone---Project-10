@@ -125,7 +125,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.verticalSlider = QtWidgets.QSlider()
             self.verticalSlider.setGeometry(QtCore.QRect(10, 10, 10, 10))
             self.verticalSlider.setMinimum(0)
-            self.verticalSlider.setMaximum(100)
+            self.verticalSlider.setMaximum(120)
             self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
             self.verticalSlider.setObjectName("verticalSlider")
             self.verticalSlider.setFocusPolicy(Qt.StrongFocus)
@@ -139,6 +139,8 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.temperatureFrame.layout = QVBoxLayout()
             self.temperatureFrame.layout.setAlignment(Qt.AlignLeft)
             self.temperatureFrame.layout.addStretch()
+            
+            self.verticalSlider.valueChanged[int].connect(self.changeValue)
 
 
             for val in temperature:
@@ -158,6 +160,9 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.layout.addWidget(self.verticalSlider)
             self.rightFrame.layout.addWidget(self.temperatureFrame)
             self.rightFrame.setLayout(self.rightFrame.layout)
+    
+    def changeValue(self, value):
+        print(value)
 
     def getPIN_Digram(self):
         return self.rightFrame
