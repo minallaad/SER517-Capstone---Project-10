@@ -36,7 +36,7 @@ The above list of requirements broadly list out all the necessary features of th
 
 ## Architecture Diagram
 <img src="/Resources/Images/Architecture Diagram.png">
-[![build status][travis-image]][travis-url]
+
 
 
 ## Tools
