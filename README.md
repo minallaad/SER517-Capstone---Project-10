@@ -16,13 +16,23 @@ Saheb Johar
 Aman Maheshwari
 
 ## Overview
-
+<table>
+<tr>
+<td>
 The brief requirement of client was to develop a clock accurate simulator which can simulate the microcontroller Atmega328P and provide a graphical visualization for the same. However, with the availability of Simulavr - simulator for AVR Microcontrollers, the project scope was reduced down to the development of the graphical visualization for Simulavr. The client requires a GUI which can display the current state of the ATMEGA328 microcontroller being simulated by Simulavr.  The problem statement of the project is to create a GUI which displays the internal states and values of the various components of the microcontroller. The application should allow the users to debug programs for Atmega328 (simulated device) using a debugger, specifically GDB. The final deliverable must consist of a GUI which displays the data of the internal states of the microcontroller throughout the program debugging. The GUI must be able to fetch the updated states of the microcontroller pins, registers and other components and should display it to the users. The project is focused on helping students working on microcontroller programming for simulation purposes.
+</td>
+</tr>
+</table>
 
 ## Requirement
-
+<table>
+<tr>
+<td>
 For this project, the product owner Dr. Douglas Sandy, has outlined a few key requirements which he would like to have. These requirements are: The GUI should be able to show the states and register values of Atmega328 specific components such as: GPIO Ports, Pin States, EEPROM, USART, 16 Bit and 2 8 Bit Timers, SPI Register, and GPIO Registers. GUI Layouts should be interactive and intuitive to the users who have experienced working with microcontrollers and it’s diagrams. The GUI should have navigations to different microcontroller components available through Simulavr. The GUI application should be able to interface with simulavr in parallel with GDB so that the users can use the application when debugging on Simulavr. Open an interface with Simulavr to fetch the required data for the microcontroller. Allow users to view the console outputs of the program running on Simulator.
 The above list of requirements broadly list out all the necessary features of the project and what it’s final outcome should be.
+</td>
+</tr>
+</table>
 
 ## Tools
 
@@ -46,28 +56,39 @@ The above list of requirements broadly list out all the necessary features of th
 Run this command to install PyQt5：
 
 ```
-sudo apt-get install python3-pyqt5
+$  sudo apt-get install python3-pyqt5
 ```
 
 Run this command to install Pysimulavr：
 
 ```
-~$ cd simulavr
-~$ ./bootstrap
-~$ ./configure --enable-python
-~$ Make
-~$ Sudo python setup.py install
-~$ Python --version
-~$ In ./bash_profile add $LD_LIBRARY_PATH = /usr/local/lib/
-~$ python
-~$ Import pysimulavr
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.61
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.72
+$ sudo update-alternatives --config python
+$ cd simulavr
+$ ./bootstrap
+$ ./configure --enable-python
+$ Make
+$ Sudo python setup.py install
+$ Python --version
+$ In ./bash_profile add $LD_LIBRARY_PATH = /usr/local/lib/
+$ python
+$ Import pysimulavr
 ```
 
+Install GUI dependencies:
 
+```
+$ cd SER517-Capstone---Project-10/
+$ pip install -r requirements.txt
+```
 
 ## Build and Run Directions
 
-
+```
+$ cd SER517-Capstone---Project-10/
+$ python3 main.py
+```
 ## Design Details
 
 
