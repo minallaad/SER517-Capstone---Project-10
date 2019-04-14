@@ -57,7 +57,7 @@ class Register_Values():
 
     @staticmethod
     def addRegister(name,address,value):
-        rowObj =row(name,address,value)
+        rowObj =row(name,address,hex(value))
         Register_Values.List.append(rowObj)
         Register_Values.updateTable()
 
