@@ -23,13 +23,8 @@ class SimulavrAdapter(object):
 
         i = 0
         while True:
-<<<<<<< HEAD
-
-            if i == 10000:
-=======
-            
             if i == 5000:
->>>>>>> 6269a6aeb6d728c5ea15c72eb90571f37133228c
+
                 self.getMemoryValue(dev)
 
                 if self.uiUpdateFlag == True :
