@@ -7,7 +7,6 @@ import Components.Port_View.PD5_View
 import Components.Port_View.PD6_View
 import Components.Port_View.PD7_View
 
-
 import Components.Port_View.PC0_View
 import Components.Port_View.PC1_View
 import Components.Port_View.PC2_View
@@ -16,6 +15,10 @@ import Components.Port_View.PC4_View
 import Components.Port_View.PC5_View
 import Components.Port_View.PC6_View
 import Components.Port_View.PC7_View
+
+import Components.Port_View.PB0_View
+import Components.Port_View.PB1_View
+import Components.Port_View.PB2_View
 
 from Components import WatchDogTimer
 from Components import  SPI
@@ -76,6 +79,12 @@ class ViewFactory():
             return Components.Port_View.PC6_View.PC6_View().getViewFrame()
         elif viewName == 'PC7':
             return Components.Port_View.PC7_View.PC7_View().getViewFrame()
+        elif viewName == 'PB0':
+            return Components.Port_View.PB0_View.PB0_View().getViewFrame()
+        elif viewName == 'PB1':
+            return Components.Port_View.PB1_View.PB1_View().getViewFrame()
+        elif viewName == 'PB2':
+            return Components.Port_View.PB2_View.PB2_View().getViewFrame()
         elif viewName == 'WATCHDOG':
             return WatchDogTimer.Ui_watchDogFrame()
         elif viewName == 'EEPROM':

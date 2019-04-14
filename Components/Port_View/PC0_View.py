@@ -62,12 +62,3 @@ class PC0_View(QtWidgets.QWidget):
         else:
             PC0_View.pinFrame.pinLine.setStyleSheet(PC0_View.standard.low)
             PC0_View.pinFrame.pinOutputFrame.setStyleSheet(PC0_View.standard.lowBackground)
-
-
-
-
-
-
-
-
-
