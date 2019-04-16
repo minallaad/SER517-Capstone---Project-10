@@ -134,11 +134,13 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.verticalSlider.setSingleStep(1)
             self.verticalSlider.setStyleSheet('QSlider{max-height:500px} QSlider::handle:vertical{background:grey} QSlider::add-page:vertical{background:red} QSlider::sub-page:vertical{background:lightgrey}')
 
-            temperature = ["120","110","100" , "90" , "80", "70", "60", "50", "40","30","20","10","0"]
+            temperature = ["120   "+ chr(176)+ "F","110","100" , "90" , "80", "70", "60", "50", "40","30","20","10", "0"]
             self.temperatureFrame = QFrame()
             self.temperatureFrame.layout = QVBoxLayout()
             self.temperatureFrame.layout.setAlignment(Qt.AlignLeft)
             self.temperatureFrame.layout.addStretch()
+            
+            
             
             self.verticalSlider.valueChanged[int].connect(self.changeValue)
 
@@ -148,9 +150,14 @@ class PIN_Diagram(QtWidgets.QWidget):
                 temp.setText(val)
                 self.temperatureFrame.layout.setSpacing(22)
                 self.temperatureFrame.layout.addWidget(temp)
-
+            
+            
+            
+            
             self.temperatureFrame.layout.addStretch()
             self.temperatureFrame.setLayout(self.temperatureFrame.layout)
+            
+        
 
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
@@ -160,7 +167,9 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.layout.addWidget(self.verticalSlider)
             self.rightFrame.layout.addWidget(self.temperatureFrame)
             self.rightFrame.setLayout(self.rightFrame.layout)
-    
+            
+
+
     def changeValue(self, value):
         print(value)
 
