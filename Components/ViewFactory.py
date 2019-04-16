@@ -1,4 +1,5 @@
-import Components.Port_View.Port_View
+
+import Components.Port_View
 
 from Components import WatchDogTimer
 from Components import  SPI
@@ -28,7 +29,7 @@ class ViewFactory():
     @staticmethod
     def getView(viewName):
         if 'PD' in viewName or 'PB' in viewName or 'PC' in viewName:
-            return Components.Port_View.Port_View.PD0_View().getViewFrame()
+            return Components.Port_View.Port_View().getViewFrame()
         elif viewName == 'WATCHDOG':
             return WatchDogTimer.Ui_watchDogFrame()
         elif viewName == 'EEPROM':
