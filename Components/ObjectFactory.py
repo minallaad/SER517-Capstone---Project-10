@@ -1,5 +1,5 @@
 
-import Components.Port_View.Port_View
+import Components.Port_View
 from Components import WatchDogTimer
 from Components import  SPI
 from Components import EEPROM
@@ -28,6 +28,6 @@ class ObjectFactory():
     @staticmethod
     def getObject(objectName):
         if 'PD' in objectName or 'PB' in objectName or 'PC' in objectName:
-            return Components.Port_View.Port_View.PD0_View().getInstance()
+            return Components.Port_View.Port_View().getInstance()
         else:
             return None
