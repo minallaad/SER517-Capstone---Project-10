@@ -13,6 +13,7 @@ import Components.Register_Values
 import Components.stackedWidget
 from simulavr.adaptor import SimulavrAdaptor
 from simulavr import SimulavrThread
+from helper import UIHelper
 
 
 class Landing(QtWidgets.QWidget):
@@ -97,7 +98,7 @@ class Landing(QtWidgets.QWidget):
 		return "Connected to Simulavr"
 
 	def backClicked(self):
-		self.refreshItems()
+		UIHelper.UIHelper().refreshItems()
 		topWidget = Components.stackedWidget.stackWidget.top
 		if topWidget != 0:
 			widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(topWidget)
@@ -109,45 +110,14 @@ class Landing(QtWidgets.QWidget):
 		for key, value in Components.Globalmap.Map.map.items():
 			port = key.split('.')[0]
 			if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
-				self.setPortValues(port, value)
+				UIHelper.UIHelper().setPortValues(port, value)
 			if key in ['PORTB.DDR', 'PORTC.DDR', 'PORTD.DDR']:
-				self.setDdrValues(port, value)
+				UIHelper.UIHelper().setDdrValues(port, value)
 			if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
-				self.setPinValues(port, value)
+				UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
 
 		if Components.Globalmap.Map.port_clicked != None:
 			self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
-
-	def setPortValues(self, key, value):
-		binVal = self.convertValueToBin(value)
-		for i in range(len(binVal) - 1, -1, -1):
-			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-			value = int(binVal[i])
-			Components.Globalmap.Map.pin_portRegisterValue_map[update] = value
-
-	def setDdrValues(self, key, value):
-		binVal = self.convertValueToBin(value)
-		for i in range(len(binVal) - 1, -1, -1):
-			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-			value = int(binVal[i])
-			Components.Globalmap.Map.pin_ddrRegisterValue_map[update] = value
-
-	def setPinValues(self, key, value):
-		binVal = self.convertValueToBin(value)
-		for i in range(len(binVal) - 1, -1, -1):
-			update = Components.Globalmap.Map.port_register_map[key] + str(len(binVal) - i - 1)
-			value = int(binVal[i])
-			Components.Globalmap.Map.pin_pinRegisterValue_map[update] = value
-			self.PIN_Diagram.setPinStatus(update, value)
-
-	def convertValueToBin(self, value):
-		binVal = bin(value)[2:]
-		if len(binVal) < 8:
-			binVal = '0' * (8 - len(binVal)) + binVal
-		return binVal
-
-	def refreshItems(self):
-		Components.Globalmap.Map.port_clicked = None
 
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
