@@ -98,7 +98,7 @@ class Landing(QtWidgets.QWidget):
 		return "Connected to Simulavr"
 
 	def backClicked(self):
-		UIHelper.UIHelper.refreshItems()
+		UIHelper.UIHelper().refreshItems()
 		topWidget = Components.stackedWidget.stackWidget.top
 		if topWidget != 0:
 			widgetToRemove = Components.stackedWidget.stackWidget.StackWidget.widget(topWidget)
