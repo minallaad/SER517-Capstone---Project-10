@@ -3,7 +3,6 @@
 import sys
 
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtCore import QThread
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QSplitter, QApplication, QHBoxLayout, QVBoxLayout
 
@@ -13,6 +12,7 @@ import Components.List_of_Registers
 import Components.Register_Values
 import Components.stackedWidget
 from simulavr.adaptor import SimulavrAdaptor
+from simulavr import SimulavrThread
 
 
 class Landing(QtWidgets.QWidget):
@@ -149,19 +149,9 @@ class Landing(QtWidgets.QWidget):
 	def refreshItems(self):
 		Components.Globalmap.Map.port_clicked = None
 
-class simulavrThread(QThread):
-	def __init__(self, ui, sim):
-		QThread.__init__(self)
-		self.sim = sim
-		self.ui = ui
-		self.start()
-
-	def run(self):
-		self.sim.runProgram(self.ui, self)
-
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
 	obj = Landing()
 	sim = SimulavrAdaptor.SimulavrAdapter()
-	thread = simulavrThread(obj, sim)
+	thread = SimulavrThread.simulavrThread(obj, sim)
 	app.exec_()
