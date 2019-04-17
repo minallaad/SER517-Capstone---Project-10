@@ -211,7 +211,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
-    #functioon to fetch the PORT and DDDR values for the PIN clicked
+    #function to fetch the PORT and DDR values for the PIN clicked
     def portClicked(self, port):  # On Click opens up port circuit diagram
 
         Components.Globalmap.Map.port_clicked = port

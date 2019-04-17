@@ -41,6 +41,7 @@ class Landing(QtWidgets.QWidget):
 
 		self.show()
 
+	#setting window components for the main page
 	def window(self):
 
 		self.Register_Values = Components.Register_Values.Register_Values().getInstance()  # Object of Class Register Values

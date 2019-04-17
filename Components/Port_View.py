@@ -37,6 +37,7 @@ class Port_View(QtWidgets.QWidget):
     def getInstance():
         return Port_View
 
+    #set the DDR value to high or low visually in the pin level diagram
     @staticmethod
     def setDDR(value):
         Port_View.pinFrame.ddrValueLabel.setText(str(value))
@@ -48,6 +49,7 @@ class Port_View(QtWidgets.QWidget):
             Port_View.pinFrame.ddrLine1.setStyleSheet(Port_View.standard.low)
             Port_View.pinFrame.ddrLine2.setStyleSheet(Port_View.standard.low)
 
+    #set the PORT value to high or low visually in the pin level diagram
     @staticmethod
     def setPort(value):
         Port_View.pinFrame.portValueLabel.setText(str(value))
@@ -57,6 +59,7 @@ class Port_View(QtWidgets.QWidget):
         else:
             Port_View.pinFrame.portLine.setStyleSheet(Port_View.standard.low)
 
+    #function to set the pin value to high or low visually based on pin value
     @staticmethod
     def setPin(value):
         if value == 1:
