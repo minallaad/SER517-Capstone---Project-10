@@ -1,19 +1,7 @@
 # SER517-Capstone---Project-10 with Professor Douglas
 
 
-**Members**
 
-Ayan Shah
-
-Minal Laad
-
-Ruihao Zhou
-
-Kaustuv Deolal
-
-Saheb Johar
-
-Aman Maheshwari
 
 ## Overview
 <table>
@@ -95,6 +83,18 @@ $ python3 main.py
 <img src="/Resources/Images/MainPicturePage.png">
 
 
+## Contributors
 
+These people are responsible for developing the AtMega328 simulator in Python:
 
+- [Aman Maheshwari](https://github.com/aman25m)
 
+- [Ayan Shah](https://github.com/arshah12)
+
+- [Kaustuv Deolal](https://github.com/Vutsuak16)
+
+- [Minal Laad](https://github.com/minallaad)
+
+- [Saheb Johar](https://github.com/sahebjohar92)
+
+- [Ruihao Zhou ](https://github.com/Parsons-Ray>)
