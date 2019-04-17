@@ -2,6 +2,7 @@ import Components.Globalmap
 
 class UIHelper():
 
+    #convert a value to binary of length 8
     @staticmethod
     def convertValueToBin(value):
         binVal = bin(value)[2:]
@@ -13,6 +14,7 @@ class UIHelper():
     def refreshItems():
         Components.Globalmap.Map.port_clicked = None
 
+    #update the specific port values
     @staticmethod
     def setPortValues(key, value):
         binVal = UIHelper.convertValueToBin(value)
@@ -21,6 +23,7 @@ class UIHelper():
             value = int(binVal[i])
             Components.Globalmap.Map.pin_portRegisterValue_map[update] = value
 
+    #setting the DDR values as per ports
     @staticmethod
     def setDdrValues(key, value):
         binVal = UIHelper.convertValueToBin(value)
@@ -29,6 +32,7 @@ class UIHelper():
             value = int(binVal[i])
             Components.Globalmap.Map.pin_ddrRegisterValue_map[update] = value
 
+    #set the pin values to high or low
     @staticmethod
     def setPinValues(key, value, pin):
         binVal = UIHelper.convertValueToBin(value)
