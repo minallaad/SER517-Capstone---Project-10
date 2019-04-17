@@ -174,7 +174,7 @@ class Ui_microcontrollerBlock(object):
         self.flashLabel.setText(_translate("microcontrollerBlock", "Flash"))
         self.gpiorLabel.setText(_translate("microcontrollerBlock", "GPIOR [2:0]"))
         self.spiLabel.setText(_translate("microcontrollerBlock", "SPI 0            (8-bit)"))
-        self.tc1Label.setText(_translate("microcontrollerBlock", "TC 1            (8-bit)"))
+        self.tc1Label.setText(_translate("microcontrollerBlock", "TC 1            (16-bit)"))
         self.eepromLabel.setText(_translate("microcontrollerBlock", "EEPROM"))
         self.label.setText(_translate("microcontrollerBlock", "<html><head/><body><p><img src=\":/blockImages/Images/arrow2.png\"/></p></body></html>"))
         self.label_2.setText(_translate("microcontrollerBlock", "<html><head/><body><p><img src=\":/blockImages/Images/arrow4.png\"/></p></body></html>"))

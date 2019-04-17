@@ -263,6 +263,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.incrementTopCount()
 
     def blockComponentClicked(self, component, registers):
+        print(component)
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
         if frame != None:
