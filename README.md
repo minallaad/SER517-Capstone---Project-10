@@ -92,7 +92,7 @@ $ python3 main.py
 ## Design Details
 
 ## Main Page
-<img src="/Resources/Images/MainPage.png">
+<img src="/Resources/Images/MainPicturePage.png">
 
 
 
