@@ -34,6 +34,9 @@ The above list of requirements broadly list out all the necessary features of th
 </tr>
 </table>
 
+## Architecture Diagram
+<img src="/Resources/Images/Architecture_Diagram.png">
+
 ## Tools
 
 [Pycharm IDE](https://www.jetbrains.com/pycharm/) - We require this IDE to help us better understand the code base for pysimulavr, as it provides easy run configuration options and good debugging to view runtime data.
@@ -90,6 +93,9 @@ $ cd SER517-Capstone---Project-10/
 $ python3 main.py
 ```
 ## Design Details
+* **[Two modules] **
+  * [Front-End] landing page consists of various UI components like Ports and Registers which are dynamically updated. The user can click on different components to view their circuit diagrams and updated register states. 
+  * [Back-End] adaptor communicates with a python interface (Pysimulavr - as shown in Fig.1) which was built using SWIG, Â to interact with native C++ code of simulavr. The backend adaptor uses pysimulavr to create an avr device object using the build file provided by codeblocks. The adaptor runs endlessly, simulating each clock cycle and fetches the updated values using the functions provided by the device object. The simulator values are translated to hexadecimal format to conform to the simulator model.
 
 ## Main Page
 <img src="/Resources/Images/MainPage.png">
