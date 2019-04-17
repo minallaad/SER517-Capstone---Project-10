@@ -258,6 +258,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     #function when the ATMEGA controller components are clicked
     def blockComponentClicked(self, component, registers):
+        print(component)
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
         if frame != None:
