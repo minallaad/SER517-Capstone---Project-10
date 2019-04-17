@@ -7,8 +7,13 @@ from PyQt5.QtWidgets import QStackedWidget
 
 class Map():  # Used to switch between multiple layout
 
+    #map for the currently clicked port
     port_clicked = None
+
+    #global map to update the values for the addresses
     map = {}
+
+    #refresh flag to check if the refresh is clicked.
     refresh_flag = False
     eeprom_address = 0
     port_address_map = {"PORTD": 0X2B, 'PORTC': 0X28, 'PORTB': 0X23}

@@ -29,6 +29,7 @@ class PIN_Diagram(QtWidgets.QWidget):
     pinl_dict = {}
     standard = None
 
+    #creating the microcontroller diagram and the pin frames for the microcontroller
     def __init__(self):
         super(PIN_Diagram, self).__init__()
 
@@ -139,25 +140,16 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.temperatureFrame.layout = QVBoxLayout()
             self.temperatureFrame.layout.setAlignment(Qt.AlignLeft)
             self.temperatureFrame.layout.addStretch()
-            
-            
-            
+
             self.verticalSlider.valueChanged[int].connect(self.changeValue)
-
-
             for val in temperature:
                 temp = QLabel()
                 temp.setText(val)
                 self.temperatureFrame.layout.setSpacing(22)
                 self.temperatureFrame.layout.addWidget(temp)
-            
-            
-            
-            
+
             self.temperatureFrame.layout.addStretch()
             self.temperatureFrame.setLayout(self.temperatureFrame.layout)
-            
-        
 
             self.rightFrame.setFrameShape(QFrame.StyledPanel)
             self.rightFrame.layout = QHBoxLayout()
@@ -167,8 +159,6 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.layout.addWidget(self.verticalSlider)
             self.rightFrame.layout.addWidget(self.temperatureFrame)
             self.rightFrame.setLayout(self.rightFrame.layout)
-            
-
 
     def changeValue(self, value):
         print(value)
@@ -176,6 +166,7 @@ class PIN_Diagram(QtWidgets.QWidget):
     def getPIN_Digram(self):
         return self.rightFrame
 
+    #function to set pin status to high and low as per the values and updating their colors
     @staticmethod
     def setPinStatus(port, value):
         if value != 0:
@@ -220,6 +211,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
+    #functioon to fetch the PORT and DDDR values for the PIN clicked
     def portClicked(self, port):  # On Click opens up port circuit diagram
 
         Components.Globalmap.Map.port_clicked = port
@@ -230,7 +222,6 @@ class PIN_Diagram(QtWidgets.QWidget):
         pinValue = Components.Globalmap.Map.getValue(pinRegister)
         pinAddress = Components.Globalmap.Map.getRegisterAddress(pinRegister)
 
-
         ddrRegister = "PORT" + port[1] + ".DDR"
         ddrValue = Components.Globalmap.Map.getValue(ddrRegister)
         ddrAddress = Components.Globalmap.Map.getRegisterAddress(ddrRegister)
@@ -239,16 +230,19 @@ class PIN_Diagram(QtWidgets.QWidget):
         portValue = Components.Globalmap.Map.getValue(portRegister)
         portAddress = Components.Globalmap.Map.getRegisterAddress(portRegister)
 
+        #adding the register value in the bottom left panel
         if pinValue!=None:
             Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), pinValue)
         else:
             Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), "0")
 
+        #adding the DDR value in the bottom left panel
         if ddrValue!=None:
             Components.Register_Values.Register_Values.addRegister(ddrRegister,hex(ddrAddress) , ddrValue)
         else:
             Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), "0")
 
+        #adding the PORT value in the bottom left panel
         if portValue!=None:
             Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), portValue)
         else:
@@ -262,6 +256,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.addWidget(pinFrame)
             Components.stackedWidget.stackWidget.incrementTopCount()
 
+    #function when the ATMEGA controller components are clicked
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
