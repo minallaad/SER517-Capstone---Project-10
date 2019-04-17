@@ -84,8 +84,22 @@ $ python3 main.py
   * [Back-End] adaptor communicates with a python interface (Pysimulavr - as shown in Fig.1) which was built using SWIG, Â to interact with native C++ code of simulavr. The backend adaptor uses pysimulavr to create an avr device object using the build file provided by codeblocks. The adaptor runs endlessly, simulating each clock cycle and fetches the updated values using the functions provided by the device object. The simulator values are translated to hexadecimal format to conform to the simulator model.
 
 
+## Main Page
+<img src="/Resources/Images/MainPicturePage.png">
 
 
+## Contributors
 
+These people are responsible for developing the AtMega328 simulator in Python:
 
+- [Aman Maheshwari](https://github.com/aman25m)
 
+- [Ayan Shah](https://github.com/arshah12)
+
+- [Kaustuv Deolal](https://github.com/Vutsuak16)
+
+- [Minal Laad](https://github.com/minallaad)
+
+- [Saheb Johar](https://github.com/sahebjohar92)
+
+- [Ruihao Zhou ](https://github.com/Parsons-Ray>)
