@@ -4,6 +4,7 @@ import Components.EEPROM
 
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
+    uiUpdateFlag = False
 
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
@@ -22,10 +23,14 @@ class SimulavrAdapter(object):
 
         i = 0
         while True:
-
             if i == 5000:
+
                 self.getMemoryValue(dev)
-                ui.updateUI()
+
+                if self.uiUpdateFlag == True :
+                    ui.updateUI()
+
+                    self.uiUpdateFlag == False
 
                 if Components.Globalmap.Map.refresh_flag:
 
@@ -35,6 +40,7 @@ class SimulavrAdapter(object):
                 i = 0
 
             i = i + 1
+
             self.doStep()
 
     def doRun(self, n):
@@ -60,6 +66,9 @@ class SimulavrAdapter(object):
     def getDDRValues(self, dev):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
             val = dev.getRWMem(value)
+
+            if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val != Components.Globalmap.Map.map[key]) :
+                self.uiUpdateFlag = True
             Components.Globalmap.Map.map[key] = val
 
     def getMemoryDumpRange(self, dev):
