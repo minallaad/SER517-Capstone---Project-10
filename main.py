@@ -127,4 +127,5 @@ if __name__ == '__main__':
     obj = Landing()
     sim = SimulavrAdaptor.SimulavrAdapter()
     thread = SimulavrThread.simulavrThread(obj, sim)
+    thread.start()
     app.exec_()
