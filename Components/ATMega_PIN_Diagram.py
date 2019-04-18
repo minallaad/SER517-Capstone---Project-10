@@ -214,7 +214,7 @@ class PIN_Diagram(QtWidgets.QWidget):
     #function to fetch the PORT and DDR values for the PIN clicked
     def portClicked(self, port):  # On Click opens up port circuit diagram
 
-        Components.Globalmap.Map.port_clicked = port
+
 
         Components.Register_Values.Register_Values.clearList()
 
@@ -255,6 +255,8 @@ class PIN_Diagram(QtWidgets.QWidget):
         if pinFrame != None:
             Components.stackedWidget.stackWidget.addWidget(pinFrame)
             Components.stackedWidget.stackWidget.incrementTopCount()
+
+        Components.Globalmap.Map.port_clicked = port
 
     #function when the ATMEGA controller components are clicked
     def blockComponentClicked(self, component, registers):
