@@ -30,13 +30,13 @@ class Landing(QtWidgets.QWidget):
     def initUI(self):
         self.title = "ATMega Simulator"
         self.top = 100
-        self.left = 100
-        self.width = 1000
+        self.left = 600
+        self.width = 1100
         self.height = 800
         self.setWindowTitle(self.title)
         self.setStyleSheet("background-color: white")
         self.window()
-        self.setGeometry(self.top, self.left, self.width, self.height)
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
         self.show()
 
