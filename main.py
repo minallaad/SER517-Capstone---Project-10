@@ -27,7 +27,7 @@ class Landing(QtWidgets.QWidget):
 		self.stackWidget = None
 		self.initUI()
 
-
+	#initializing UI here and setting properties
 	def initUI(self):
 		self.title = "ATMega Simulator"
 		self.top = 100
@@ -41,6 +41,7 @@ class Landing(QtWidgets.QWidget):
 
 		self.show()
 
+	#setting window components for the main page
 	def window(self):
 
 		self.Register_Values = Components.Register_Values.Register_Values().getInstance()  # Object of Class Register Values
@@ -97,6 +98,7 @@ class Landing(QtWidgets.QWidget):
 	def getConnectionStatus(self):  # Function returns status (Connected / Disconnected)
 		return "Connected to Simulavr"
 
+	#functionality for back button
 	def backClicked(self):
 		UIHelper.UIHelper().refreshItems()
 		topWidget = Components.stackedWidget.stackWidget.top
@@ -105,6 +107,7 @@ class Landing(QtWidgets.QWidget):
 			Components.stackedWidget.stackWidget.decrementTopCount()
 			Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
+	#function to update UI for ports and pins
 	def updateUI(self):
 
 		for key, value in Components.Globalmap.Map.map.items():

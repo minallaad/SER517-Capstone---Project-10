@@ -24,8 +24,6 @@ class Register_Values():
             Register_Values.tableWidget.setItem(0, 1, QTableWidgetItem("Address"))
             Register_Values.tableWidget.setItem(0, 2, QTableWidgetItem("Value"))
 
-
-
     @staticmethod
     def getInstance():
         """ Static access method. """
@@ -37,6 +35,7 @@ class Register_Values():
     def clearList():
         Register_Values.List = []
 
+    #fetch the values of the registers from the address and update the table
     @staticmethod
     def updateTable():
         i = 0
