@@ -10,6 +10,9 @@ class Map():  # Used to switch between multiple layout
     #map for the currently clicked port
     port_clicked = None
 
+    #global variable to hold currently clickec register value
+    register_clicked = None
+
     #global map to update the values for the addresses
     map = {}
 

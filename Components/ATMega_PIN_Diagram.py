@@ -214,39 +214,10 @@ class PIN_Diagram(QtWidgets.QWidget):
     #function to fetch the PORT and DDR values for the PIN clicked
     def portClicked(self, port):  # On Click opens up port circuit diagram
 
+        Components.Globalmap.Map.port_clicked = port
+        Components.Globalmap.Map.register_clicked = port
 
-
-        Components.Register_Values.Register_Values.clearList()
-
-        pinRegister = "PORT" + port[1] + ".PIN"
-        pinValue = Components.Globalmap.Map.getValue(pinRegister)
-        pinAddress = Components.Globalmap.Map.getRegisterAddress(pinRegister)
-
-        ddrRegister = "PORT" + port[1] + ".DDR"
-        ddrValue = Components.Globalmap.Map.getValue(ddrRegister)
-        ddrAddress = Components.Globalmap.Map.getRegisterAddress(ddrRegister)
-
-        portRegister = "PORT" + port[1] + ".PORT"
-        portValue = Components.Globalmap.Map.getValue(portRegister)
-        portAddress = Components.Globalmap.Map.getRegisterAddress(portRegister)
-
-        #adding the register value in the bottom left panel
-        if pinValue!=None:
-            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), pinValue)
-        else:
-            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), "0")
-
-        #adding the DDR value in the bottom left panel
-        if ddrValue!=None:
-            Components.Register_Values.Register_Values.addRegister(ddrRegister,hex(ddrAddress) , ddrValue)
-        else:
-            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), "0")
-
-        #adding the PORT value in the bottom left panel
-        if portValue!=None:
-            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), portValue)
-        else:
-            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), "0")
+        self.refreshLeftPanelValues(port)
 
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
 
@@ -287,3 +258,37 @@ class PIN_Diagram(QtWidgets.QWidget):
             obj.setPin(Components.Globalmap.Map.pin_pinRegisterValue_map[port])
 
 
+    @staticmethod
+    def refreshLeftPanelValues(port):
+
+        Components.Register_Values.Register_Values.clearList()
+
+        pinRegister = "PORT" + port[1] + ".PIN"
+        pinValue = Components.Globalmap.Map.getValue(pinRegister)
+        pinAddress = Components.Globalmap.Map.getRegisterAddress(pinRegister)
+
+        # adding the register value in the bottom left panel
+        if pinValue != None:
+            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), pinValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), "0")
+
+        ddrRegister = "PORT" + port[1] + ".DDR"
+        ddrValue = Components.Globalmap.Map.getValue(ddrRegister)
+        ddrAddress = Components.Globalmap.Map.getRegisterAddress(ddrRegister)
+
+        # adding the DDR value in the bottom left panel
+        if ddrValue != None:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), ddrValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), "0")
+
+        portRegister = "PORT" + port[1] + ".PORT"
+        portValue = Components.Globalmap.Map.getValue(portRegister)
+        portAddress = Components.Globalmap.Map.getRegisterAddress(portRegister)
+
+        # adding the PORT value in the bottom left panel
+        if portValue != None:
+            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), portValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), "0")
