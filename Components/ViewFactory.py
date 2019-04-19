@@ -5,6 +5,7 @@ from Components import WatchDogTimer
 from Components import  SPI
 from Components import EEPROM
 from Components import Timer_8Bit
+from Components import Timer_16Bit
 
 
 class ViewFactory():
@@ -40,7 +41,7 @@ class ViewFactory():
         elif viewName == 'TIMER0' or viewName == 'TIMER2':
             return Timer_8Bit.Ui_Frame()
         elif viewName == 'TIMER1':
-            return Timer_8Bit.Ui_Frame()
+            return Timer_16Bit.Ui_Frame()
         else:
             return None
 
