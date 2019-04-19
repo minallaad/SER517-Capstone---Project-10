@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>579</height>
+    <width>777</width>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,22 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>-30</y>
+     <width>831</width>
+     <height>711</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/16 bit counter.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../Resources/img.qrc"/>
+ </resources>
  <connections/>
 </ui>

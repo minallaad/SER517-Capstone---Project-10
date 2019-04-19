@@ -39,6 +39,8 @@ class ViewFactory():
             return SPI.Ui_SPIFrame()
         elif viewName == 'TIMER0' or viewName == 'TIMER2':
             return Timer_8Bit.Ui_Frame()
+        elif viewName == 'TIMER1':
+            return Timer_8Bit.Ui_Frame()
         else:
             return None
 
