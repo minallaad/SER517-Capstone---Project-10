@@ -32,7 +32,7 @@ class SimulavrAdapter(object):
                 if self.uiUpdateFlag == True :
                     ui.updateUI()
 
-                    self.uiUpdateFlag == False
+                    self.uiUpdateFlag = False
 
                 #if referesh flag is true update the values again.
                 if Components.Globalmap.Map.refresh_flag:
