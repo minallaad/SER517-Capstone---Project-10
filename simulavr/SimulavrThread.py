@@ -5,7 +5,6 @@ class simulavrThread(QThread):
 		QThread.__init__(self)
 		self.sim = sim
 		self.ui = ui
-		self.start()
 
 	def run(self):
 		self.sim.runProgram(self.ui, self)

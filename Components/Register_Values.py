@@ -39,7 +39,6 @@ class Register_Values():
     @staticmethod
     def updateTable():
         i = 0
-        j = 0
         Register_Values.tableWidget.setRowCount(len(Register_Values.List)+1)
 
         while( i<len(Register_Values.List) ):
@@ -52,14 +51,15 @@ class Register_Values():
             i = i+1
 
         Register_Values.tableWidget.resizeColumnsToContents()
-        Register_Values.tableWidget.repaint()
+        #Register_Values.tableWidget.repaint()
 
     @staticmethod
     def addRegister(name,address,value):
-        rowObj =row(name,address,hex(value))
+        if isinstance(value, int):
+            value = hex(value)
+        rowObj =row(name,address,value)
         Register_Values.List.append(rowObj)
         Register_Values.updateTable()
-
 
 
 class row():
@@ -71,12 +71,3 @@ class row():
         self.name =  name
         self.address= address
         self.value = value
-
-
-
-
-
-
-
-
-
