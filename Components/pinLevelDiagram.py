@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'pinLevelDiagram.ui'
+# Form implementation generated from reading ui file 'UIComponents/pinLevelDiagram.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.1
 #
@@ -66,9 +66,9 @@ class Ui_Frame(object):
         self.pinLine.setObjectName("pinLine")
         self.pinOutputFrame = QtWidgets.QFrame(Frame)
         self.pinOutputFrame.setGeometry(QtCore.QRect(80, 340, 41, 41))
+        self.pinOutputFrame.setStyleSheet("background-color: rgb(239, 41, 41);")
         self.pinOutputFrame.setFrameShape(QtWidgets.QFrame.Panel)
         self.pinOutputFrame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.pinOutputFrame.setStyleSheet("background-color: rgb(239, 41, 41);")
         self.pinOutputFrame.setLineWidth(3)
         self.pinOutputFrame.setObjectName("pinOutputFrame")
         self.pullupLine = QtWidgets.QFrame(Frame)
@@ -89,7 +89,7 @@ class Ui_Frame(object):
         self.portLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.portLabel.setObjectName("portLabel")
         self.label = QtWidgets.QLabel(Frame)
-        self.label.setGeometry(QtCore.QRect(150, 110, 81, 71))
+        self.label.setGeometry(QtCore.QRect(150, 120, 81, 71))
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(Frame)
         self.label_2.setGeometry(QtCore.QRect(250, 340, 41, 31))
@@ -97,6 +97,23 @@ class Ui_Frame(object):
         self.label_3 = QtWidgets.QLabel(Frame)
         self.label_3.setGeometry(QtCore.QRect(180, 350, 16, 16))
         self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(Frame)
+        self.label_4.setGeometry(QtCore.QRect(260, 130, 16, 16))
+        self.label_4.setObjectName("label_4")
+        self.ddrRegisterFrame.raise_()
+        self.portRegisterFrame.raise_()
+        self.portLine.raise_()
+        self.ddrLine1.raise_()
+        self.ddrLine2.raise_()
+        self.pinLine.raise_()
+        self.pinOutputFrame.raise_()
+        self.pullupLine.raise_()
+        self.ddrLabel.raise_()
+        self.portLabel.raise_()
+        self.label_2.raise_()
+        self.label_3.raise_()
+        self.label_4.raise_()
+        self.label.raise_()
 
         self.retranslateUi(Frame)
         QtCore.QMetaObject.connectSlotsByName(Frame)
@@ -111,6 +128,6 @@ class Ui_Frame(object):
         self.label.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/pullupResistor.png\"/></p></body></html>"))
         self.label_2.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/multiplexer.png\"/></p></body></html>"))
         self.label_3.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/connection.png\"/></p></body></html>"))
-
+        self.label_4.setText(_translate("Frame", "<html><head/><body><p><img src=\":/image/Images/connection.png\"/></p></body></html>"))
 
 

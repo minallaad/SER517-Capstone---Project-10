@@ -263,7 +263,7 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>110</y>
+     <y>120</y>
      <width>81</width>
      <height>71</height>
     </rect>
@@ -298,9 +298,36 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/connection.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>130</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/Images/connection.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <zorder>ddrRegisterFrame</zorder>
+  <zorder>portRegisterFrame</zorder>
+  <zorder>portLine</zorder>
+  <zorder>ddrLine1</zorder>
+  <zorder>ddrLine2</zorder>
+  <zorder>pinLine</zorder>
+  <zorder>pinOutputFrame</zorder>
+  <zorder>pullupLine</zorder>
+  <zorder>ddrLabel</zorder>
+  <zorder>portLabel</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label</zorder>
  </widget>
  <resources>
-  <include location="../Resources/img.qrc"/>
+  <include location="../../Resources/img.qrc"/>
  </resources>
  <connections/>
 </ui>

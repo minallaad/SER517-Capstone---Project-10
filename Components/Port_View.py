@@ -65,6 +65,8 @@ class Port_View(QtWidgets.QWidget):
         if value == 1:
             Port_View.pinFrame.pinLine.setStyleSheet(Port_View.standard.high)
             Port_View.pinFrame.pinOutputFrame.setStyleSheet(Port_View.standard.highBackground)
+            Port_View.pinFrame.pullupLine.setStyleSheet(Port_View.standard.high)
         else:
             Port_View.pinFrame.pinLine.setStyleSheet(Port_View.standard.low)
             Port_View.pinFrame.pinOutputFrame.setStyleSheet(Port_View.standard.lowBackground)
+            Port_View.pinFrame.pullupLine.setStyleSheet(Port_View.standard.low)
