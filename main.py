@@ -122,8 +122,10 @@ class Landing(QtWidgets.QWidget):
             self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
 
         if Components.Globalmap.Map.register_clicked != None:
-			self.PIN_Diagram.refreshLeftPanelValues(Components.Globalmap.Map.register_clicked)
-
+            if Components.Globalmap.Map.is_left_panel_register_clicked:
+                self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked)
+            else:
+                self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
