@@ -86,7 +86,7 @@ class SimulavrAdapter(object):
             new_address = 0
             for j in range(0, 16):
                 new_address = address + j
-                val = dev.eeprom.ReadFromAddress(new_address)
+                val = dev.eeprom.ReadFromAddress(new_address % 1024)
                 value_list.append(str(val))
             map[address] = value_list
             address = new_address
