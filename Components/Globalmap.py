@@ -13,8 +13,8 @@ class Map():  # Used to switch between multiple layout
     #global variable to hold currently clickec register value
     register_clicked = None
 
-    # global variable to hold whether port register is clicked or left panel register
-    is_left_panel_register_clicked = False
+
+    register_clicked_type = None
 
     #global map to update the values for the addresses
     map = {}

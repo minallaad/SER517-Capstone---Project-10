@@ -217,7 +217,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.Globalmap.Map.port_clicked = port
         Components.Globalmap.Map.register_clicked = port
 
-        Components.Globalmap.Map.is_left_panel_register_clicked = False
+        Components.Globalmap.Map.register_clicked_type = 'p'
 
         self.refreshLeftPanelPortValues(port)
 
@@ -250,6 +250,17 @@ class PIN_Diagram(QtWidgets.QWidget):
             registerAddress = Components.Globalmap.Map.getRegisterAddress(key)
             registerValue = Components.Globalmap.Map.getValue(key)
             Components.Register_Values.Register_Values.addRegister(key.split('.')[1], hex(registerAddress), registerValue)
+        Components.Globalmap.Map.register_clicked_type = 'b'
+        Components.Globalmap.Map.register_clicked = registers
+
+    @staticmethod
+    def refreshBlockRegister(registers):
+        Components.Register_Values.Register_Values.clearList()
+        for key in registers:
+            registerAddress = Components.Globalmap.Map.getRegisterAddress(key)
+            registerValue = Components.Globalmap.Map.getValue(key)
+            Components.Register_Values.Register_Values.addRegister(key.split('.')[1], hex(registerAddress),
+                                                                   registerValue)
 
     @staticmethod
     def refreshPortValues(port):

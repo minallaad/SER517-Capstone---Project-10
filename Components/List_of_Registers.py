@@ -62,7 +62,7 @@ class List_of_Registers(QListWidget):
     def Clicked(self):  # On Click Register name calls this function
         value = Components.Globalmap.Map.getValue(self.text())
         Components.Globalmap.Map.register_clicked = self.text()
-        Components.Globalmap.Map.is_left_panel_register_clicked = True
+        Components.Globalmap.Map.register_clicked_type = 'r'
         address = Components.Globalmap.Map.getRegisterAddress(self.text())
         Components.Register_Values.Register_Values.clearList()
 
