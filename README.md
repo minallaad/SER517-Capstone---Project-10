@@ -47,6 +47,9 @@ sudo apt-get install python3-pyqt5
 
 ## Design Details
 
+## Running Demo
+
+[![](http://img.youtube.com/vi/5v_OvZfBDK4/0.jpg)](http://www.youtube.com/watch?v=5v_OvZfBDK4 "eepromUI")
 
 
 
