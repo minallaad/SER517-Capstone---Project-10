@@ -71,7 +71,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             # .itemClicked.connect(self.Clicked)
 
             for i in pinsl:
-                self.pinl_dict[i] = QtWidgets.QPushButton(self)
+                self.pinl_dict[i] = QtWidgets.QPushButton()
 
                 self.pinl_dict[i].setText(i)
                 self.pinl_dict[i].setStyleSheet(PIN_Diagram.standard.deactivated)
@@ -94,7 +94,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             pinsr = ['PC7','PC6', 'PC5', 'PC4', 'PC3', 'PC2', 'PC1', 'PC0','PB0', 'PB1', 'PB2','PB3']
 
             for i in pinsr:
-                self.pinr_dict[i] = QtWidgets.QPushButton(self)
+                self.pinr_dict[i] = QtWidgets.QPushButton()
 
                 self.pinr_dict[i].setText(i)
                 self.pinr_dict[i].setStyleSheet(PIN_Diagram.standard.deactivated)
