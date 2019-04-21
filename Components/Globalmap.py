@@ -94,6 +94,10 @@ class Map():
             Map()
         return Map.map
 
+    '''
+    Description: Function to access a specific value from the map. The key here is the component name for which
+                 the value needs to be accessed.
+    '''
     @staticmethod
     def getValue(key):
         """ Static access method. """
@@ -102,6 +106,9 @@ class Map():
         else:
             return None
 
+    '''
+    Description: Function to update global map values.
+    '''
     @staticmethod
     def setGlobalMap(valueMap):
         """ Static access method. """
@@ -117,6 +124,10 @@ class Map():
         """ Static access method. """
         return Map.port_register_map
 
+    '''
+    Description: Function to access the address of specific register.
+    @param key: The name of the register for which the value needs to be accessed.
+    '''
     @staticmethod
     def getRegisterAddress(key):
         if key in Map.registerAddressMap:
