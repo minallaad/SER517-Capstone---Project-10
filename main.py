@@ -126,13 +126,13 @@ class Landing(QtWidgets.QWidget):
                 self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked)
             elif Components.Globalmap.Map.register_clicked_type == 'p':
                 self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked)
-            # else :
-            #     self.PIN_Diagram.refreshBlockRegister(Components.Globalmap.Map.register_clicked)
-
+            
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     obj = Landing()
     sim = SimulavrAdaptor.SimulavrAdapter()
-    thread = SimulavrThread.simulavrThread(obj, sim)
-    thread.start()
+    p = Process(target=sim.runProgram, args=[obj])
+    p.start()
+    #thread = SimulavrThread.simulavrThread(obj, sim)
+    #thread.start()
     app.exec_()
