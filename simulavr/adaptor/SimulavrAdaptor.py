@@ -4,7 +4,9 @@ import Components.EEPROM
 
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
+    uiUpdateFlag = False
 
+    #function to create the device object
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
         self.__sc.ResetClock()
@@ -17,16 +19,22 @@ class SimulavrAdapter(object):
         self.__sc.Add(gdb)
         return dev
 
+    #function which runs the program
     def runProgram(self, ui, thread):
         dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
 
         i = 0
         while True:
-
             if i == 5000:
+                #fetching values from memory address
                 self.getMemoryValue(dev)
-                ui.updateUI()
 
+                if self.uiUpdateFlag == True :
+                    ui.updateUI()
+
+                    self.uiUpdateFlag == False
+
+                #if referesh flag is true update the values again.
                 if Components.Globalmap.Map.refresh_flag:
 
                     Components.Globalmap.Map.refresh_flag = False
@@ -35,6 +43,7 @@ class SimulavrAdapter(object):
                 i = 0
 
             i = i + 1
+
             self.doStep()
 
     def doRun(self, n):
@@ -44,6 +53,7 @@ class SimulavrAdapter(object):
             if res is not 0: return res
         return 0
 
+    #function to perform step
     def doStep(self, stepcount=1):
         while stepcount > 0:
             res = self.__sc.Step()
@@ -54,24 +64,29 @@ class SimulavrAdapter(object):
     def getCurrentTime(self):
         return self.__sc.GetCurrentTime()
 
+    #function to fetch the memory values from the addresses
     def getMemoryValue(self, dev):
         self.getDDRValues(dev)
 
     def getDDRValues(self, dev):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
             val = dev.getRWMem(value)
+            if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val != Components.Globalmap.Map.map[key]) :
+                self.uiUpdateFlag = True
             Components.Globalmap.Map.map[key] = val
 
+    #function too fetch the value from EEPROM
     def getMemoryDumpRange(self, dev):
         map = {}
         address = Components.Globalmap.Map.eeprom_address
         for i in range(0, 20):
             address += i
+            address = address % 1024
             value_list = []
             new_address = 0
             for j in range(0, 16):
                 new_address = address + j
-                val = dev.eeprom.ReadFromAddress(new_address)
+                val = dev.eeprom.ReadFromAddress(new_address % 1024)
                 value_list.append(str(val))
             map[address] = value_list
             address = new_address

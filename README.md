@@ -1,28 +1,27 @@
 # SER517-Capstone---Project-10 with Professor Douglas
 
 
-**Members**
-
-Ayan Shah
-
-Minal Laad
-
-Ruihao Zhou
-
-Kaustuv Deolal
-
-Saheb Johar
-
-Aman Maheshwari
-
 ## Overview
-
-The brief requirement of client was to develop a clock accurate simulator which can simulate the microcontroller Atmega328P and provide a graphical visualization for the same. However, with the availability of Simulavr - simulator for AVR Microcontrollers, the project scope was reduced down to the development of the graphical visualization for Simulavr. The client requires a GUI which can display the current state of the ATMEGA328 microcontroller being simulated by Simulavr.  The problem statement of the project is to create a GUI which displays the internal states and values of the various components of the microcontroller. The application should allow the users to debug programs for Atmega328 (simulated device) using a debugger, specifically GDB. The final deliverable must consist of a GUI which displays the data of the internal states of the microcontroller throughout the program debugging. The GUI must be able to fetch the updated states of the microcontroller pins, registers and other components and should display it to the users. The project is focused on helping students working on microcontroller programming for simulation purposes.
+<table>
+<tr>
+<td>
+The project focuses on creating a GUI which provides a graphical visualization of the internal simulation of the ATMEGA328P microcontroller.  Simulavr is used for the simulation of AVR microcontrollers. The GUI is required to fetch the current state of the microcontroller including Port and DDR registers, and components of the microcontroller. The users are allowed to debug their program through Codeblocks or external GDB application and view the updated state of microcontroller on the GUI.
+</td>
+</tr>
+</table>
 
 ## Requirement
-
+<table>
+<tr>
+<td>
 For this project, the product owner Dr. Douglas Sandy, has outlined a few key requirements which he would like to have. These requirements are: The GUI should be able to show the states and register values of Atmega328 specific components such as: GPIO Ports, Pin States, EEPROM, USART, 16 Bit and 2 8 Bit Timers, SPI Register, and GPIO Registers. GUI Layouts should be interactive and intuitive to the users who have experienced working with microcontrollers and it’s diagrams. The GUI should have navigations to different microcontroller components available through Simulavr. The GUI application should be able to interface with simulavr in parallel with GDB so that the users can use the application when debugging on Simulavr. Open an interface with Simulavr to fetch the required data for the microcontroller. Allow users to view the console outputs of the program running on Simulator.
 The above list of requirements broadly list out all the necessary features of the project and what it’s final outcome should be.
+</td>
+</tr>
+</table>
+
+## Architecture Diagram
+<img src="/Resources/Images/Architecture_Diagram.png">
 
 ## Tools
 
@@ -46,30 +45,64 @@ The above list of requirements broadly list out all the necessary features of th
 Run this command to install PyQt5：
 
 ```
-sudo apt-get install python3-pyqt5
+$  sudo apt-get install python3-pyqt5
 ```
 
 Run this command to install Pysimulavr：
 
 ```
-~$ cd simulavr
-~$ ./bootstrap
-~$ ./configure --enable-python
-~$ Make
-~$ Sudo python setup.py install
-~$ Python --version
-~$ In ./bash_profile add $LD_LIBRARY_PATH = /usr/local/lib/
-~$ python
-~$ Import pysimulavr
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.61
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.72
+$ sudo update-alternatives --config python
+$ cd simulavr
+$ ./bootstrap
+$ ./configure --enable-python
+$ Make
+$ Sudo python setup.py install
+$ Python --version
+$ In ./bash_profile add $LD_LIBRARY_PATH = /usr/local/lib/
+$ python
+$ Import pysimulavr
 ```
 
+Install GUI dependencies:
 
+```
+$ cd SER517-Capstone---Project-10/
+$ pip install -r requirements.txt
+```
 
 ## Build and Run Directions
 
-
+```
+$ cd SER517-Capstone---Project-10/
+$ python3 main.py
+```
 ## Design Details
+* **[Two modules]**
+  * [Front-End] landing page consists of various UI components like Ports and Registers which are dynamically updated. The user can click on different components to view their circuit diagrams and updated register states. 
+  * [Back-End] adaptor communicates with a python interface (Pysimulavr - as shown in Fig.1) which was built using SWIG, Â to interact with native C++ code of simulavr. The backend adaptor uses pysimulavr to create an avr device object using the build file provided by codeblocks. The adaptor runs endlessly, simulating each clock cycle and fetches the updated values using the functions provided by the device object. The simulator values are translated to hexadecimal format to conform to the simulator model.
 
 
+## Main Page
+<img src="/Resources/Images/MainPicturePage.png">
+
+## Running Demo
+[![](http://img.youtube.com/vi/5v_OvZfBDK4/0.jpg)](http://www.youtube.com/watch?v=5v_OvZfBDK4 "eepromUI")
 
 
+## Contributors
+
+These people are responsible for developing the AtMega328 simulator in Python:
+
+- [Aman Maheshwari](https://github.com/aman25m)
+
+- [Ayan Shah](https://github.com/arshah12)
+
+- [Kaustuv Deolal](https://github.com/Vutsuak16)
+
+- [Minal Laad](https://github.com/minallaad)
+
+- [Saheb Johar](https://github.com/sahebjohar92)
+
+- [Ruihao Zhou ](https://github.com/Parsons-Ray>)

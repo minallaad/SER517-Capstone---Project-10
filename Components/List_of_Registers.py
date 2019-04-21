@@ -58,9 +58,11 @@ class List_of_Registers(QListWidget):
             List_of_Registers()
         return List_of_Registers.listWidget
 
-
+    # to fetch the value of the register clicked
     def Clicked(self):  # On Click Register name calls this function
         value = Components.Globalmap.Map.getValue(self.text())
+        Components.Globalmap.Map.register_clicked = self.text()
+        Components.Globalmap.Map.register_clicked_type = 'r'
         address = Components.Globalmap.Map.getRegisterAddress(self.text())
         Components.Register_Values.Register_Values.clearList()
 

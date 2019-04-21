@@ -90,7 +90,6 @@ class memoryDump(QtWidgets.QWidget):
         return memoryDump.memoryDumpFrame
 
     def reloadMemoryDump(self):
-        self.movie.start()
         self.clearMap()
         self.updateTable()
 
@@ -98,7 +97,7 @@ class memoryDump(QtWidgets.QWidget):
         Components.Globalmap.Map.eeprom_address = int(self.line.text(), 16)
         Components.Globalmap.Map.refresh_flag = True
 
-
+    #function to update the EEPROM values in the EERPOM tables
     @staticmethod
     def updateTable():
         i = 0

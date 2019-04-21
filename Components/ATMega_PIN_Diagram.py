@@ -29,6 +29,7 @@ class PIN_Diagram(QtWidgets.QWidget):
     pinl_dict = {}
     standard = None
 
+    #creating the microcontroller diagram and the pin frames for the microcontroller
     def __init__(self):
         super(PIN_Diagram, self).__init__()
 
@@ -125,7 +126,7 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.verticalSlider = QtWidgets.QSlider()
             self.verticalSlider.setGeometry(QtCore.QRect(10, 10, 10, 10))
             self.verticalSlider.setMinimum(0)
-            self.verticalSlider.setMaximum(100)
+            self.verticalSlider.setMaximum(120)
             self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
             self.verticalSlider.setObjectName("verticalSlider")
             self.verticalSlider.setFocusPolicy(Qt.StrongFocus)
@@ -134,13 +135,13 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.verticalSlider.setSingleStep(1)
             self.verticalSlider.setStyleSheet('QSlider{max-height:500px} QSlider::handle:vertical{background:grey} QSlider::add-page:vertical{background:red} QSlider::sub-page:vertical{background:lightgrey}')
 
-            temperature = ["120","110","100" , "90" , "80", "70", "60", "50", "40","30","20","10","0"]
+            temperature = ["120   "+ chr(176)+ "F","110","100" , "90" , "80", "70", "60", "50", "40","30","20","10", "0"]
             self.temperatureFrame = QFrame()
             self.temperatureFrame.layout = QVBoxLayout()
             self.temperatureFrame.layout.setAlignment(Qt.AlignLeft)
             self.temperatureFrame.layout.addStretch()
 
-
+            self.verticalSlider.valueChanged[int].connect(self.changeValue)
             for val in temperature:
                 temp = QLabel()
                 temp.setText(val)
@@ -159,9 +160,16 @@ class PIN_Diagram(QtWidgets.QWidget):
             self.rightFrame.layout.addWidget(self.temperatureFrame)
             self.rightFrame.setLayout(self.rightFrame.layout)
 
+    def changeValue(self, value):
+        print(value)
+
     def getPIN_Digram(self):
         return self.rightFrame
+    
+    def analogSend(self):
+        print("This functons take temperature value")
 
+    #function to set pin status to high and low as per the values and updating their colors
     @staticmethod
     def setPinStatus(port, value):
         if value != 0:
@@ -206,39 +214,15 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
+    #function to fetch the PORT and DDR values for the PIN clicked
     def portClicked(self, port):  # On Click opens up port circuit diagram
 
         Components.Globalmap.Map.port_clicked = port
+        Components.Globalmap.Map.register_clicked = port
 
-        Components.Register_Values.Register_Values.clearList()
+        Components.Globalmap.Map.register_clicked_type = 'p'
 
-        pinRegister = "PORT" + port[1] + ".PIN"
-        pinValue = Components.Globalmap.Map.getValue(pinRegister)
-        pinAddress = Components.Globalmap.Map.getRegisterAddress(pinRegister)
-
-
-        ddrRegister = "PORT" + port[1] + ".DDR"
-        ddrValue = Components.Globalmap.Map.getValue(ddrRegister)
-        ddrAddress = Components.Globalmap.Map.getRegisterAddress(ddrRegister)
-
-        portRegister = "PORT" + port[1] + ".PORT"
-        portValue = Components.Globalmap.Map.getValue(portRegister)
-        portAddress = Components.Globalmap.Map.getRegisterAddress(portRegister)
-
-        if pinValue!=None:
-            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), pinValue)
-        else:
-            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), "0")
-
-        if ddrValue!=None:
-            Components.Register_Values.Register_Values.addRegister(ddrRegister,hex(ddrAddress) , ddrValue)
-        else:
-            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), "0")
-
-        if portValue!=None:
-            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), portValue)
-        else:
-            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), "0")
+        self.refreshLeftPanelPortValues(port)
 
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
 
@@ -248,6 +232,9 @@ class PIN_Diagram(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.addWidget(pinFrame)
             Components.stackedWidget.stackWidget.incrementTopCount()
 
+        Components.Globalmap.Map.port_clicked = port
+
+    #function when the ATMEGA controller components are clicked
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
@@ -266,6 +253,17 @@ class PIN_Diagram(QtWidgets.QWidget):
             registerAddress = Components.Globalmap.Map.getRegisterAddress(key)
             registerValue = Components.Globalmap.Map.getValue(key)
             Components.Register_Values.Register_Values.addRegister(key.split('.')[1], hex(registerAddress), registerValue)
+        Components.Globalmap.Map.register_clicked_type = 'b'
+        Components.Globalmap.Map.register_clicked = registers
+
+    @staticmethod
+    def refreshBlockRegister(registers):
+        Components.Register_Values.Register_Values.clearList()
+        for key in registers:
+            registerAddress = Components.Globalmap.Map.getRegisterAddress(key)
+            registerValue = Components.Globalmap.Map.getValue(key)
+            Components.Register_Values.Register_Values.addRegister(key.split('.')[1], hex(registerAddress),
+                                                                   registerValue)
 
     @staticmethod
     def refreshPortValues(port):
@@ -276,3 +274,49 @@ class PIN_Diagram(QtWidgets.QWidget):
             obj.setPin(Components.Globalmap.Map.pin_pinRegisterValue_map[port])
 
 
+    @staticmethod
+    def refreshLeftPanelPortValues(port):
+
+        Components.Register_Values.Register_Values.clearList()
+
+        pinRegister = "PORT" + port[1] + ".PIN"
+        pinValue = Components.Globalmap.Map.getValue(pinRegister)
+        pinAddress = Components.Globalmap.Map.getRegisterAddress(pinRegister)
+
+        # adding the register value in the bottom left panel
+        if pinValue != None:
+            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), pinValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), "0")
+
+        ddrRegister = "PORT" + port[1] + ".DDR"
+        ddrValue = Components.Globalmap.Map.getValue(ddrRegister)
+        ddrAddress = Components.Globalmap.Map.getRegisterAddress(ddrRegister)
+
+        # adding the DDR value in the bottom left panel
+        if ddrValue != None:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), ddrValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), "0")
+
+        portRegister = "PORT" + port[1] + ".PORT"
+        portValue = Components.Globalmap.Map.getValue(portRegister)
+        portAddress = Components.Globalmap.Map.getRegisterAddress(portRegister)
+
+        # adding the PORT value in the bottom left panel
+        if portValue != None:
+            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), portValue)
+        else:
+            Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), "0")
+
+    @staticmethod
+    def refreshLeftPanelRegisterValues(register):  # On Click Register name calls this function
+
+        value = Components.Globalmap.Map.getValue(register)
+        address = Components.Globalmap.Map.getRegisterAddress(register)
+        Components.Register_Values.Register_Values.clearList()
+
+        if value != None and address != None:
+            Components.Register_Values.Register_Values.addRegister(register, hex(address), hex(value))
+        else:
+            Components.Register_Values.Register_Values.addRegister(register, "NA", "NA")

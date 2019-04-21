@@ -1,6 +1,5 @@
-import Components.Port_View.PD0_View
-import Components.Port_View.PD1_View
-import Components.Port_View.PD2_View
+
+import Components.Port_View
 from Components import WatchDogTimer
 from Components import  SPI
 from Components import EEPROM
@@ -28,14 +27,7 @@ class ObjectFactory():
 
     @staticmethod
     def getObject(objectName):
-        if(objectName == 'PD0'):
-            return Components.Port_View.PD0_View.PD0_View().getInstance()
-        elif objectName == 'PD1':
-            return Components.Port_View.PD1_View.PD1_View().getInstance()
-        elif objectName == 'PD2':
-            return Components.Port_View.PD1_View.PD1_View().getInstance()
-        elif objectName == 'PC7':
-            return Components.Port_View.PC7_View.PC7_View().getInstance()
+        if 'PD' in objectName or 'PB' in objectName or 'PC' in objectName:
+            return Components.Port_View.Port_View().getInstance()
         else:
             return None
-
