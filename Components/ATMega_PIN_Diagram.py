@@ -165,6 +165,9 @@ class PIN_Diagram(QtWidgets.QWidget):
 
     def getPIN_Digram(self):
         return self.rightFrame
+    
+    def analogSend(self):
+        print("This functons take temperature value")
 
     #function to set pin status to high and low as per the values and updating their colors
     @staticmethod
