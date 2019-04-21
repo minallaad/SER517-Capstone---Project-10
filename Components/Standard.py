@@ -2,9 +2,8 @@
 
 import sys
 
-
-class value():    # According to electronic standard
-
+""" Class Standard Values consisting constant values for colors according to electronic Standard """
+class value():
 
     high = "color : red"
     low = "color : green"

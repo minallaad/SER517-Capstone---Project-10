@@ -30,7 +30,7 @@ class SimulavrAdapter(object):
                 self.getMemoryValue(dev)
 
                 if self.uiUpdateFlag == True :
-                    ui.updateUI()
+                    # ui.updateUI()
 
                     self.uiUpdateFlag == False
 
