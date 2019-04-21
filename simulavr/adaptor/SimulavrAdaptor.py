@@ -20,8 +20,8 @@ class SimulavrAdapter(object):
         return dev
 
     #function which runs the program
-    def runProgram(self, ui, thread):
-        dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
+    def runProgram(self, ui):
+        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Debug/simadc.elf")
 
         i = 0
         while True:
