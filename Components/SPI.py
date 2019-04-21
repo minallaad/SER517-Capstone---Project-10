@@ -22,10 +22,10 @@ class Ui_SPIFrame(object):
         font.setBold(True)
         font.setWeight(75)
         self.label.setFont(font)
-        self.label.setObjectName("label")
+        self.label.setObjectName("Title")
         self.label_2 = QtWidgets.QLabel(Frame)
         self.label_2.setGeometry(QtCore.QRect(90, 90, 671, 501))
-        self.label_2.setObjectName("label_2")
+        self.label_2.setObjectName("Image")
 
         self.retranslateUi(Frame)
         QtCore.QMetaObject.connectSlotsByName(Frame)
