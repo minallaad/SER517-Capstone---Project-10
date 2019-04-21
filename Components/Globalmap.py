@@ -1,26 +1,40 @@
-# -*- coding: utf-8 -*-
+'''
+This class is used to store global maps for various components to access them from UI and Simulavr Adaptor.
+Ui can access these map's for specific components to retrieve the value and display it on the UI.
+Adaptor helps in updating these maps when the values are fetched from specific memory addresses.
+'''
 
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QStackedWidget
 
 
-class Map():  # Used to switch between multiple layout
+class Map():
 
-    #map for the currently clicked port
+    '''
+    Description: map for tracking the currently clicked port
+    '''
     port_clicked = None
 
-    #global variable to hold currently clickec register value
+    '''
+    Description: global variable to hold currently clicked register value
+    '''
     register_clicked = None
 
-
+    '''
+    Description: global variable to hold currently clicked register value
+    '''
     register_clicked_type = None
 
-    #global map to update the values for the addresses
+    '''
+    Description: global map which consists the values of various components.
+    '''
     map = {}
 
-    #refresh flag to check if the refresh is clicked.
+    '''refresh flag to check if the refresh is clicked.'''
     refresh_flag = False
+
+    '''EEPROM address variable used to fetch the data from. It gets updated by the EEPROM UI.'''
     eeprom_address = 0
     port_address_map = {"PORTD": 0X2B, 'PORTC': 0X28, 'PORTB': 0X23}
     port_register_map = {"PORTD": "PD", "PORTB": "PB", "PORTC": "PC"}
@@ -34,7 +48,6 @@ class Map():  # Used to switch between multiple layout
                                 "PC0": 0, "PC1": 0, "PC2": 0, "PC3": 0, "PC3": 0,
                                 "PC5": 0, "PC6": 0, "PC7": 0, "PB0": 0, "PB1": 0, "PB2": 0, "PB3": 0, "PB4": 0,
                                 "PB5": 0, "PB6": 0, "PB7": 0, }
-    # ddr_address_map = {'DDRD': 0X2A, 'DDRC': 0X27, 'PORTB.DDR': 0X24}
 
     registerAddressMap = {'CORE.SREG': 0x5F, 'CORE.GTCCR': 0x43, 'CORE.ASSR': 0xB6, 'CORE.CLKPR': 0x61,
                           'CORE.OSCCAL': 0x66,
@@ -71,6 +84,9 @@ class Map():  # Used to switch between multiple layout
         else:
             Map.map = {}
 
+    '''
+    Description: Method to get the already existing instance of the map. If not, then create a new one.
+    '''
     @staticmethod
     def getInstance():
         """ Static access method. """
@@ -78,6 +94,10 @@ class Map():  # Used to switch between multiple layout
             Map()
         return Map.map
 
+    '''
+    Description: Function to access a specific value from the map. The key here is the component name for which
+                 the value needs to be accessed.
+    '''
     @staticmethod
     def getValue(key):
         """ Static access method. """
@@ -86,6 +106,9 @@ class Map():  # Used to switch between multiple layout
         else:
             return None
 
+    '''
+    Description: Function to update global map values.
+    '''
     @staticmethod
     def setGlobalMap(valueMap):
         """ Static access method. """
@@ -101,6 +124,10 @@ class Map():  # Used to switch between multiple layout
         """ Static access method. """
         return Map.port_register_map
 
+    '''
+    Description: Function to access the address of specific register.
+    @param key: The name of the register for which the value needs to be accessed.
+    '''
     @staticmethod
     def getRegisterAddress(key):
         if key in Map.registerAddressMap:
