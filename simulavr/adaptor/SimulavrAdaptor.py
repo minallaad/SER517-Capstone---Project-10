@@ -20,7 +20,7 @@ class SimulavrAdapter(object):
         return dev
 
     #function which runs the program
-    def runProgram(self, ui, thread):
+    def runProgram(self, ui):
         dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
 
         i = 0

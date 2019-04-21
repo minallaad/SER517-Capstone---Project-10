@@ -14,6 +14,7 @@ import Components.stackedWidget
 from simulavr.adaptor import SimulavrAdaptor
 from simulavr import SimulavrThread
 from helper import UIHelper
+from multiprocessing import Process
 
 
 class Landing(QtWidgets.QWidget):
@@ -133,6 +134,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     obj = Landing()
     sim = SimulavrAdaptor.SimulavrAdapter()
-    thread = SimulavrThread.simulavrThread(obj, sim)
-    thread.start()
+    p = Process(target=sim.runProgram, args=[obj])
+    p.start()
+    #thread = SimulavrThread.simulavrThread(obj, sim)
+    #thread.start()
     app.exec_()
