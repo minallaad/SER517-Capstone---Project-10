@@ -80,7 +80,7 @@ class SimulavrAdapter(object):
         map = {}
         address = Components.Globalmap.Map.eeprom_address
         for i in range(0, 20):
-            address += i
+            #address += 1
             address = address % 1024
             value_list = []
             new_address = 0
@@ -89,6 +89,6 @@ class SimulavrAdapter(object):
                 val = dev.eeprom.ReadFromAddress(new_address % 1024)
                 value_list.append(str(val))
             map[address] = value_list
-            address = new_address
+            address = new_address+1
 
         Components.Globalmap.Map.memory_map = map
