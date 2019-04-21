@@ -126,21 +126,32 @@ class Landing(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.decrementTopCount()
             Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
-    # function to update UI for ports and pins
+    '''
+    Description: This function updates the values in PORTS, PINS and registers on UI. It fetches the data from global
+                map and updates the UI components with the new data.
+    '''
     def updateUI(self):
 
         for key, value in Components.Globalmap.Map.map.items():
             port = key.split('.')[0]
+
+            #update the ports if the key is PORT
             if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
                 UIHelper.UIHelper().setPortValues(port, value)
+
+            #update the DDR values if the key is DDR.
             if key in ['PORTB.DDR', 'PORTC.DDR', 'PORTD.DDR']:
                 UIHelper.UIHelper().setDdrValues(port, value)
+
+            #update the PIN values if the key is PIN.
             if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
                 UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
 
+        #Update the values if any port is clicked.
         if Components.Globalmap.Map.port_clicked != None:
             self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
 
+        #Uddate the values if any register is clicked from the register list
         if Components.Globalmap.Map.register_clicked != None:
             if Components.Globalmap.Map.register_clicked_type == 'r':
                 self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked)
