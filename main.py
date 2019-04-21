@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import time
 
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
@@ -14,6 +15,8 @@ import Components.stackedWidget
 from simulavr.adaptor import SimulavrAdaptor
 from simulavr import SimulavrThread
 from helper import UIHelper
+import multiprocessing
+from multiprocessing import Process, Manager
 
 
 class Landing(QtWidgets.QWidget):
@@ -107,9 +110,9 @@ class Landing(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
     # function to update UI for ports and pins
-    def updateUI(self):
-
-        for key, value in Components.Globalmap.Map.map.items():
+    def updateUI(self, sharedMap):
+        Map = sharedMap['val']
+        for key, value in Map.map.items():
             port = key.split('.')[0]
             if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
                 UIHelper.UIHelper().setPortValues(port, value)
@@ -119,20 +122,35 @@ class Landing(QtWidgets.QWidget):
                 UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
 
         if Components.Globalmap.Map.port_clicked != None:
-            self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
+            self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked, Map)
 
         if Components.Globalmap.Map.register_clicked != None:
             if Components.Globalmap.Map.register_clicked_type == 'r':
-                self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked)
+                self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked, Map)
             elif Components.Globalmap.Map.register_clicked_type == 'p':
-                self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked)
-            
-if __name__ == '__main__':
+                self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked, Map)
+
+class UI:
+
+    def __init__(self, ui):
+        self.ui = ui
+
+def run(map):
     app = QApplication(sys.argv)
     obj = Landing()
-    sim = SimulavrAdaptor.SimulavrAdapter()
-    p = Process(target=sim.runProgram, args=[obj])
-    p.start()
+    Components.Globalmap.Map.ui = obj
+    map['map'] = Components.Globalmap.Map
+    map['1'] = 2
+    app.exec_()
+
+            
+if __name__ == '__main__':
+
+    with Manager() as manager:
+        Map = manager.dict()
+        p = Process(target=run, args=[Map])
+        p.start()
+        sim = SimulavrAdaptor.SimulavrAdapter()
+        sim.runProgram(Map)
     #thread = SimulavrThread.simulavrThread(obj, sim)
     #thread.start()
-    app.exec_()

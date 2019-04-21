@@ -5,6 +5,9 @@ import Components.EEPROM
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
     uiUpdateFlag = False
+    
+    #def __init(self):
+        #self.dev = self.loadDevice("atmega328", "/home/saheb/Downloads/simadoc/bin/Debug/simadc.elf")
 
     #function to create the device object
     def loadDevice(self, t, e):
@@ -20,7 +23,7 @@ class SimulavrAdapter(object):
         return dev
 
     #function which runs the program
-    def runProgram(self, ui, thread):
+    def runProgram(self, Map):
         dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
 
         i = 0
@@ -29,9 +32,10 @@ class SimulavrAdapter(object):
                 #fetching values from memory address
                 self.getMemoryValue(dev)
 
-                if self.uiUpdateFlag == True :
-                    ui.updateUI()
+                if self.uiUpdateFlag == True:
 
+                    d = Map['map']
+                    e = Map['1']
                     self.uiUpdateFlag == False
 
                 #if referesh flag is true update the values again.

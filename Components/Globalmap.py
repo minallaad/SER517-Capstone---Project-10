@@ -19,6 +19,8 @@ class Map():  # Used to switch between multiple layout
     #global map to update the values for the addresses
     map = {}
 
+    ui = None
+
     #refresh flag to check if the refresh is clicked.
     refresh_flag = False
     eeprom_address = 0
