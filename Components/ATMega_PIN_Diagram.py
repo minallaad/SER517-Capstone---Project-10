@@ -219,7 +219,7 @@ class PIN_Diagram(QtWidgets.QWidget):
 
         Components.Globalmap.Map.register_clicked_type = 'p'
 
-        self.refreshLeftPanelPortValues(port)
+        self.refreshLeftPanelPortValues(port, )
 
         pinFrame = Components.ViewFactory.ViewFactory.getView(port)
 

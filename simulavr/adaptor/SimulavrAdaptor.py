@@ -6,8 +6,8 @@ class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
     uiUpdateFlag = False
     
-    #def __init(self):
-        #self.dev = self.loadDevice("atmega328", "/home/saheb/Downloads/simadoc/bin/Debug/simadc.elf")
+    def __init(self):
+        self.dev = self.loadDevice("atmega328", "/home/saheb/Downloads/simadoc/bin/Debug/simadc.elf")
 
     #function to create the device object
     def loadDevice(self, t, e):
@@ -23,26 +23,24 @@ class SimulavrAdapter(object):
         return dev
 
     #function which runs the program
-    def runProgram(self, Map):
-        dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
+    def runProgram(self, sharedMap):
+        #dev = self.loadDevice("atmega328", "/home/saheb/Downloads/simadoc/bin/Debug/simadc.elf")
 
         i = 0
         while True:
             if i == 5000:
                 #fetching values from memory address
-                self.getMemoryValue(dev)
+                self.getMemoryValue(self.dev, sharedMap)
 
-                if self.uiUpdateFlag == True:
-
-                    d = Map['map']
-                    e = Map['1']
-                    self.uiUpdateFlag == False
+                #if self.uiUpdateFlag == True:
+                sharedMap['refresh_ui_flag'] = True
+                self.uiUpdateFlag = False
 
                 #if referesh flag is true update the values again.
                 if Components.Globalmap.Map.refresh_flag:
 
                     Components.Globalmap.Map.refresh_flag = False
-                    self.getMemoryDumpRange(dev)
+                    self.getMemoryDumpRange(self.dev)
                     Components.EEPROM.memoryDump.UpdateEEPROM()
                 i = 0
 
@@ -69,15 +67,15 @@ class SimulavrAdapter(object):
         return self.__sc.GetCurrentTime()
 
     #function to fetch the memory values from the addresses
-    def getMemoryValue(self, dev):
-        self.getDDRValues(dev)
+    def getMemoryValue(self, dev, sharedMap):
+        self.getDDRValues(dev, sharedMap)
 
-    def getDDRValues(self, dev):
+    def getDDRValues(self, dev, sharedMap):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
             val = dev.getRWMem(value)
-            if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val != Components.Globalmap.Map.map[key]) :
-                self.uiUpdateFlag = True
-            Components.Globalmap.Map.map[key] = val
+            #if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val != sharedMap[key]) :
+             #   self.uiUpdateFlag = True
+            sharedMap[key] = val
 
     #function too fetch the value from EEPROM
     def getMemoryDumpRange(self, dev):

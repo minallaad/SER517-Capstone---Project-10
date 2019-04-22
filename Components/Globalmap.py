@@ -21,6 +21,8 @@ class Map():  # Used to switch between multiple layout
 
     ui = None
 
+    refresh_ui_flag = False
+
     #refresh flag to check if the refresh is clicked.
     refresh_flag = False
     eeprom_address = 0

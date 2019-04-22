@@ -16,12 +16,13 @@ from simulavr.adaptor import SimulavrAdaptor
 from simulavr import SimulavrThread
 from helper import UIHelper
 import multiprocessing
+from PyQt5.QtCore import QThread
 from multiprocessing import Process, Manager
 
 
 class Landing(QtWidgets.QWidget):
 
-    def __init__(self):
+    def __init__(self, sharedMap):
         super(Landing, self).__init__()
         self.Register_Values = None
         self.List_of_Registers = None
@@ -111,46 +112,55 @@ class Landing(QtWidgets.QWidget):
 
     # function to update UI for ports and pins
     def updateUI(self, sharedMap):
-        Map = sharedMap['val']
-        for key, value in Map.map.items():
-            port = key.split('.')[0]
-            if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
-                UIHelper.UIHelper().setPortValues(port, value)
-            if key in ['PORTB.DDR', 'PORTC.DDR', 'PORTD.DDR']:
-                UIHelper.UIHelper().setDdrValues(port, value)
-            if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
-                UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
+        while True:
 
-        if Components.Globalmap.Map.port_clicked != None:
-            self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked, Map)
+            if sharedMap['refresh_ui_flag']:
+                sharedMap['refresh_ui_flag'] = False
+                for key, value in sharedMap.items():
+                    port = key.split('.')[0]
+                    if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
+                        UIHelper.UIHelper().setPortValues(port, value)
+                    if key in ['PORTB.DDR', 'PORTC.DDR', 'PORTD.DDR']:
+                        UIHelper.UIHelper().setDdrValues(port, value)
+                    if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
+                        UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
 
-        if Components.Globalmap.Map.register_clicked != None:
-            if Components.Globalmap.Map.register_clicked_type == 'r':
-                self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked, Map)
-            elif Components.Globalmap.Map.register_clicked_type == 'p':
-                self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked, Map)
+                if Components.Globalmap.Map.port_clicked != None:
+                    self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked, Components.Globalmap.Map)
 
-class UI:
+                if Components.Globalmap.Map.register_clicked != None:
+                    if Components.Globalmap.Map.register_clicked_type == 'r':
+                        self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked, Components.Globalmap.Map)
+                    elif Components.Globalmap.Map.register_clicked_type == 'p':
+                        self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked, Components.Globalmap.Map)
 
-    def __init__(self, ui):
+class UiThread(QThread):
+
+    def __init__(self, ui, sharedMap):
+        QThread.__init__(self)
         self.ui = ui
+        self.sharedMap = sharedMap
 
-def run(map):
+    def run(self):
+        self.ui.updateUI(self.sharedMap)
+
+
+def run(sharedMap):
     app = QApplication(sys.argv)
-    obj = Landing()
-    Components.Globalmap.Map.ui = obj
-    map['map'] = Components.Globalmap.Map
-    map['1'] = 2
+    obj = Landing(sharedMap)
+    uiThread = UiThread(obj, sharedMap)
+    uiThread.start()
     app.exec_()
 
             
 if __name__ == '__main__':
 
-    with Manager() as manager:
-        Map = manager.dict()
-        p = Process(target=run, args=[Map])
-        p.start()
-        sim = SimulavrAdaptor.SimulavrAdapter()
-        sim.runProgram(Map)
+    #with Manager() as manager:
+    manager = Manager()
+    sharedMap = manager.dict()
+    #p = Process(target=run, args=[sharedMap])
+    #p.start()
+    sim = SimulavrAdaptor.SimulavrAdapter()
+    sim.runProgram(sharedMap)
     #thread = SimulavrThread.simulavrThread(obj, sim)
     #thread.start()
