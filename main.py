@@ -1,4 +1,8 @@
-# -*- coding: utf-8 -*-
+'''
+    Description: This class represents the actual UI for the application. It consist of the functions for creating
+                 the backbone of the UI and adding various components to it. It also has the functionality of updating
+                 the UI.
+'''
 
 import sys
 
@@ -27,7 +31,9 @@ class Landing(QtWidgets.QWidget):
         self.stackWidget = None
         self.initUI()
 
-    # initializing UI here and setting properties
+    '''
+    Description: Function for initializing the UI and setting default properties to it.
+    '''
     def initUI(self):
         self.title = "ATMega Simulator"
         self.top = 100
@@ -41,13 +47,19 @@ class Landing(QtWidgets.QWidget):
 
         self.show()
 
-    # setting window components for the main page
+    '''
+    Description: Function for creating a window for the UI and adding various components to it. 
+    '''
     def window(self):
 
-        self.Register_Values = Components.Register_Values.Register_Values().getInstance()  # Object of Class Register Values
-        self.List_of_Registers = Components.List_of_Registers.List_of_Registers().getInstance()  # Object of Class List of Registers
+        # Component for displaying the register values. This is the bottom left component of the UI.
+        self.Register_Values = Components.Register_Values.Register_Values().getInstance()
 
-        self.PIN_Diagram = Components.ATMega_PIN_Diagram.PIN_Diagram()  # Object of Class PIN Diagram
+        # Component for displaying the list of register. This is the top left list component of the UI.
+        self.List_of_Registers = Components.List_of_Registers.List_of_Registers().getInstance()
+
+        # Component for displaying the microcontroller and the pins.
+        self.PIN_Diagram = Components.ATMega_PIN_Diagram.PIN_Diagram()
 
         self.stackWidget = Components.stackedWidget.stackWidget().getInstance()
 
@@ -75,11 +87,13 @@ class Landing(QtWidgets.QWidget):
         self.Title.setFont(self.titleFont)
         self.Title.setAlignment(Qt.AlignCenter)
 
+        # Associating back button to UI.
         self.backButton = QtWidgets.QPushButton("Back")
         self.backButton.clicked.connect(lambda: self.backClicked())
 
         self.horizontalLayout.addWidget(self.horizontalSplitter)
 
+        # Displauying the connection status of the simulator.
         self.StatusFont = QtGui.QFont("Helvetica", 10, QtGui.QFont.Bold)
         self.Status = QtWidgets.QLabel(self)
         self.Status.setText(self.getConnectionStatus())
@@ -95,10 +109,16 @@ class Landing(QtWidgets.QWidget):
 
         self.setLayout(self.verticalLayout)
 
-    def getConnectionStatus(self):  # Function returns status (Connected / Disconnected)
+    '''
+    Description: This function returns the connection status of the simulator.
+    '''
+    def getConnectionStatus(self):
         return "Connected to Simulavr"
 
-    # functionality for back button
+    '''
+    Description: Function to create the back button functionality. This button helps in navigation on UI between 
+                 various screens. 
+    '''
     def backClicked(self):
         UIHelper.UIHelper().refreshItems()
         topWidget = Components.stackedWidget.stackWidget.top
@@ -107,7 +127,10 @@ class Landing(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.decrementTopCount()
             Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
-    # function to update UI for ports and pins
+    '''
+    Description: This function updates the values in PORTS, PINS and registers on UI. It fetches the data from global
+     map and updates the UI components with the new data.
+    '''
     def updateUI(self, sharedMap, sharedMemoryMap):
         while True:
 
