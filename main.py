@@ -155,12 +155,9 @@ def run(sharedMap):
             
 if __name__ == '__main__':
 
-    #with Manager() as manager:
     manager = Manager()
     sharedMap = manager.dict()
-    #p = Process(target=run, args=[sharedMap])
-    #p.start()
+    p = Process(target=run, args=[sharedMap])
+    p.start()
     sim = SimulavrAdaptor.SimulavrAdapter()
     sim.runProgram(sharedMap)
-    #thread = SimulavrThread.simulavrThread(obj, sim)
-    #thread.start()
