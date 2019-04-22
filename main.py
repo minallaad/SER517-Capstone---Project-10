@@ -19,8 +19,10 @@ from simulavr.adaptor import SimulavrAdaptor
 from simulavr import SimulavrThread
 from helper import UIHelper
 
-import faulthandler
-faulthandler.enable()
+sys.stdout = open('test/logs.log', 'w')
+
+
+
 
 class Landing(QtWidgets.QWidget):
 
