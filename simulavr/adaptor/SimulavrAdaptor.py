@@ -20,8 +20,10 @@ class SimulavrAdapter(object):
         return dev
 
     #function which runs the program
-    def runProgram(self, sharedMap):
+    def runProgram(self, sharedMap, sharedMemoryMap):
         dev = self.loadDevice("atmega328", "/home/saheb/Downloads/simadoc/bin/Debug/simadc.elf")
+        sharedMap['eeprom_update'] = False
+        sharedMap['eeprom_is_updated'] = False
 
         i = 0
         while True:
@@ -34,11 +36,10 @@ class SimulavrAdapter(object):
                 self.uiUpdateFlag = False
 
                 #if referesh flag is true update the values again.
-                if Components.Globalmap.Map.refresh_flag:
-
-                    Components.Globalmap.Map.refresh_flag = False
-                    self.getMemoryDumpRange(dev)
-                    Components.EEPROM.memoryDump.UpdateEEPROM()
+                if sharedMap['eeprom_update']:
+                    sharedMap['eeprom_update'] = False
+                    self.getMemoryDumpRange(dev, sharedMap, sharedMemoryMap)
+                    sharedMap['eeprom_is_updated'] = True
                 i = 0
 
             i = i + 1
@@ -75,9 +76,9 @@ class SimulavrAdapter(object):
             sharedMap[key] = val
 
     #function too fetch the value from EEPROM
-    def getMemoryDumpRange(self, dev):
-        map = {}
-        address = Components.Globalmap.Map.eeprom_address
+    def getMemoryDumpRange(self, dev, sharedMap, sharedMemoryMap):
+        sharedMemoryMap.clear()
+        address = sharedMap['eeprom_address']
         for i in range(0, 20):
             address += i
             address = address % 1024
@@ -87,7 +88,5 @@ class SimulavrAdapter(object):
                 new_address = address + j
                 val = dev.eeprom.ReadFromAddress(new_address % 1024)
                 value_list.append(str(val))
-            map[address] = value_list
+            sharedMemoryMap[address] = value_list
             address = new_address
-
-        Components.Globalmap.Map.memory_map = map

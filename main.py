@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import time
 
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread
 from PyQt5.QtWidgets import QSplitter, QApplication, QHBoxLayout, QVBoxLayout
 
 import Components.ATMega_PIN_Diagram
@@ -12,17 +11,15 @@ import Components.Globalmap
 import Components.List_of_Registers
 import Components.Register_Values
 import Components.stackedWidget
+import Components.EEPROM
 from simulavr.adaptor import SimulavrAdaptor
-from simulavr import SimulavrThread
 from helper import UIHelper
-import multiprocessing
-from PyQt5.QtCore import QThread
 from multiprocessing import Process, Manager
 
 
 class Landing(QtWidgets.QWidget):
 
-    def __init__(self, sharedMap):
+    def __init__(self):
         super(Landing, self).__init__()
         self.Register_Values = None
         self.List_of_Registers = None
@@ -111,7 +108,7 @@ class Landing(QtWidgets.QWidget):
             Components.stackedWidget.stackWidget.removeWidget(widgetToRemove)
 
     # function to update UI for ports and pins
-    def updateUI(self, sharedMap):
+    def updateUI(self, sharedMap, sharedMemoryMap):
         while True:
 
             if sharedMap['refresh_ui_flag']:
@@ -126,29 +123,40 @@ class Landing(QtWidgets.QWidget):
                         UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
 
                 if Components.Globalmap.Map.port_clicked != None:
-                    self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked, Components.Globalmap.Map)
+                    self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
 
                 if Components.Globalmap.Map.register_clicked != None:
                     if Components.Globalmap.Map.register_clicked_type == 'r':
-                        self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked, Components.Globalmap.Map)
+                        self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked)
                     elif Components.Globalmap.Map.register_clicked_type == 'p':
-                        self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked, Components.Globalmap.Map)
+                        self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked)
+
+                if Components.Globalmap.Map.refresh_flag:
+                    Components.Globalmap.Map.refresh_flag = False
+                    sharedMap['eeprom_address'] = Components.Globalmap.Map.eeprom_address
+                    sharedMap['eeprom_update'] = True
+
+                if sharedMap['eeprom_is_updated']:
+                    sharedMap['eeprom_is_updated'] = False
+                    Components.EEPROM.memoryDump.UpdateEEPROM(sharedMemoryMap)
+
 
 class UiThread(QThread):
 
-    def __init__(self, ui, sharedMap):
+    def __init__(self, ui, sharedMap, sharedMemoryMap):
         QThread.__init__(self)
         self.ui = ui
         self.sharedMap = sharedMap
+        self.sharedMemoryMap = sharedMemoryMap
 
     def run(self):
-        self.ui.updateUI(self.sharedMap)
+        self.ui.updateUI(self.sharedMap, self.sharedMemoryMap)
 
 
-def run(sharedMap):
+def run(sharedMap, sharedMemoryMap):
     app = QApplication(sys.argv)
-    obj = Landing(sharedMap)
-    uiThread = UiThread(obj, sharedMap)
+    obj = Landing()
+    uiThread = UiThread(obj, sharedMap, sharedMemoryMap)
     uiThread.start()
     app.exec_()
 
@@ -157,7 +165,9 @@ if __name__ == '__main__':
 
     manager = Manager()
     sharedMap = manager.dict()
-    p = Process(target=run, args=[sharedMap])
+    sharedMemoryMap = manager.dict()
+
+    p = Process(target=run, args=[sharedMap, sharedMemoryMap])
     p.start()
     sim = SimulavrAdaptor.SimulavrAdapter()
-    sim.runProgram(sharedMap)
+    sim.runProgram(sharedMap, sharedMemoryMap)

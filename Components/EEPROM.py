@@ -30,7 +30,7 @@ class memoryDump(QtWidgets.QWidget):
             Title.setGeometry(QRect(290, 40, 191, 31))
 
             self.refreshButton = QtWidgets.QPushButton("Refresh")
-            self.refreshButton.clicked.connect(lambda: self.reloadMemoryDump())
+            self.refreshButton.clicked.connect(lambda: self.submitClicked)
 
             self.memoryAddressLabel = QLabel(self)
             self.memoryAddressLabel.setText('Memory Address:')
@@ -99,11 +99,11 @@ class memoryDump(QtWidgets.QWidget):
 
     #function to update the EEPROM values in the EERPOM tables
     @staticmethod
-    def updateTable():
+    def updateTable(sharedMemoryMap):
         i = 0
-        memoryDump.map = Components.Globalmap.Map.memory_map
+        memoryDump.map = sharedMemoryMap
         memoryDump.tableWidget.setRowCount(len(memoryDump.map) + 1)
-        for key, Value in Components.Globalmap.Map.memory_map.items():
+        for key, Value in sharedMemoryMap.items():
             j = 0
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(hex(key))))
             j = j + 1
@@ -121,8 +121,8 @@ class memoryDump(QtWidgets.QWidget):
         memoryDump.map = {}
 
     @staticmethod
-    def UpdateEEPROM():
-        memoryDump.updateTable()
+    def UpdateEEPROM(sharedMemoryMap):
+        memoryDump.updateTable(sharedMemoryMap)
 
 class row():
     name = None
