@@ -317,7 +317,6 @@ class PIN_Diagram(QtWidgets.QWidget):
     """ Static Method to Referesh Register Values in the Bottom Left Panel  """
     @staticmethod
     def refreshLeftPanelRegisterValues(register):
-
         value = Components.Globalmap.Map.getValue(register)
         address = Components.Globalmap.Map.getRegisterAddress(register)
         Components.Register_Values.Register_Values.clearList()

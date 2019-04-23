@@ -7,7 +7,7 @@
 import sys
 
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread
 from PyQt5.QtWidgets import QSplitter, QApplication, QHBoxLayout, QVBoxLayout
 
 import Components.ATMega_PIN_Diagram
@@ -15,9 +15,10 @@ import Components.Globalmap
 import Components.List_of_Registers
 import Components.Register_Values
 import Components.stackedWidget
+import Components.EEPROM
 from simulavr.adaptor import SimulavrAdaptor
-from simulavr import SimulavrThread
 from helper import UIHelper
+from multiprocessing import Process, Manager
 
 
 
@@ -132,38 +133,43 @@ class Landing(QtWidgets.QWidget):
 
     '''
     Description: This function updates the values in PORTS, PINS and registers on UI. It fetches the data from global
-                map and updates the UI components with the new data.
+     map and updates the UI components with the new data.
     '''
-    def updateUI(self):
+    def updateUI(self, sharedMap, sharedMemoryMap):
+        while True:
 
-        for key, value in Components.Globalmap.Map.map.items():
-            port = key.split('.')[0]
+            if sharedMap['refresh_ui_flag']:
+                sharedMap['refresh_ui_flag'] = False
+                Components.Globalmap.Map.map = sharedMap
+                for key, value in sharedMap.items():
+                    port = key.split('.')[0]
+                    if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
+                        UIHelper.UIHelper().setPortValues(port, value)
+                    if key in ['PORTB.DDR', 'PORTC.DDR', 'PORTD.DDR']:
+                        UIHelper.UIHelper().setDdrValues(port, value)
+                    if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
+                        UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
 
-            #update the ports if the key is PORT
-            if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
-                UIHelper.UIHelper().setPortValues(port, value)
+                if Components.Globalmap.Map.port_clicked != None:
+                    self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
 
-            #update the DDR values if the key is DDR.
-            if key in ['PORTB.DDR', 'PORTC.DDR', 'PORTD.DDR']:
-                UIHelper.UIHelper().setDdrValues(port, value)
+                if Components.Globalmap.Map.register_clicked != None:
+                    if Components.Globalmap.Map.register_clicked_type == 'r':
+                        self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked)
+                    elif Components.Globalmap.Map.register_clicked_type == 'p':
+                        self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked)
 
-            #update the PIN values if the key is PIN.
-            if key in ['PORTB.PIN', 'PORTC.PIN', 'PORTD.PIN']:
-                UIHelper.UIHelper().setPinValues(port, value, self.PIN_Diagram)
+                if Components.Globalmap.Map.refresh_flag:
+                    Components.Globalmap.Map.refresh_flag = False
+                    sharedMap['eeprom_address'] = Components.Globalmap.Map.eeprom_address
+                    sharedMap['eeprom_update'] = True
 
-        #Update the values if any port is clicked.
-        if Components.Globalmap.Map.port_clicked != None:
-            self.PIN_Diagram.refreshPortValues(Components.Globalmap.Map.port_clicked)
+                if sharedMap['eeprom_is_updated']:
+                    sharedMap['eeprom_is_updated'] = False
+                    Components.EEPROM.memoryDump.UpdateEEPROM(sharedMemoryMap)
 
-        #Uddate the values if any register is clicked from the register list
-        if Components.Globalmap.Map.register_clicked != None:
-            if Components.Globalmap.Map.register_clicked_type == 'r':
-                self.PIN_Diagram.refreshLeftPanelRegisterValues(Components.Globalmap.Map.register_clicked)
-            elif Components.Globalmap.Map.register_clicked_type == 'p':
-                self.PIN_Diagram.refreshLeftPanelPortValues(Components.Globalmap.Map.register_clicked)
-            # else :
-            #     self.PIN_Diagram.refreshBlockRegister(Components.Globalmap.Map.register_clicked)
 
+<<<<<<< HEAD
 if __name__ == '__main__':
     
     app = QApplication(sys.argv)
@@ -180,3 +186,39 @@ if __name__ == '__main__':
     del obj
     del app
     sys.exit(rc)
+=======
+class UiThread(QThread):
+
+    def __init__(self, ui, sharedMap, sharedMemoryMap):
+        QThread.__init__(self)
+        self.ui = ui
+        self.sharedMap = sharedMap
+        self.sharedMemoryMap = sharedMemoryMap
+
+    def run(self):
+        self.ui.updateUI(self.sharedMap, self.sharedMemoryMap)
+
+
+def run(sharedMap, sharedMemoryMap):
+    app = QApplication(sys.argv)
+    obj = Landing()
+    uiThread = UiThread(obj, sharedMap, sharedMemoryMap)
+    uiThread.start()
+    app.exec_()
+
+            
+if __name__ == '__main__':
+
+    manager = Manager()
+    sharedMap = manager.dict()
+    sharedMemoryMap = manager.dict()
+
+    p = Process(target=run, args=[sharedMap, sharedMemoryMap])
+    p.start()
+
+    try:
+        sim = SimulavrAdaptor.SimulavrAdapter()
+        sim.runProgram(sharedMap, sharedMemoryMap)
+    except:
+        p.terminate()
+>>>>>>> f3a74d88334b1f3ecbc2586ecc543e9c23a480b8

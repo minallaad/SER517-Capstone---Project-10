@@ -45,25 +45,31 @@ class SimulavrAdapter(object):
     
     
     
-    def runProgram(self, ui, thread):
-        dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
+    
+
+    def runProgram(self, sharedMap, sharedMemoryMap):
+        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Debug/simadc.elf")
+        sharedMap['eeprom_update'] = False
+        sharedMap['eeprom_is_updated'] = False
+
 
         i = 0
         while True:
             if i == 5000:
+                #fetching values from memory address
+                self.getMemoryValue(dev, sharedMap)
+
+                #if self.uiUpdateFlag == True:
+                sharedMap['refresh_ui_flag'] = True
+                self.uiUpdateFlag = False
+
+                #if referesh flag is true update the values again.
                 '''fetching values from memory address'''
-                self.getMemoryValue(dev)
+                if sharedMap['eeprom_update']:
+                    sharedMap['eeprom_update'] = False
+                    self.getMemoryDumpRange(dev, sharedMap, sharedMemoryMap)
+                    sharedMap['eeprom_is_updated'] = True
 
-                if self.uiUpdateFlag == True:
-                    ui.updateUI()
-
-                    self.uiUpdateFlag == False
-
-                '''if referesh flag is true, update the values again.'''
-                if Components.Globalmap.Map.refresh_flag:
-                    Components.Globalmap.Map.refresh_flag = False
-                    self.getMemoryDumpRange(dev)
-                    Components.EEPROM.memoryDump.UpdateEEPROM()
                 i = 0
             if i % 1000 == 0:
                 gc.collect()
@@ -87,30 +93,35 @@ class SimulavrAdapter(object):
     Description: This function is used to fetch the memory values from the addresses.
     @param dev: The reference of the device object.
     '''
-
-    def getMemoryValue(self, dev):
-        self.getDDRValues(dev)
+    def getMemoryValue(self, dev, sharedMap):
+        self.getDDRValues(dev, sharedMap)
 
     '''
     Description: This function is to fetch DDR values from specific memory addresses.
     @param dev: The reference of the device object.
     '''
-
-    def getDDRValues(self, dev):
+    def getDDRValues(self, dev, sharedMap):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
             val = dev.getRWMem(value)
+
             if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val !=
                     Components.Globalmap.Map.map[key]):
                 self.uiUpdateFlag = True
             Components.Globalmap.Map.map[key] = val
         
+
+            #if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val != sharedMap[key]) :
+             #   self.uiUpdateFlag = True
+            sharedMap[key] = val
+
+
     '''
     Description: This function is used to fetch the values from the EEPROM.
     @param dev: The reference of the device object.
     '''
-    def getMemoryDumpRange(self, dev):
-        map = {}
-        address = Components.Globalmap.Map.eeprom_address
+    def getMemoryDumpRange(self, dev, sharedMap, sharedMemoryMap):
+        sharedMemoryMap.clear()
+        address = sharedMap['eeprom_address']
         for i in range(0, 20):
             address += i
             address = address % 1024
@@ -120,8 +131,10 @@ class SimulavrAdapter(object):
                 new_address = address + j
                 val = dev.eeprom.ReadFromAddress(new_address % 1024)
                 value_list.append(str(val))
-            map[address] = value_list
+            sharedMemoryMap[address] = value_list
             address = new_address
+
 
         Components.Globalmap.Map.memory_map = map
         
+
