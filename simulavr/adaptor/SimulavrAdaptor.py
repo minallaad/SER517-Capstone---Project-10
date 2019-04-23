@@ -48,7 +48,7 @@ class SimulavrAdapter(object):
     
 
     def runProgram(self, sharedMap, sharedMemoryMap):
-        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Debug/simadc.elf")
+        dev = self.loadDevice("atmega328", "/home/vutsuak/Desktop/SER517-Capstone---Project-10/simulavr/adaptor/simadc.elf")
         sharedMap['eeprom_update'] = False
         sharedMap['eeprom_is_updated'] = False
 

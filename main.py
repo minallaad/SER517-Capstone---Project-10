@@ -187,8 +187,8 @@ def run(sharedMap, sharedMemoryMap):
     uiThread = UiThread(obj, sharedMap, sharedMemoryMap)
     uiThread.start()
     app.exec_()
-    del obj
-    del app
+
+
             
 if __name__ == '__main__':
 
