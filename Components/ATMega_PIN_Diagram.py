@@ -1,4 +1,8 @@
-# -*- coding: utf-8 -*-
+'''
+This class is used to create PIN Diagram for microcontroller. It draws all the pins in the microcontroller and sets
+the color of the pin's as well based on the value of the pin.
+
+'''
 
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
@@ -29,7 +33,9 @@ class PIN_Diagram(QtWidgets.QWidget):
     pinl_dict = {}
     standard = None
 
-    #creating the microcontroller diagram and the pin frames for the microcontroller
+    '''
+    Description: Fucntion for creating the microcontroller diagram and the pin frames for the microcontroller
+    '''
     def __init__(self):
         super(PIN_Diagram, self).__init__()
 
@@ -68,8 +74,6 @@ class PIN_Diagram(QtWidgets.QWidget):
             leftPinFrame.layout.setAlignment(Qt.AlignRight)
             leftPinFrame.layout.addStretch()
 
-            # .itemClicked.connect(self.Clicked)
-
             for i in pinsl:
                 self.pinl_dict[i] = QtWidgets.QPushButton(self)
 
@@ -107,17 +111,18 @@ class PIN_Diagram(QtWidgets.QWidget):
 
             rightPinFrame.layout.addStretch()
             rightPinFrame.setLayout(rightPinFrame.layout)
-            #enable pin clicks for left
+
+            '''enable pin clicks for left'''
             for val in pinsl:
                 self.pinl_dict[val].setEnabled(True)
                 self.pinl_dict[val].setStyleSheet(self.standard.low)
 
-            # enable pin clicks for left
+            '''enable pin clicks for left'''
             for val in pinsl:
                 self.pinl_dict[val].setEnabled(True)
                 self.pinl_dict[val].setStyleSheet(self.standard.low)
 
-            # enable pin clicks for right
+            '''enable pin clicks for right'''
             for val in pinsr:
                 self.pinr_dict[val].setEnabled(True)
                 self.pinr_dict[val].setStyleSheet(self.standard.low)
@@ -169,7 +174,12 @@ class PIN_Diagram(QtWidgets.QWidget):
     def analogSend(self):
         print("This functons take temperature value")
 
-    #function to set pin status to high and low as per the values and updating their colors
+    '''
+    Desction: Function to set pin status to high and low as per the values and updating their colors
+    @param port: The port value for which the color needs to be changed.
+    @param value: The value according to which the color is changed. For value 0, it is set to green, for value 1,
+                  it is set to red.
+    '''
     @staticmethod
     def setPinStatus(port, value):
         if value != 0:
@@ -214,8 +224,11 @@ class PIN_Diagram(QtWidgets.QWidget):
         Components.stackedWidget.stackWidget.addWidget(microcontrollerBlock)
         Components.stackedWidget.stackWidget.incrementTopCount()
 
-    #function to fetch the PORT and DDR values for the PIN clicked
-    def portClicked(self, port):  # On Click opens up port circuit diagram
+    '''
+    Description: Function to fetch the PORT values and the circuit diagram.
+    @param port: The port which is clicked.
+    '''
+    def portClicked(self, port):
 
         Components.Globalmap.Map.port_clicked = port
         Components.Globalmap.Map.register_clicked = port
@@ -234,7 +247,11 @@ class PIN_Diagram(QtWidgets.QWidget):
 
         Components.Globalmap.Map.port_clicked = port
 
-    #function when the ATMEGA controller components are clicked
+    '''
+    Description: Function when the ATMEGA controller components are clicked
+    @param component: The component which is clicked in the ATMEGA block diagram.
+    @param registers: The list of registers values associated with that component.
+    '''
     def blockComponentClicked(self, component, registers):
         frame = Components.ViewFactory.ViewFactory.getView(component)
 
@@ -264,7 +281,10 @@ class PIN_Diagram(QtWidgets.QWidget):
             registerValue = Components.Globalmap.Map.getValue(key)
             Components.Register_Values.Register_Values.addRegister(key.split('.')[1], hex(registerAddress),
                                                                    registerValue)
-
+    '''
+    Description: Function to refresh the values of the currently clicked port.
+    @param port: The port value which is currently clicked. 
+    '''
     @staticmethod
     def refreshPortValues(port):
         obj = Components.ObjectFactory.ObjectFactory.getObject(port)
@@ -273,7 +293,10 @@ class PIN_Diagram(QtWidgets.QWidget):
             obj.setPort(Components.Globalmap.Map.pin_portRegisterValue_map[port])
             obj.setPin(Components.Globalmap.Map.pin_pinRegisterValue_map[port])
 
-
+    '''
+    Description: Function to update the DDR, PORT and PIN values for the clicked port in bottom left panel.
+    @param port: The port value which is currently clicked.
+    '''
     @staticmethod
     def refreshLeftPanelPortValues(port):
 
@@ -283,7 +306,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         pinValue = Components.Globalmap.Map.getValue(pinRegister)
         pinAddress = Components.Globalmap.Map.getRegisterAddress(pinRegister)
 
-        # adding the register value in the bottom left panel
+        '''adding the register value in the bottom left panel'''
         if pinValue != None:
             Components.Register_Values.Register_Values.addRegister(pinRegister, hex(pinAddress), pinValue)
         else:
@@ -293,7 +316,7 @@ class PIN_Diagram(QtWidgets.QWidget):
         ddrValue = Components.Globalmap.Map.getValue(ddrRegister)
         ddrAddress = Components.Globalmap.Map.getRegisterAddress(ddrRegister)
 
-        # adding the DDR value in the bottom left panel
+        '''adding the DDR value in the bottom left panel'''
         if ddrValue != None:
             Components.Register_Values.Register_Values.addRegister(ddrRegister, hex(ddrAddress), ddrValue)
         else:
@@ -303,12 +326,16 @@ class PIN_Diagram(QtWidgets.QWidget):
         portValue = Components.Globalmap.Map.getValue(portRegister)
         portAddress = Components.Globalmap.Map.getRegisterAddress(portRegister)
 
-        # adding the PORT value in the bottom left panel
+        '''adding the PORT value in the bottom left panel'''
         if portValue != None:
             Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), portValue)
         else:
             Components.Register_Values.Register_Values.addRegister(portRegister, hex(portAddress), "0")
 
+    '''
+    Description: Function to refresh the bottom left panel for register value clicked.
+    @param register: the name of the register which is currently clicked
+    '''
     @staticmethod
     def refreshLeftPanelRegisterValues(register):  # On Click Register name calls this function
 
