@@ -37,7 +37,7 @@ class SimulavrAdapter(object):
         @param thread: The reference of simulavr thread which is run at the start of the application.
         '''
     def runProgram(self, sharedMap, sharedMemoryMap):
-        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Debug/simadc.elf")
+        dev = self.loadDevice("atmega328", "/home/saheb/Documents/workspace/SER517-Capstone---Project-10/simulavr/adaptor/simadc.elf")
         sharedMap['eeprom_update'] = False
         sharedMap['eeprom_is_updated'] = False
 
