@@ -19,10 +19,10 @@ from simulavr.adaptor import SimulavrAdaptor
 from simulavr import SimulavrThread
 from helper import UIHelper
 
+
+
+
 sys.stdout = open('test/logs.log', 'w')
-
-
-
 
 class Landing(QtWidgets.QWidget):
 
@@ -165,9 +165,18 @@ class Landing(QtWidgets.QWidget):
             #     self.PIN_Diagram.refreshBlockRegister(Components.Globalmap.Map.register_clicked)
 
 if __name__ == '__main__':
+    
     app = QApplication(sys.argv)
     obj = Landing()
     sim = SimulavrAdaptor.SimulavrAdapter()
+
     thread = SimulavrThread.simulavrThread(obj, sim)
     thread.start()
-    app.exec_()
+    
+    rc = app.exec_()
+
+    #cleaning up memory to avoid segmentation faults
+    del sim
+    del obj
+    del app
+    sys.exit(rc)

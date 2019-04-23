@@ -8,10 +8,16 @@ import pysimulavr
 import Components.Globalmap
 import Components.EEPROM
 
+from PyQt5.QtCore import  Qt, pyqtSignal, pyqtSlot
+import gc
+
+
 
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
     uiUpdateFlag = False
+    levelChangeSignal = pyqtSignal()
+
 
     ''' Description: Function to create the device object.
         @param t: The type of device/microcontroller used.
@@ -36,7 +42,9 @@ class SimulavrAdapter(object):
     @param ui: The object of the UI.
     @param thread: The reference of simulavr thread which is run at the start of the application.
     '''
-
+    
+    
+    
     def runProgram(self, ui, thread):
         dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
 
@@ -57,11 +65,12 @@ class SimulavrAdapter(object):
                     self.getMemoryDumpRange(dev)
                     Components.EEPROM.memoryDump.UpdateEEPROM()
                 i = 0
-
+            if i % 1000 == 0:
+                gc.collect()
             i = i + 1
 
             self.doStep()
-
+        
     '''
     Description: This function is used to perform step operation of simulavr
     @param stepcount: number of times the step needs to be called. Default value is 1.
@@ -94,7 +103,7 @@ class SimulavrAdapter(object):
                     Components.Globalmap.Map.map[key]):
                 self.uiUpdateFlag = True
             Components.Globalmap.Map.map[key] = val
-
+        
     '''
     Description: This function is used to fetch the values from the EEPROM.
     @param dev: The reference of the device object.
@@ -115,3 +124,4 @@ class SimulavrAdapter(object):
             address = new_address
 
         Components.Globalmap.Map.memory_map = map
+        
