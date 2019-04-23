@@ -136,6 +136,7 @@ class Landing(QtWidgets.QWidget):
 
             if sharedMap['refresh_ui_flag']:
                 sharedMap['refresh_ui_flag'] = False
+                Components.Globalmap.Map.map = sharedMap
                 for key, value in sharedMap.items():
                     port = key.split('.')[0]
                     if key in ['PORTB.PORT', 'PORTC.PORT', 'PORTD.PORT']:
@@ -192,5 +193,9 @@ if __name__ == '__main__':
 
     p = Process(target=run, args=[sharedMap, sharedMemoryMap])
     p.start()
-    sim = SimulavrAdaptor.SimulavrAdapter()
-    sim.runProgram(sharedMap, sharedMemoryMap)
+
+    try:
+        sim = SimulavrAdaptor.SimulavrAdapter()
+        sim.runProgram(sharedMap, sharedMemoryMap)
+    except:
+        p.terminate()
