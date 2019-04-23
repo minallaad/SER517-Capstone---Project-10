@@ -130,12 +130,21 @@ class Landing(QtWidgets.QWidget):
             # else :
             #     self.PIN_Diagram.refreshBlockRegister(Components.Globalmap.Map.register_clicked)
 
-if __name__ == '__main__':
+class UI():
+
     app = QApplication(sys.argv)
     obj = Landing()
+
+    def run(self):
+        self.app.exec_()
+
+if __name__ == '__main__':
+
     sim = SimulavrAdaptor.SimulavrAdapter()
-    p = Process(target=sim.runProgram, args=[obj])
+    ui = UI()
+    p = Process(target=ui.run)
     p.start()
+    sim.runProgram(ui.obj)
     #thread = SimulavrThread.simulavrThread(obj, sim)
     #thread.start()
-    app.exec_()
+    #app.exec_()
