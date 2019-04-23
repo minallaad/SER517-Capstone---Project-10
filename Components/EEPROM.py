@@ -118,7 +118,7 @@ class memoryDump(QtWidgets.QWidget):
             j = 0
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(hex(key))))
             j = j + 1
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(' '.join(Value))))
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(' '.join([hex(int(x)) for x in Value]))))
             j = j + 1
             s = ''
             for val in Value:
