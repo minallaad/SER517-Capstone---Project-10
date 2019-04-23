@@ -9,7 +9,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Resources import imageResource_rc
 
-
 class Ui_microcontrollerBlock(object):
     def setupUi(self, microcontrollerBlock):
         microcontrollerBlock.setObjectName("microcontrollerBlock")

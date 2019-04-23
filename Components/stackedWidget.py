@@ -4,9 +4,10 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QStackedWidget
 
-
-class stackWidget(QtWidgets.QWidget):    # Used to switch between multiple layout
-
+""" Singleton Class Stack Widget used to switch the layouts
+    To switch to different Layout, add the QFrame of that layout to the Stack and make the top point to the layout.
+    To switch Back to previous Layout remove the QFrame from stack and make decrement the top counter"""
+class stackWidget(QtWidgets.QWidget):
 
     StackWidget = None
     top = None
@@ -21,16 +22,17 @@ class stackWidget(QtWidgets.QWidget):    # Used to switch between multiple layou
             stackWidget.StackWidget = QStackedWidget()
             stackWidget.top = 0
 
-
+    """ Static Method to add the Object of QFrame on Stack  """
     @staticmethod
     def addWidget(qFrame):
         stackWidget.StackWidget.addWidget(qFrame)
 
+    """ Static Method to remove the Object of QFrame on Stack  """
     @staticmethod
     def removeWidget(qFrame):
         stackWidget.StackWidget.removeWidget(qFrame)
 
-
+    """ Static Method to remove the Object of QFrame on Stack  """
     @staticmethod
     def getInstance():
         """ Static access method. """
@@ -38,12 +40,13 @@ class stackWidget(QtWidgets.QWidget):    # Used to switch between multiple layou
             stackWidget()
         return stackWidget.StackWidget
 
-
+    """ Static Method to increment the top counter   """
     @staticmethod
     def incrementTopCount():
         stackWidget.top = stackWidget.top + 1;
         stackWidget.StackWidget.setCurrentIndex(stackWidget.top)
 
+    """ Static Method to decrement the top counter   """
     @staticmethod
     def decrementTopCount():
         stackWidget.top = stackWidget.top - 1;
