@@ -31,11 +31,16 @@ class Register_Values():
             Register_Values()
         return Register_Values.tableWidget
 
+    '''
+    Description: Function to clear the list of clicked register value being displayed in the bottom panel.
+    '''
     @staticmethod
     def clearList():
         Register_Values.List = []
 
-    #fetch the values of the registers from the address and update the table
+    '''
+    Description: Function to fetch the values of the registers from the address and update the table
+    '''
     @staticmethod
     def updateTable():
         i = 0
@@ -53,6 +58,12 @@ class Register_Values():
         Register_Values.tableWidget.resizeColumnsToContents()
         #Register_Values.tableWidget.repaint()
 
+    '''
+    Description: Function to add a row to the register table displayed in the bottom panel.
+    @param name: Name of the register.
+    @pram address: Address of the register.
+    @param value: Value present in the register.
+    '''
     @staticmethod
     def addRegister(name,address,value):
         if isinstance(value, int):
