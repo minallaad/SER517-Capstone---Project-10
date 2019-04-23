@@ -169,24 +169,6 @@ class Landing(QtWidgets.QWidget):
                     Components.EEPROM.memoryDump.UpdateEEPROM(sharedMemoryMap)
 
 
-<<<<<<< HEAD
-if __name__ == '__main__':
-    
-    app = QApplication(sys.argv)
-    obj = Landing()
-    sim = SimulavrAdaptor.SimulavrAdapter()
-
-    thread = SimulavrThread.simulavrThread(obj, sim)
-    thread.start()
-    
-    rc = app.exec_()
-
-    #cleaning up memory to avoid segmentation faults
-    del sim
-    del obj
-    del app
-    sys.exit(rc)
-=======
 class UiThread(QThread):
 
     def __init__(self, ui, sharedMap, sharedMemoryMap):
@@ -205,7 +187,8 @@ def run(sharedMap, sharedMemoryMap):
     uiThread = UiThread(obj, sharedMap, sharedMemoryMap)
     uiThread.start()
     app.exec_()
-
+    del obj
+    del app
             
 if __name__ == '__main__':
 
@@ -221,4 +204,4 @@ if __name__ == '__main__':
         sim.runProgram(sharedMap, sharedMemoryMap)
     except:
         p.terminate()
->>>>>>> f3a74d88334b1f3ecbc2586ecc543e9c23a480b8
+
