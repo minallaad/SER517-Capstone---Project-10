@@ -31,6 +31,8 @@ class Map():
     '''
     map = {}
 
+    refresh_ui_flag = False
+
     '''refresh flag to check if the refresh is clicked.'''
     refresh_flag = False
 
