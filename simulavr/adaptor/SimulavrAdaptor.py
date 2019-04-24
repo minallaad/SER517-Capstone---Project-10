@@ -8,7 +8,7 @@ import pysimulavr
 import Components.Globalmap
 import Components.EEPROM
 
-from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import pyqtSignal
 import gc
 
 
@@ -22,7 +22,6 @@ class SimulavrAdapter(object):
         @param e: The path of the target file (.elf file) that needs to run. The default path is set to the elf
                 present in the current directory.
     '''
-
     def loadDevice(self, t, e):
         self.__sc = pysimulavr.SystemClock.Instance()
         self.__sc.ResetClock()
@@ -40,9 +39,8 @@ class SimulavrAdapter(object):
     @param ui: The object of the UI.
     @param thread: The reference of simulavr thread which is run at the start of the application.
     '''
-
-    def runProgram(self, sharedMap, sharedMemoryMap):
-        dev = self.loadDevice("atmega328", "simulavr/adaptor/simadc.elf")
+    def runProgram(self, sharedMap, sharedMemoryMap, device_name, elf_file):
+        dev = self.loadDevice(device_name, elf_file)
 
         sharedMap['eeprom_update'] = False
         sharedMap['eeprom_is_updated'] = False
