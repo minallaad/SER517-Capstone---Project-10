@@ -23,7 +23,13 @@ def runGui(sharedMap, sharedMemoryMap):
             
 if __name__ == '__main__':
 
-    device_name, elf_file = argv[1].split(":")
+    device_name = ''
+    elf_file = ''
+    if (len(argv) == 2):
+        device_name, elf_file = argv[1].split(":")
+    else:
+        device_name = 'atmega328'
+        elf_file = 'simulavr/adaptor/simadc.elf'
 
     manager = Manager()
     sharedMap = manager.dict()
