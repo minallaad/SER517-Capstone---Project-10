@@ -22,10 +22,6 @@ from helper import UIHelper
 from multiprocessing import Process, Manager
 
 
-
-
-sys.stdout = open('test/logs.log', 'w')
-
 class Landing(QtWidgets.QWidget):
 
     def __init__(self):
