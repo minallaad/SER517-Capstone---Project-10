@@ -20,7 +20,7 @@ The above list of requirements broadly list out all the necessary features of th
 </tr>
 </table>
 
-## Architecture Diagram
+## Component Diagram
 <img src="/Resources/Images/Architecture_Diagram.png">
 
 ## Tools
