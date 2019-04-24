@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+'''
+This class is used to fetch and display the EEPROM values.
+'''
 
 import sys
 from PyQt5 import QtWidgets, QtGui
@@ -30,7 +32,7 @@ class memoryDump(QtWidgets.QWidget):
             Title.setGeometry(QRect(290, 40, 191, 31))
 
             self.refreshButton = QtWidgets.QPushButton("Refresh")
-            self.refreshButton.clicked.connect(lambda: self.reloadMemoryDump())
+            self.refreshButton.clicked.connect(lambda: self.submitClicked)
 
             self.memoryAddressLabel = QLabel(self)
             self.memoryAddressLabel.setText('Memory Address:')
@@ -85,10 +87,16 @@ class memoryDump(QtWidgets.QWidget):
             memoryDump.memoryDumpFrame.layout.addWidget(simulatorFrame)
             memoryDump.memoryDumpFrame.setLayout(memoryDump.memoryDumpFrame.layout)
 
+    '''
+    Description: Function to fetch the memory dump map
+    '''
     @staticmethod
     def getMemoryDump():
         return memoryDump.memoryDumpFrame
 
+    '''
+    Description: Function to fetch clear and reload the memory dump
+    '''
     def reloadMemoryDump(self):
         self.clearMap()
         self.updateTable()
@@ -97,17 +105,20 @@ class memoryDump(QtWidgets.QWidget):
         Components.Globalmap.Map.eeprom_address = int(self.line.text(), 16)
         Components.Globalmap.Map.refresh_flag = True
 
-    #function to update the EEPROM values in the EERPOM tables
+    '''
+    Description: function to update the EEPROM values in the EERPOM tables
+    @param sharedMemoryMap: Map which contains the updated values of EEPROM.
+    '''
     @staticmethod
-    def updateTable():
+    def updateTable(sharedMemoryMap):
         i = 0
-        memoryDump.map = Components.Globalmap.Map.memory_map
+        memoryDump.map = sharedMemoryMap
         memoryDump.tableWidget.setRowCount(len(memoryDump.map) + 1)
-        for key, Value in Components.Globalmap.Map.memory_map.items():
+        for key, Value in sharedMemoryMap.items():
             j = 0
             memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(hex(key))))
             j = j + 1
-            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(' '.join(Value))))
+            memoryDump.tableWidget.setItem(i + 1, j, QTableWidgetItem(str(' '.join([hex(int(x)) for x in Value]))))
             j = j + 1
             s = ''
             for val in Value:
@@ -121,8 +132,8 @@ class memoryDump(QtWidgets.QWidget):
         memoryDump.map = {}
 
     @staticmethod
-    def UpdateEEPROM():
-        memoryDump.updateTable()
+    def UpdateEEPROM(sharedMemoryMap):
+        memoryDump.updateTable(sharedMemoryMap)
 
 class row():
     name = None
