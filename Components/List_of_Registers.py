@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+'''
+This class is used to fetch the list of registers available in various components of microcontroller.
+'''
 
 from PyQt5.QtWidgets import  QMessageBox , QListWidget
 from PyQt5 import  QtCore
@@ -56,8 +58,10 @@ class List_of_Registers(QListWidget):
             List_of_Registers()
         return List_of_Registers.listWidget
 
-    # to fetch the value of the register clicked
-    def Clicked(self):  # On Click Register name calls this function
+    '''
+    Description: to fetch the value of the register clicked
+    '''
+    def Clicked(self):
         value = Components.Globalmap.Map.getValue(self.text())
         Components.Globalmap.Map.register_clicked = self.text()
         Components.Globalmap.Map.register_clicked_type = 'r'
