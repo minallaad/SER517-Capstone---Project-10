@@ -123,7 +123,6 @@ class SimulavrAdapter(object):
         sharedMemoryMap.clear()
         address = sharedMap['eeprom_address']
         for i in range(0, 20):
-            address += i
             address = address % 1024
             value_list = []
             new_address = 0
@@ -133,8 +132,4 @@ class SimulavrAdapter(object):
                 value_list.append(str(val))
             sharedMemoryMap[address] = value_list
             address = new_address
-
-
-        Components.Globalmap.Map.memory_map = map
-        
-
+            address += 1
