@@ -8,10 +8,16 @@ import pysimulavr
 import Components.Globalmap
 import Components.EEPROM
 
+from PyQt5.QtCore import  Qt, pyqtSignal, pyqtSlot
+import gc
+
+
 
 class SimulavrAdapter(object):
     DEFAULT_CLOCK_SETTING = 63
     uiUpdateFlag = False
+    levelChangeSignal = pyqtSignal()
+
 
     ''' Description: Function to create the device object.
         @param t: The type of device/microcontroller used.
@@ -32,14 +38,20 @@ class SimulavrAdapter(object):
         return dev
 
     '''
-        Description: This function is required to run the target file. It is called from the Simulavr thread.
-        @param ui: The object of the UI.
-        @param thread: The reference of simulavr thread which is run at the start of the application.
-        '''
+    Description: This function is required to run the target file. It is called from the Simulavr thread.
+    @param ui: The object of the UI.
+    @param thread: The reference of simulavr thread which is run at the start of the application.
+    '''
+    
+    
+    
+    
+
     def runProgram(self, sharedMap, sharedMemoryMap):
-        dev = self.loadDevice("atmega328", "/home/ayan/Desktop/TestProject/simadoc/bin/Debug/simadc.elf")
+        dev = self.loadDevice("atmega328", "/home/vutsuak/Desktop/SER517-Capstone---Project-10/simulavr/adaptor/simadc.elf")
         sharedMap['eeprom_update'] = False
         sharedMap['eeprom_is_updated'] = False
+
 
         i = 0
         while True:
@@ -59,11 +71,12 @@ class SimulavrAdapter(object):
                     sharedMap['eeprom_is_updated'] = True
 
                 i = 0
-
+            if i % 1000 == 0:
+                gc.collect()
             i = i + 1
 
             self.doStep()
-
+        
     '''
     Description: This function is used to perform step operation of simulavr
     @param stepcount: number of times the step needs to be called. Default value is 1.
@@ -90,9 +103,17 @@ class SimulavrAdapter(object):
     def getDDRValues(self, dev, sharedMap):
         for key, value in Components.Globalmap.Map.registerAddressMap.items():
             val = dev.getRWMem(value)
+
+            if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val !=
+                    Components.Globalmap.Map.map[key]):
+                self.uiUpdateFlag = True
+            Components.Globalmap.Map.map[key] = val
+        
+
             #if (len(Components.Globalmap.Map.map) == len(Components.Globalmap.Map.registerAddressMap) and val != sharedMap[key]) :
              #   self.uiUpdateFlag = True
             sharedMap[key] = val
+
 
     '''
     Description: This function is used to fetch the values from the EEPROM.

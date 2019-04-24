@@ -5,6 +5,7 @@
 '''
 
 import sys
+import os
 
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt, QThread
@@ -20,6 +21,10 @@ from simulavr.adaptor import SimulavrAdaptor
 from helper import UIHelper
 from multiprocessing import Process, Manager
 
+
+
+
+sys.stdout = open('test/logs.log', 'w')
 
 class Landing(QtWidgets.QWidget):
 
@@ -183,7 +188,10 @@ def run(sharedMap, sharedMemoryMap):
     uiThread = UiThread(obj, sharedMap, sharedMemoryMap)
     uiThread.start()
     app.exec_()
-
+    
+    del obj
+    del app
+    os.system("kill -9 `ps -ef | grep main.py | grep -v grep | awk '{print $2}'`")
             
 if __name__ == '__main__':
 
@@ -199,3 +207,5 @@ if __name__ == '__main__':
         sim.runProgram(sharedMap, sharedMemoryMap)
     except:
         p.terminate()
+    
+
