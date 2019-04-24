@@ -1,6 +1,7 @@
 import sys
 import os
 
+from sys import argv
 from PyQt5.QtWidgets import QApplication
 
 from Landing import Landing
@@ -10,7 +11,7 @@ from multiprocessing import Process, Manager
 
 
 def runGui(sharedMap, sharedMemoryMap):
-    app = QApplication(sys.argv)
+    app = QApplication(argv)
     obj = Landing()
     uiThread = UiThread(obj, sharedMap, sharedMemoryMap)
     uiThread.start()
@@ -22,6 +23,8 @@ def runGui(sharedMap, sharedMemoryMap):
             
 if __name__ == '__main__':
 
+    device_name, elf_file = argv[1].split(":")
+
     manager = Manager()
     sharedMap = manager.dict()
     sharedMemoryMap = manager.dict()
@@ -31,6 +34,6 @@ if __name__ == '__main__':
 
     try:
         sim = SimulavrAdaptor.SimulavrAdapter()
-        sim.runProgram(sharedMap, sharedMemoryMap)
+        sim.runProgram(sharedMap, sharedMemoryMap, device_name, elf_file)
     except:
         p.terminate()
