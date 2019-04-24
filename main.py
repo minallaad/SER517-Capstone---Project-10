@@ -1,4 +1,6 @@
 import sys
+import os
+
 from PyQt5.QtWidgets import QApplication
 
 from Landing import Landing
@@ -13,7 +15,10 @@ def runGui(sharedMap, sharedMemoryMap):
     uiThread = UiThread(obj, sharedMap, sharedMemoryMap)
     uiThread.start()
     app.exec_()
-
+    
+    del obj
+    del app
+    os.system("kill -9 `ps -ef | grep main.py | grep -v grep | awk '{print $2}'`")
             
 if __name__ == '__main__':
 
