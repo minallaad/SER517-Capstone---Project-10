@@ -20,7 +20,7 @@ The above list of requirements broadly list out all the necessary features of th
 </tr>
 </table>
 
-## Architecture Diagram
+## Component Diagram
 <img src="/Resources/Images/Architecture_Diagram.png">
 
 ## Tools
@@ -86,6 +86,9 @@ $ python3 main.py
 
 ## Main Page
 <img src="/Resources/Images/MainPicturePage.png">
+
+## Running Demo
+[![](http://img.youtube.com/vi/5v_OvZfBDK4/0.jpg)](http://www.youtube.com/watch?v=5v_OvZfBDK4 "eepromUI")
 
 
 ## Contributors
