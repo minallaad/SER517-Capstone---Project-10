@@ -6,6 +6,12 @@ import unittest
 class TestGUI(unittest.TestCase):
 	def test_gui(self):
 		pass
+        
+        def test_slider(self):
+
+            log = open("logs.log")
+
+            print(log.readlines())
 
 class TestGDB(unittest.TestCase):
         def test_gdb_connection(self):
