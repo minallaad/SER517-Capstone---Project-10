@@ -42,15 +42,22 @@ The above list of requirements broadly list out all the necessary features of th
 
 ## Installation Direction
 
-Run this command to install PyQt5：
+Build and install the toolds rquired：
 
 ```
-$  sudo apt-get install python3-pyqt5
+$  sudo apt install gcc make git
+$  sudo apt-get install build-essential g++ libtool-bin binutils-dev texinfo autoconf swig
+$  sudo apt-get --purge remove gdb-avr
+$  wget ftp.gnu.org/gnu/gdb/gdb-8.1.1.tar.xz
+$  tar xf gdb-8.1.1.tar.xz
+$  cd gdb-8.1.1
+$  perl -i -0pe 's/  ULONGEST addr = unpack_long \(type, buf\);\R\R  return avr_make_saddr \(addr\);\R/  ULONGEST addr = unpack_long (type, buf);\n\n  if (TYPE_DATA_SPACE (type))\n    return avr_make_saddr (addr);\n  else\n    return avr_make_iaddr (addr);\n/' gdb/avr-tdep.c
 ```
 
 Run this command to install Pysimulavr：
 
 ```
+$ sudo apt-get install python3.6
 $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.61
 $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.72
 $ sudo update-alternatives --config python
@@ -65,17 +72,30 @@ $ python
 $ Import pysimulavr
 ```
 
-Install GUI dependencies:
+Installation Pysimulavr Module:
 
 ```
-$ cd SER517-Capstone---Project-10/
-$ pip install -r requirements.txt
+$ git clone https://git.savannah.gnu.org/git/simulavr.git/
+$ cd simulavr
+$ sudo apt-get install python3-pip
+$ sudo apt-get install python3-sphinx
+$ sudo apt-get install python3-pyqt5
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 1
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 2
+$ sudo update-alternatives --config python
+$ make distclean
+$ ./bootstrap
+$ ./configure --enable-python --with-pic
+$ make
+$ cd src/python/dist
+$ python -m pip install ./pysimulavr-1.1.dev0-cp36-cp36m-linux_x86_64.whl
 ```
 
 ## Build and Run Directions
 
 ```
-$ cd SER517-Capstone---Project-10/
+$ git clone https://github.com/minallaad/SER517-Capstone---Project-10.git
+$ cd (folder)
 $ python3 main.py
 ```
 ## Design Details
